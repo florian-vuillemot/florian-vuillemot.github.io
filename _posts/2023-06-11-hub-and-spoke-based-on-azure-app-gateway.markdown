@@ -2,6 +2,7 @@
 layout: post
 title:  "Hub-spoke based on Azure Application Gateway"
 categories: azure azure-app-gateway hub-and-spoke network
+permalink: azure-application-gateway/simple-hub-and-spoke
 ---
 # Introduction
 

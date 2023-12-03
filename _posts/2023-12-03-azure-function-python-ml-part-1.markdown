@@ -2,6 +2,7 @@
 layout: mermaid
 title:  "[Part 1] Azure Function and machine learning applications"
 categories: azure azure-function machine-learning python github github-action
+permalink: azure-function/machine-learning/part-1
 ---
 # Introduction
 This article is the first of a guide to help the reader deploy a machine learning application from its local environment to the cloud. This guide comprises articles focusing on the [MLOps](https://en.wikipedia.org/wiki/MLOps) topic and not the machine learning itself. Article by article, the application will improve its scalability and resilience, starting with nerds' needs and finishing with the enterprise's requirements.

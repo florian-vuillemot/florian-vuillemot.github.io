@@ -2,6 +2,7 @@
 layout: post
 title:  "Azure Bastion Key Vault integration behind the scene"
 categories: azure azure-bastion azure-keyvault security zero-trust
+permalink: azure-bastion/key-vault-integration-behind-the-scene
 ---
 # Introduction
 
