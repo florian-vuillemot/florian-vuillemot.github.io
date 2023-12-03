@@ -1,12 +1,16 @@
 ---
-layout: bootstrap
-title:  "[Part 1] Azure Function and Machine Learning application"
+layout: mermaid
+title:  "[Part 1] Azure Function and machine learning applications"
 categories: azure azure-function machine-learning python github github-action
 ---
 # Introduction
 This article is the first of a guide to help the reader deploy a machine learning application from its local environment to the cloud. This guide comprises articles focusing on the [MLOps](https://en.wikipedia.org/wiki/MLOps) topic and not the machine learning itself. Article by article, the application will improve its scalability and resilience, starting with nerds' needs and finishing with the enterprise's requirements.
 
 Even if these articles have a step-by-step approach, some Python, GitHub and Azure knowledge might be necessary. The articles provide official documentation, letting the reader handle some straightforward steps autonomously. Moreover, basic Python knowledge as packaging, condition or function as well as navigating in the GitHub interface, the Git part of GitHub are considered known as well as essential components of Azure components as [Resource Group](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal#what-is-a-resource-group).
+
+> [Here](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-1) is the code for this article.
+
+> Feel free to create an issue for comment or improvement [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).
 
 
 # The application
@@ -53,7 +57,6 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 
 # Defining the API endpoint.
-# This route listens `/predict`.
 @app.route(route="predict")
 def predict(req: func.HttpRequest):
     # Retrieve the data to be predicted.
@@ -89,7 +92,7 @@ Both files, `function_app.py` and `requirements.txt`, must be at the root of you
 
 ![GitHub Repository](/assets/2023-11-28-azure-function-python-ml-part-1/github-repository.gif)
 
-{% include alerts/info.html content="To better understand the [Azure Function framework](https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-python?tabs=asgi%2Capplication-level&pivots=python-mode-decorators)." %}
+> To better understand the [Azure Function framework](https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-python?tabs=asgi%2Capplication-level&pivots=python-mode-decorators).
 
 ## Run locally an Azure Function
 Now, the application is ready to be used in the cloud. However, running the application on the local machine is more complex than it was. Because now, the code is a mix between the Azure Function framework and the application code, it is not possible to test the application code without running the [Azure Function emulator](https://learn.microsoft.com/en-us/azure/azure-functions/functions-develop-local). Even if running this emulator is straightforward, the reader is encouraged to separate the Azure Function code and the business application to improve the feedback loop.
@@ -99,7 +102,7 @@ Now, the application is ready to be used in the cloud. However, running the appl
 We will use Azure Function service to expose our application on the Internet. Whilst configuring the Azure Function, we will also configure the connection with GitHub. Based on this connection, we can create a GitHub workflow to deploy the application automatically when a commit is pushed to the repository.
 
 The workflow:
-```mermaid
+<pre class="mermaid">
 sequenceDiagram
     actor User
     participant Azure
@@ -125,17 +128,16 @@ sequenceDiagram
     User->>GitHub: Push on the 'main' branch
     GitHub->>GitHub Action: Run the workflow
     GitHub Action->>Azure: Deploy
-```
+</pre>
 
 ## What is an Azure Function
 Azure Function is an event-driven serverless computing service that allows the execution of small applications - named "functions" - without managing the underlying infrastructure. This service automatically scales based on the demand, and you pay only for the resources consumed during execution, making it a cost-effective solution for various application scenarios.
+> You can find more documentation about Azure Function [here](https://learn.microsoft.com/en-us/azure/azure-functions/).
 
-{% include alerts/info.html content="You can find more documentation about Azure Function [here](https://learn.microsoft.com/en-us/azure/azure-functions/)" %}
 
 ## What is GitHub Action
-GitHub Actions is an automation and CI/CD service provided by GitHub. It allows the definition of workflows triggered by action on the GitHub repository. In our case, a trigger on the action 'push on main' will run a workflow created during the configuration to deploy the code on the Azure Function.
-
-{% include alerts/info.html content="You can find more documentation about GitHub Action [here](https://docs.github.com/en/actions)" %}
+GitHub Actions is an automation and CI/CD service provided by GitHub. It allows the definition of workflows triggered by action on the GitHub repository. In our case, a trigger on the action "push on main" will run a workflow created during the configuration to deploy the code on the Azure Function.
+> You can find more documentation about GitHub Action [here](https://docs.github.com/en/actions).
 
 ## Step by step
 ![Global workflow](/assets/2023-11-28-azure-function-python-ml-part-1/global-workflow.gif)
@@ -150,10 +152,9 @@ GitHub Actions is an automation and CI/CD service provided by GitHub. It allows 
 7. The configuration is done, the Azure Function can now be created. ![Configuration review](/assets/2023-11-28-azure-function-python-ml-part-1/review-before-create-fct-app.png)
 
 After creating the Azure Function, Azure pushes the workflow file `main_az-fct-python-ml.yml` on the repository under folder `.github/workflows`. This file contains the workflow that GitHub will perform on each push on the branch `main`.
+
 ![GitHub repository files](/assets/2023-11-28-azure-function-python-ml-part-1/files-in-repository.png)
-
-
-{% include alerts/info.html content="The next article will deep dive into this file." %}
+> The next article will deep dive into this file.
 
 The application is now accessible via an HTTP Request.
 ```
@@ -164,12 +165,14 @@ curl -H "Accept: application/json" -H "Content-Type: application/json" -X POST -
 ]
 ```
 
-# GitHub Action
+# The GitHub Action panel
 The GitHub Action panel contains the history of workflow runs. Currently, it only includes one run with the first deployment. Feel free to update the application to trigger a new deployment.
 ![GitHub Action panel](/assets/2023-11-28-azure-function-python-ml-part-1/github-actions-panel.png)
 
-This workflow contains steps defined in the workflow configuration 
-![GitHub Workflow](/assets/2023-11-28-azure-function-python-ml-part-1/github-action-workflow.png).
+This workflow contains steps defined in the workflow configuration.
+![GitHub Workflow](/assets/2023-11-28-azure-function-python-ml-part-1/github-action-workflow.png)
 
 # Summary and next steps
-This article gives the reader the basic knowledge to deploy a basic machine learning application. However, this simple example does not allow the deployment of a real machine-learning model! And that will be the focus of the next article.
+This article gives the reader the basic knowledge to deploy a basic machine learning application. However, this simple example does not allow the deployment of a real machine learning model! And that will be the focus of the next article.
+
+> Any comments, feedback or problems? Please create an issue [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).
