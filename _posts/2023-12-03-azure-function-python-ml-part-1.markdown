@@ -90,7 +90,7 @@ azure-functions
 
 Both files, `function_app.py` and `requirements.txt`, must be at the root of your repository and pushed on GitHub to be consumed by the Azure Function.
 
-![GitHub Repository](/assets/2023-11-28-azure-function-python-ml-part-1/github-repository.gif)
+![GitHub Repository](/assets/2023-12-03-azure-function-python-ml-part-1/github-repository.gif)
 
 > To better understand the [Azure Function framework](https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-python?tabs=asgi%2Capplication-level&pivots=python-mode-decorators).
 
@@ -140,20 +140,20 @@ GitHub Actions is an automation and CI/CD service provided by GitHub. It allows 
 > You can find more documentation about GitHub Action [here](https://docs.github.com/en/actions).
 
 ## Step by step
-![Global workflow](/assets/2023-11-28-azure-function-python-ml-part-1/global-workflow.gif)
+![Global workflow](/assets/2023-12-03-azure-function-python-ml-part-1/global-workflow.gif)
 1. Go to the [Azure Portal](https://portal.azure.com).
 2. Search the "Function App" service, then click "create". [Here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-create-function-app-portal) is a step-by-step guide. 
 3. The Azure Function name will be the subdomain of the API endpoint.
 4. Specify the information without forgetting to update the runtime stack to `Python`.
-![Create an Azure Function](/assets/2023-11-28-azure-function-python-ml-part-1/create-fct-app.png)
+![Create an Azure Function](/assets/2023-12-03-azure-function-python-ml-part-1/create-fct-app.png)
 5. Click on "Next" until you are on the **Deployment** panel.
 6. In this panel, you can authorize Azure to access a GitHub repository. In this case, I selected the repository containing the [example application](https://github.com/florian-vuillemot/az-fct-python-ml).
-![GitHub configuration](/assets/2023-11-28-azure-function-python-ml-part-1/grant-deployment-permission.png)
-7. The configuration is done, the Azure Function can now be created. ![Configuration review](/assets/2023-11-28-azure-function-python-ml-part-1/review-before-create-fct-app.png)
+![GitHub configuration](/assets/2023-12-03-azure-function-python-ml-part-1/grant-deployment-permission.png)
+7. The configuration is done, the Azure Function can now be created. ![Configuration review](/assets/2023-12-03-azure-function-python-ml-part-1/review-before-create-fct-app.png)
 
 After creating the Azure Function, Azure pushes the workflow file `main_az-fct-python-ml.yml` on the repository under folder `.github/workflows`. This file contains the workflow that GitHub will perform on each push on the branch `main`.
 
-![GitHub repository files](/assets/2023-11-28-azure-function-python-ml-part-1/files-in-repository.png)
+![GitHub repository files](/assets/2023-12-03-azure-function-python-ml-part-1/files-in-repository.png)
 > The next article will deep dive into this file.
 
 The application is now accessible via an HTTP Request.
@@ -167,10 +167,10 @@ curl -H "Accept: application/json" -H "Content-Type: application/json" -X POST -
 
 # The GitHub Action panel
 The GitHub Action panel contains the history of workflow runs. Currently, it only includes one run with the first deployment. Feel free to update the application to trigger a new deployment.
-![GitHub Action panel](/assets/2023-11-28-azure-function-python-ml-part-1/github-actions-panel.png)
+![GitHub Action panel](/assets/2023-12-03-azure-function-python-ml-part-1/github-actions-panel.png)
 
 This workflow contains steps defined in the workflow configuration.
-![GitHub Workflow](/assets/2023-11-28-azure-function-python-ml-part-1/github-action-workflow.png)
+![GitHub Workflow](/assets/2023-12-03-azure-function-python-ml-part-1/github-action-workflow.png)
 
 # Summary and next steps
 This article gives the reader the basic knowledge to deploy a basic machine learning application. However, this simple example does not allow the deployment of a real machine learning model! And that will be the focus of the next article.
