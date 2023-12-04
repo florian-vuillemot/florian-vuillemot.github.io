@@ -21,6 +21,7 @@ virtual networks to prevent management overhead.
 Provide default DNS.
 DNS name is consistent across the network.
 
+MTU fragment packet bytes of 1400 and 1500 for VMs.
 Bandwidth: based on the VM size and not the VNET itself.
 
 # Restrictions VNEt
@@ -132,5 +133,4 @@ Enable accelerate networking. Presque aucun impact si les VM ne sont pas dans le
 NIC: DNS server applied on.
 NIC can get multiple IP to redirect on multiple docker hosted on the VM.
 NIC: MTU and fragmentation
-
-Subnet extension p 310
+Bandwith limit allow is shared between NIC. Only on outbound.
