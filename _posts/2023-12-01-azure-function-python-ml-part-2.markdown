@@ -5,7 +5,7 @@ categories: azure azure-function machine-learning python github github-action
 permalink: azure-function/machine-learning/part-2
 ---
 # Introduction
-The [previous article]({% link _posts/2023-12-03-azure-function-python-ml-part-1.markdown %}) focuses on turning a small machine-learning application into an API and deploying it automatically with GitHub Action. With this automation done, it's time to improve the application and allow the deployment of a larger-scale machine-learning model!
+The [previous article]({% link _posts/2023-12-03-azure-function-python-ml-part-1.markdown %}) focuses on turning a small machine-learning application into an API and deploying it automatically with GitHub Action. With this automation done, it's time to improve the application and allow the deployment of a larger-scale machine-learning model.
 
 > [Here](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-2) is the code article's code.
 
@@ -18,7 +18,7 @@ The [previous article]({% link _posts/2023-12-03-azure-function-python-ml-part-1
 - [requirements.txt](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-1/requirements.txt): containing the application dependencies.
 - [.github/workflows/main_az-fct-python-ml.yml](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-1/.github/workflows/main_az-fct-python-ml.yml): the GitHub Action workflow. 
 
-The previous article focused on the application and so on the `function_app.py` file. Here, we will be focusing on the GitHub Action workflow and so the `.github/workflows/main_az-fct-python-ml.yml` file.
+The previous article focused on the application and so on the `function_app.py` file. Here, we will focus on the GitHub Action workflow and the `.github/workflows/main_az-fct-python-ml.yml` file.
 
 ## The GitHub Action workflow
 This workflow has been created during the Azure configuration and performs the following tasks:
@@ -61,7 +61,7 @@ sequenceDiagram
     participant Azure
 
     GitHub Action->>GitHub: Retrieve the artifact.
-    GitHub Action->>GitHub: Retrieve the value of the secret.
+    GitHub Action->>GitHub: Retrieve the Azure's secret.
     GitHub Action->>Azure: Secret-based authentification.
     GitHub Action->>Azure: Application's code.
 </pre>
@@ -93,7 +93,7 @@ sequenceDiagram
     GitHub Action ->> Azure: Deploy
 </pre>
 
-> Here we will save the model trained in the [pickle](https://scikit-learn.org/stable/model_persistence.html) format for pedagogical purposes.
+> Here, we will save the model trained in the [pickle](https://scikit-learn.org/stable/model_persistence.html) format for pedagogical purposes.
 
 > In our case, the dataset is alongside the code and, therefore, on Git. Another article will talk about remote data retrieval for training, but we'll keep things simple at this stage of this guide.
 
