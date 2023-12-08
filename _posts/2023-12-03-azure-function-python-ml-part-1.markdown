@@ -155,7 +155,7 @@ GitHub Actions is an automation and CI/CD service provided by GitHub. It allows 
 After creating the Azure Function, Azure pushes the workflow file `main_az-fct-python-ml.yml` on the repository under folder `.github/workflows`. This file contains the workflow that GitHub will perform on each push on the branch `main`.
 
 ![GitHub repository files](/assets/2023-12-03-azure-function-python-ml-part-1/files-in-repository.png)
-> The next article will deep dive into this file.
+> The [next article]({% link _posts/2023-12-10-azure-function-python-ml-part-2.markdown %}) will deep dive into this file.
 
 The application is now accessible via an HTTP Request.
 ```
@@ -174,6 +174,6 @@ This workflow contains steps defined in the workflow configuration.
 ![GitHub Workflow](/assets/2023-12-03-azure-function-python-ml-part-1/github-action-workflow.png)
 
 # Summary and next steps
-This article gives the reader the basic knowledge to deploy a basic machine learning application. However, this simple example does not allow the deployment of a real machine learning model! And that will be the focus of the next article.
+This article gives the reader the basic knowledge to deploy a basic machine learning application. However, this simple example does not allow the deployment of a real machine learning model! And that will be the focus of the [next article]({% link _posts/2023-12-10-azure-function-python-ml-part-2.markdown %}).
 
 > Any comments, feedback or problems? Please create an issue [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).

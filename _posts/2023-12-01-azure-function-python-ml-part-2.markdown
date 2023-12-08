@@ -205,3 +205,5 @@ Training the model using the GitHub Action service can be surprising, but it's a
 
 # Summary and next steps
 Remotely training a model is convenient and easy with GitHub Action. But putting a model in production requires verifying its integrity. The next article will focus on a validation step ensuring the model quality before the deployment.
+
+> Any comments, feedback or problems? Please create an issue [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).
