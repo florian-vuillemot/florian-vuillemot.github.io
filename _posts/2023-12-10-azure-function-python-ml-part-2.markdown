@@ -5,7 +5,7 @@ categories: azure azure-function machine-learning python github github-action
 permalink: azure-function/machine-learning/part-2
 ---
 # Introduction
-The [previous article]({% link _posts/2023-12-03-azure-function-python-ml-part-1.markdown %}) focuses on turning a small machine-learning application into an API and deploying it automatically with GitHub Action. With this automation done, it's time to improve the application and allow the deployment of a larger-scale machine-learning model.
+The [previous article]({% link _posts/2023-12-03-azure-function-python-ml-part-1.markdown %}) focuses on turning a small machine learning application into an API and deploying it automatically with GitHub Action. With this automation done, it's time to improve the application and allow the deployment of a larger-scale machine learning model.
 
 > [Here](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-2) is the code article's code.
 
@@ -79,7 +79,7 @@ GitHub can manage [secrets](https://docs.github.com/en/actions/security-guides/u
 # Isolating the training part
 Training and predicting simultaneously without validation is not an everyday use case. A more realistic approach is to train the model, validate it, and then deploy it. This article focuses on the isolation of the training part, leaving the validation step to the next.
 
-Putting a machine-learning model in a Git repository is not the best idea, even if technically possible at our scale. A more realistic and scalable way is to create it in the GitHub workflow's `build` step, letting the GitHub Action train it remotely. Then, save the trained model in a file, packaged with the application deployed on the Azure Function.
+Putting a machine learning model in a Git repository is not the best idea, even if technically possible at our scale. A more realistic and scalable way is to create it in the GitHub workflow's `build` step, letting the GitHub Action train it remotely. Then, save the trained model in a file, packaged with the application deployed on the Azure Function.
 
 <pre class="mermaid">
 sequenceDiagram
