@@ -1,6 +1,6 @@
 ---
 layout: mermaid
-title:  "[Part 1] Azure Function and machine learning applications"
+title:  "[Part 1] Azure Functions and machine learning applications"
 categories: azure azure-function machine-learning python github github-action
 permalink: azure-function/machine-learning/part-1
 ---
@@ -11,7 +11,7 @@ Even if these articles have a step-by-step approach, some Python, GitHub and Azu
 
 > [Here](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-1) is the code for this article.
 
-> Feel free to create an issue for comment or improvement [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).
+> Feel free to create an issue to comment on or help us improve [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).
 
 
 # The application
