@@ -122,7 +122,7 @@ Add the following step in GitHub Action workflow to performs the test:
 
 In case of error, the GitHub Action stops the workflow and thus the deployment.
 
-=> Add a failing gif with the failure
+![GitHub secret](/assets/2023-12-17-azure-function-python-ml-part-3/failing-test.png)
 
 ## Manual validation
 Human validation before updating the production environment is a common usecase. GitHub allows this with [environment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment).
@@ -145,12 +145,9 @@ So, we only need to apply a protection rules to add the human validation:
 - Select "Production".
 - Click on "Required reviewers" and add the reviewer: it can be yourself.
 - Then click on "Save protection rules".
-
-=> Add GIF.
+![GitHub secret](/assets/2023-12-17-azure-function-python-ml-part-3/protection-rules.gif)
 
 The next time the workflow is executed, it will pause and wait for human validation before executing the `deploy` step.
-
-=> Add Gif
 
 > For more information about secrets and variable in the context of our application, take a look at the [previous article]({% link _posts/2023-12-10-azure-function-python-ml-part-2.markdown %}).
 
@@ -165,7 +162,7 @@ Those information are especially important before validating a deployment, and w
 - name: Train the model
   run: python train.py >> $GITHUB_STEP_SUMMARY
 ```
-=> GIF
+![GitHub secret](/assets/2023-12-17-azure-function-python-ml-part-3/complete-workflow.gif)
 
 Now, the user is able to verify the model accuracy before deploying it.
 
