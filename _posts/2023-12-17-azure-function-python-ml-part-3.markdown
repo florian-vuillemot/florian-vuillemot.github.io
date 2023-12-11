@@ -120,13 +120,58 @@ Then run the test on the GitHub Action workflow by adding the step:
 ```
 > [Here](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/.github/workflows/main_az-fct-python-ml.yml) the complete file.
 
+In case of error, the GitHub Action stops the workflow and so the deployment.
+
+=> Add a failing gif with the failure
 
 ## Manual validation
-=> Usefull before deployment or whatever
-=> Environment on GitHub
-=> Update the existing
-=> Scope secrets and variables
+It's a common usecase to want a manual validation before updating a production environment. GitHub allows manual validation with the usage of [environment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment).
+
+Environments on GitHub allow the scoping of [secrets](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#environment-secrets) and [variables](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#environment-variables) but also the management of [protection rules](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#deployment-protection-rules). Protection rules allows powerfull guardrail protecting the production environment from common mistake. An interresting fonctionality of protection rules is [required reviewers](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#required-reviewers). It allows a human validation before steps in workflows.
+
+> For more information about secrets and variable in the context of our application, take a look at the [previous article]({% link _posts/2023-12-10-azure-function-python-ml-part-2.markdown %}).
+
+During the configuration, Azure creates a "Production" environment. Let's update it to add the human validation:
+- Go under the "Settings" bar of the application repository.
+- Then click on the "Environments" panel.
+- Select "Production".
+- Click on "Required reviewers" and add the reviewer: it can be yourself.
+- Then click on "Save protection rules".
+
+=> Add GIF.
+
+The workflow is already using this environment in the step `deploy`:
+```
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-function.outputs.webapp-url }}
+```
+
+> Remember, the workflow is in the file `.github\workflows\main_az-fct-python-ml.yml` [here](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/.github/workflows/main_az-fct-python-ml.yml).
+
+Next time the workflow run, it will pause and wait the human validation before processing the `deploy` step.
+
+=> Add Gif
+
+# Training output
+The `train.py` script print information about the model: 
+```
+print('### {scores.mean():.2f} accuracy with a standard deviation of {scores.std():.2f}')
+```
+
+Those information are important specially before validating a deployment and we want to get them easily not by searching in the workflow's logs. GitHub Action allows that by using the [environment file](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#adding-a-job-summary) `GITHUB_STEP_SUMMARY`. Let's update the "Train the model" step to gather the output:
+```
+- name: Train the model
+  run: python train.py >> $GITHUB_STEP_SUMMARY
+```
+=> GIF
+
+Now, the user is able to verify the model accuracy before deploying it.
 
 # Summary and next steps
+Controlling what is deploying is only a step in an application journey. When deploy, an application must be monitoring and depending of some metric, may be rollback. As deployment, rollback can be automated as the next article will discuss.
 
 > Any comments, feedback or problems? Please create an issue [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).
