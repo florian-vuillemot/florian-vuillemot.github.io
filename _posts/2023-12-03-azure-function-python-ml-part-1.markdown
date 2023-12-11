@@ -173,7 +173,7 @@ The GitHub Action panel contains the history of workflow runs. Currently, it onl
 This workflow contains steps defined in the workflow configuration.
 ![GitHub Workflow](/assets/2023-12-03-azure-function-python-ml-part-1/github-action-workflow.png)
 
-# Summary and next steps
+# Summary and next step
 This article gives the reader the basic knowledge to deploy a basic machine learning application. However, this simple example does not allow the deployment of a real machine learning model! And that will be the focus of the [next article]({% link _posts/2023-12-10-azure-function-python-ml-part-2.markdown %}).
 
 > Any comments, feedback or problems? Please create an issue [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).
