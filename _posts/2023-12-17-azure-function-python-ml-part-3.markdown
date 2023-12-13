@@ -5,7 +5,7 @@ categories: azure azure-function machine-learning python github github-action
 permalink: azure-function/machine-learning/part-3
 ---
 # Introduction
-The [previous article]({% link _posts/2023-12-10-azure-function-python-ml-part-2.markdown %}) transforms the application and enables remote training through a GitHub Action. The current article focuses on improving the quality of the application by verifying the integrity and correctness of this trained model.
+The [previous article]({% link _posts/2023-12-10-azure-function-python-ml-part-2.markdown %}) transforms the application and enables remote training through a GitHub Action. This remote training is the base of the current article focusing on improving the quality of the application by verifying the integrity and correctness of this trained model.
 
 > [Here](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-3) is the code article's code.
 
@@ -17,7 +17,7 @@ The [previous article]({% link _posts/2023-12-10-azure-function-python-ml-part-2
 - [function_app.py](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-2/function_app.py): with the application API.
 - [train.py](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-2/train.py): doing the model training.
 - [requirements.txt](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-2/requirements.txt): containing the application dependencies.
-- [.github/workflows/main_az-fct-python-ml.yml](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-2/.github/workflows/main_az-fct-python-ml.yml): the GitHub Action workflow training the model then deploying the API.
+- [.github/workflows/main_az-fct-python-ml.yml](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-2/.github/workflows/main_az-fct-python-ml.yml): the GitHub Action workflow doing the model training then deploying the API.
 
 # Validation steps
 Before using a model, it is interesting to carry out some checks. The checks can be automatic in the form of unit tests or manually by letting a human perform verifications.
@@ -26,7 +26,7 @@ This article will:
 - Add a unit test for the API.
 - Require human validation before deploying the new model.
 
-Before that, we will update the training part of the application to collect scoring metrics.
+But before, we will update the training part of the application to collect scoring metrics.
 
 ## Updating the application
 Scoring is not possible with the current dataset. Let's update the `train.py` file by creating a larger dataset before adding the scoring step and outputting some model information:
@@ -109,27 +109,27 @@ class TestFunction(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 ```
-> [Here](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/test.py) the relative file.
+> [Here](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/test.py) the file.
 
-> This article is not about testing, and this application as well as this test are poor examples of what software testing is. Please think about the idea and the workflow and not the implementation.
+> This article is not about testing! This application and this test are bad examples of what software testing is. Please think about the idea and the workflow and not the implementation.
 
-Add the following step in GitHub Action workflow to performs the test:
+Now, add the following step in GitHub Action workflow to perform the test remotely before deploying:
 ```
 - name: Test the API application
   run: python test.py
 ```
-> [Here](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/.github/workflows/main_az-fct-python-ml.yml) the complete file.
+> [Here](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/.github/workflows/main_az-fct-python-ml.yml) the complet file.
 
-In case of error, the GitHub Action stops the workflow and thus the deployment.
+In case of an error, the GitHub Action stops the workflow and, thus, the deployment.
 
-![GitHub secret](/assets/2023-12-17-azure-function-python-ml-part-3/failing-test.png)
+![Failing test stop the workflow](/assets/2023-12-17-azure-function-python-ml-part-3/failing-test.png)
 
 ## Manual validation
-Human validation before updating the production environment is a common usecase. GitHub allows this with [environment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment).
+Human validation before updating the production environment is a common use case. GitHub allows this with [environment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment).
 
-Environments on GitHub not only enable the scoping of [secrets](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#environment-secrets) and [variables](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#environment-variables), but also the management of [protection rules](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#deployment-protection-rules). Protection rules provide a powerful guardrail that protects an environment from common errors. Especially, it allows to specify [validators](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#required-reviewers) that have to manually approve changes to let the workflow continue its execution.
+Environments on GitHub not only enable the scoping of [secrets](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#environment-secrets) and [variables](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#environment-variables), but also the management of [protection rules](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#deployment-protection-rules). Protection rules provide a powerful guardrail that protects an environment from common errors. Especially, it allows to specify human [validators](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#required-reviewers) that have to approve changes to let the workflow continue its execution manually.
 
-In fact, our [workflow](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/.github/workflows/main_az-fct-python-ml.yml), already uses a "Production" environment created by Azure during the configuration:
+In fact, our [workflow](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/.github/workflows/main_az-fct-python-ml.yml) already uses a "Production" environment created by Azure during the configuration:
 ```
 deploy:
   runs-on: ubuntu-latest
@@ -139,34 +139,34 @@ deploy:
     url: ${{ steps.deploy-to-function.outputs.webapp-url }}
 ```
 
-So, we only need to apply a protection rules to add the human validation:
+So, we only need to apply a protection rule to add the human validation:
 - Go under the "Settings" bar of the application repository.
 - Then click on the "Environments" panel.
 - Select "Production".
-- Click on "Required reviewers" and add the reviewer: it can be yourself.
+- Click "Required reviewers" and add the reviewer: it can be yourself.
 - Then click on "Save protection rules".
 ![GitHub secret](/assets/2023-12-17-azure-function-python-ml-part-3/protection-rules.gif)
 
-The next time the workflow is executed, it will pause and wait for human validation before executing the `deploy` step.
+The next time the workflow is executed, it will pause and wait for human validation before performing the `deploy` step.
 
-> For more information about secrets and variable in the context of our application, take a look at the [previous article]({% link _posts/2023-12-10-azure-function-python-ml-part-2.markdown %}).
+> For more information about secrets and variables in the context of our application, take a look at the [previous article]({% link _posts/2023-12-10-azure-function-python-ml-part-2.markdown %}).
 
 # Training output
-The `train.py` script print information about the model: 
+The `train.py` script prints information about the model: 
 ```
 print('### {scores.mean():.2f} accuracy with a standard deviation of {scores.std():.2f}')
 ```
 
-Those information are especially important before validating a deployment, and we don't want to get it by searching in the workflow's logs. GitHub Action makes this possible by using the [environment file](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#adding-a-job-summary) `GITHUB_STEP_SUMMARY`. Let's update the "Train the model" step to display this output:
+Those information are essential before validating a deployment, and we want to avoid getting it by searching in the workflow's logs. GitHub Action makes this possible by using the [environment file](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#adding-a-job-summary) `GITHUB_STEP_SUMMARY`. Let's update the "Train the model" step to display this output:
 ```
 - name: Train the model
   run: python train.py >> $GITHUB_STEP_SUMMARY
 ```
-![GitHub secret](/assets/2023-12-17-azure-function-python-ml-part-3/complete-workflow.gif)
+![Complete workflow](/assets/2023-12-17-azure-function-python-ml-part-3/complete-workflow.gif)
 
-Now, the user is able to verify the model accuracy before deploying it.
+Now, the user can verify the model's accuracy before deploying it.
 
 # Summary and next step
-Controlling what is deployed is only one step on the way to an application. After deployment, an application must be monitored and, depending on the metrics, a rollback can take place. Like deployment, rollback can also be automated, as explained in the next article.
+Controlling what is deployed is a step in an application journey. After deployment, an application must be monitored, and depending on the metrics, a rollback can take place. Like deployment, rollback can also be automated, as explained in the next article.
 
 > Any comments, feedback or problems? Please create an issue [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).
