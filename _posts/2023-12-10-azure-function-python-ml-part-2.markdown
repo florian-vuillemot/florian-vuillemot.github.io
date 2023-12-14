@@ -7,7 +7,7 @@ permalink: azure-function/machine-learning/part-2
 # Introduction
 The [previous article]({% link _posts/2023-12-03-azure-function-python-ml-part-1.markdown %}) focuses on turning a small machine learning application into an API and deploying it automatically with GitHub Action. With this automation done, it's time to improve the application and allow the deployment of a larger-scale machine learning model.
 
-> [Here](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-2) is the code article's code.
+> [Here](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-2) is the code for this article.
 
 > Feel free to create an issue to comment on or help us improve [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).
 

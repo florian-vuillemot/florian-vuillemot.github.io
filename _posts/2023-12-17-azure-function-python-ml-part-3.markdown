@@ -5,9 +5,9 @@ categories: azure azure-function machine-learning python github github-action
 permalink: azure-function/machine-learning/part-3
 ---
 # Introduction
-The [previous article]({% link _posts/2023-12-10-azure-function-python-ml-part-2.markdown %}) transforms the application and enables remote training through a GitHub Action. This remote training is the base of the current article focusing on improving the quality of the application by verifying the integrity and correctness of this trained model.
+The [previous article]({% link _posts/2023-12-10-azure-function-python-ml-part-2.markdown %}) transforms our application enabling remote training through a GitHub Action. This remote training is the base of the current article focusing on improving the quality of the application by verifying the integrity and correctness of this trained model.
 
-> [Here](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-3) is the code article's code.
+> [Here](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-3) is the code for this article.
 
 > Feel free to create an issue to comment on or help us improve [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).
 
@@ -20,7 +20,7 @@ The [previous article]({% link _posts/2023-12-10-azure-function-python-ml-part-2
 - [.github/workflows/main_az-fct-python-ml.yml](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-2/.github/workflows/main_az-fct-python-ml.yml): the GitHub Action workflow doing the model training then deploying the API.
 
 # Validation steps
-Before using a model, it is interesting to carry out some checks. The checks can be automatic in the form of unit tests or manually by letting a human perform verifications.
+Before using a model, it is interesting to carry out some checks. It can be automatic in the form of unit tests or manually by letting a human perform verifications.
 
 This article will:
 - Add a unit test for the API.
@@ -66,7 +66,7 @@ print('### {scores.mean():.2f} accuracy with a standard deviation of {scores.std
 ```
 
 ## Automatic validation
-[Software testing](https://en.wikipedia.org/wiki/Software_testing) is standard in software development. Let's add a test in a file `test.py` on the Azure Function to validate the interface of our application:
+[Software testing](https://en.wikipedia.org/wiki/Software_testing) is standard in software development. Let's add a test in a file `test.py` on the API to validate the interface of our application:
 ```
 import json
 import pickle
@@ -109,7 +109,7 @@ class TestFunction(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 ```
-> [Here](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/test.py) the file.
+> [Here](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/test.py) is the file.
 
 > This article is not about testing! This application and this test are bad examples of what software testing is. Please think about the idea and the workflow and not the implementation.
 
@@ -118,7 +118,7 @@ Now, add the following step in GitHub Action workflow to perform the test remote
 - name: Test the API application
   run: python test.py
 ```
-> [Here](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/.github/workflows/main_az-fct-python-ml.yml) the complet file.
+> [Here](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/.github/workflows/main_az-fct-python-ml.yml) is the file.
 
 In case of an error, the GitHub Action stops the workflow and, thus, the deployment.
 
@@ -145,6 +145,7 @@ So, we only need to apply a protection rule to add the human validation:
 - Select "Production".
 - Click "Required reviewers" and add the reviewer: it can be yourself.
 - Then click on "Save protection rules".
+
 ![GitHub secret](/assets/2023-12-17-azure-function-python-ml-part-3/protection-rules.gif)
 
 The next time the workflow is executed, it will pause and wait for human validation before performing the `deploy` step.
@@ -162,11 +163,12 @@ Those information are essential before validating a deployment, and we want to a
 - name: Train the model
   run: python train.py >> $GITHUB_STEP_SUMMARY
 ```
-![Complete workflow](/assets/2023-12-17-azure-function-python-ml-part-3/complete-workflow.gif)
 
 Now, the user can verify the model's accuracy before deploying it.
 
+![Global workflow](/assets/2023-12-17-azure-function-python-ml-part-3/global-workflow.gif)
+
 # Summary and next step
-Controlling what is deployed is a step in an application journey. After deployment, an application must be monitored, and depending on the metrics, a rollback can take place. Like deployment, rollback can also be automated, as explained in the next article.
+Controlling what is deployed is a step in an application journey. After deployment, an application must be monitored, and depending on the metrics, a rollback can take place. Rollback can be automated like deployment, as explained in the next article.
 
 > Any comments, feedback or problems? Please create an issue [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).
