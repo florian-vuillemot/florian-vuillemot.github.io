@@ -66,7 +66,7 @@ print('### {scores.mean():.2f} accuracy with a standard deviation of {scores.std
 ```
 
 ## Automatic validation
-[Software testing](https://en.wikipedia.org/wiki/Software_testing) is standard in software development. Let's add a test in a file `test.py` on the API to validate the interface of our application:
+[Software testing](https://en.wikipedia.org/wiki/Software_testing) is standard in software development. Let's add a test in a file [`test.py`](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/test.py) on the API to validate the interface of our application:
 ```
 import json
 import pickle
@@ -109,16 +109,14 @@ class TestFunction(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 ```
-> [Here](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/test.py) is the file.
 
 > This article is not about testing! This application and this test are bad examples of what software testing is. Please think about the idea and the workflow, and not the implementation.
 
-Now, add the following step in the GitHub Action workflow to perform the test remotely before deploying:
+Now, add the following step in the GitHub Action workflow [file](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/.github/workflows/main_az-fct-python-ml.yml) to perform the test remotely before deploying:
 ```
 - name: Test the API application
   run: python test.py
 ```
-> [Here](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/.github/workflows/main_az-fct-python-ml.yml) is the file.
 
 In case of an error, the GitHub Action stops the workflow and, thus, the deployment.
 
@@ -129,7 +127,7 @@ Human validation before updating the production environment is a common use case
 
 Environments on GitHub not only enable the scoping of [secrets](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#environment-secrets) and [variables](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#environment-variables), but also the management of [protection rules](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#deployment-protection-rules). Protection rules provide a powerful guardrail that protects an environment from common errors. Especially it allows to specify human [validators](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#required-reviewers) that have to approve changes to let the workflow continue its execution manually.
 
-In fact, our [workflow](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/.github/workflows/main_az-fct-python-ml.yml) already uses a "Production" environment created by Azure during the configuration:
+In fact, our [workflow](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/.github/workflows/main_az-fct-python-ml.yml) already uses a **Production** environment created by Azure during the configuration:
 ```
 deploy:
   runs-on: ubuntu-latest

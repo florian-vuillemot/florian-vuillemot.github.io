@@ -204,6 +204,6 @@ Training the model using the GitHub Action service can be surprising, but it's a
 > A dedicated GitHub Runner article will demonstrate some possibilities offered by GitHub.
 
 # Summary and next step
-Remotely training a model is convenient and easy with GitHub Action. But, putting a model in production requires verifying its integrity. The following article will focus on a validation step ensuring the model quality before the deployment.
+Remotely training a model is convenient and easy with GitHub Action. But, putting a model in production requires verifying its integrity. The [following article]({% link _posts/2023-12-17-azure-function-python-ml-part-3.markdown %}) will focus on a validation step ensuring the model quality before the deployment.
 
 > Any comments, feedback or problems? Please create an issue [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).
