@@ -90,9 +90,28 @@ First, update the workflow to deploy on the *Staging* slot:
     enable-oryx-build: true
 ```
 
-Then, create a new step to swap the slots:
+Then, create a new step to swap slots:
+```
+- name: 'Swap slot'
+  run: az functionapp deployment slot swap -g az-fct-python-ml_group -n az-fct-python-ml --slot staging --target-slot production
+```
+Where `az-fct-python-ml_group` and `az-fct-python-ml` are respectively the Ressource Group and the Azure Function creates during the [step 1]({% link _posts/2023-12-24-azure-function-python-ml-part-4.markdown %}) of this guide.
 
+ADD GIF
+
+## In case of failure
+Currently, your new and old application are in a running state. In case of failure, you can re run the last step of the workflow restoring the previous version of your application. Because the next deployment will erase the **staging** slot, rollbacks are not impacting next deployment.
+
+ADD GIFFFFFF
+
+## HTTP 503
+Well magic is great but magic can't do everything. More then [cold start](https://azure.microsoft.com/fr-fr/blog/understanding-serverless-cold-start/), users may encountered [HTTP errors](https://github.com/projectkudu/kudu/wiki/Configurable-settings#disable-the-generation-of-bindings-in-applicationhostconfig) due to technical reasons. To limit this error, add in the app settings of all slots the variable `WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG` set to `1`.
+
+> A good article about that [here](https://medium.com/@yapaxinl/azure-deployment-slots-how-not-to-make-deployment-worse-23c5819d1a17).
+
+ADD GIFFFF
 
 # Summary and next step
+We are now able to quickly rollback on an previous version of our application. 
 
 > Any comments, feedback or problems? Please create an issue [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).
