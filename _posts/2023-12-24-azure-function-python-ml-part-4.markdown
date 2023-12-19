@@ -33,10 +33,7 @@ A [deployment slot](https://learn.microsoft.com/en-us/azure/azure-functions/func
 ## Adding a slot
 Slots are located in the Azure Function "Deployment slots" panel. Initially, only one slot is present. Add a new slot by clicking on "Add slot", name it **staging** and confirm. On creation, two slots are present, but the new slot is empty and we need to push an application as we did on the production slot.
 
-ADD GIF
-
-## Inspecting a slot
-In the deployment slot panel, click on the slot deployment name as explain [here](https://learn.microsoft.com/en-us/azure/app-service/deploy-staging-slots?tabs=portal). From the UI point of view, the user is on a similar Azure Function but empty.
+You can now inspect it by going in the deployment slot panel and click on the slot deployment name as explain [here](https://learn.microsoft.com/en-us/azure/app-service/deploy-staging-slots?tabs=portal). From the UI point of view, the user is on a similar Azure Function but empty.
 
 ![Deployment slot demo](/assets/2023-12-24-azure-function-python-ml-part-4/create-slot.gif)
 
@@ -60,8 +57,13 @@ sequenceDiagram
     note over Staging slot, Production slot: Staging slot: Version N<br>Version slot: Application N'
 </pre>
 
+## Allowing CI/CD on this deployment slot
+Because deployment slots are independents, we also need to setup the CI/CD as in the [part 1]({% link _posts/2023-12-03-azure-function-python-ml-part-1.markdown %}) of this guide but only on this new slot.
+
+![Setup CI/CD](/assets/2023-12-24-azure-function-python-ml-part-4/ci-cd.gif)
+
 ## Update the GitHub Action workflow
-First, update the workflow to deploy on the **Staging** slot by replacing `Production` by `staging`:
+First, update the workflow to deploy on the **staging** slot by replacing `Production` by `staging`:
 ```
 - name: 'Deploy to Azure Functions'
   uses: Azure/functions-action@v1
