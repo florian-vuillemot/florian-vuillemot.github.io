@@ -37,6 +37,37 @@ You can now inspect it by going in the deployment slot panel and click on the sl
 
 ![Deployment slot demo](/assets/2023-12-24-azure-function-python-ml-part-4/create-slot.gif)
 
+# Authentication
+The swap operation between slots is performs via the [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/) which needs an authentication different from the one we are currently using. This authentication between the GitHub Action and Azure can be performs with [OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-azure) (OIDC). OIDC is a tokenless authentication mecanisme capable of replacing the current token based authentication and so the necessity of credential rotation. The principal is the following: Azure creates an Microsoft Entra Application used by the GitHub Action to authenticate using a federated identity.
+
+Explaining how to create the identity is not the purpose of this article, and it is well explained [here](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux). The documentation also explain how to update the GitHub Action workflow. Here some GIFs presenting big steps.
+
+Creates the Microsoft Entra application:
+![Entra app](/assets/2023-12-24-azure-function-python-ml-part-4/create-app.gif)
+
+Allows the Microsoft Entra application to deploy on the Azure Function.
+![App permission](/assets/2023-12-24-azure-function-python-ml-part-4/app-permissions.gif)
+
+Allows the GitHub Action to take the identity:
+![Federated identity](/assets/2023-12-24-azure-function-python-ml-part-4/federated.gif)
+
+Adds application secrets allowing the GitHub Action workflow to retrieve the identity created:
+![Federated identity](/assets/2023-12-24-azure-function-python-ml-part-4/workflow-identity.gif)
+
+Updates [the workflow](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-4/.github/workflows/main_az-fct-python-ml.yml) to use the application created, then update the deploy step by removing the token usage and let OIDC take over the authentication:
+```
+- name: 'Deploy to Azure Functions'
+  uses: Azure/functions-action@v1
+  id: deploy-to-function
+  with:
+    app-name: 'az-fct-python-ml'
+    slot-name: 'Production'
+    package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+    scm-do-build-during-deployment: true
+    enable-oryx-build: true
+```
+
+
 # Workflow
 Updating the version `N` of the application to the version `N'` with the blue-green deployment using deployment slot and GitHub Action, leads to the following infrastructure interraction diagram:
 <pre class="mermaid">
@@ -57,11 +88,6 @@ sequenceDiagram
     note over Staging slot, Production slot: Staging slot: Version N<br>Version slot: Application N'
 </pre>
 
-## Allowing CI/CD on this deployment slot
-Because deployment slots are independents, we also need to setup the CI/CD as in the [part 1]({% link _posts/2023-12-03-azure-function-python-ml-part-1.markdown %}) of this guide but only on this new slot.
-
-![Setup CI/CD](/assets/2023-12-24-azure-function-python-ml-part-4/ci-cd.gif)
-
 ## Update the GitHub Action workflow
 First, update the workflow to deploy on the **staging** slot by replacing `Production` by `staging`:
 ```
@@ -72,7 +98,6 @@ First, update the workflow to deploy on the **staging** slot by replacing `Produ
     app-name: 'az-fct-python-ml'
     slot-name: 'staging'
     package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-    publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A9B4B58D0D7443A68FA374C8D4F718A6 }}
     scm-do-build-during-deployment: true
     enable-oryx-build: true
 ```
