@@ -89,39 +89,64 @@ sequenceDiagram
 </pre>
 
 ## Update the GitHub Action workflow
-First, update the workflow to deploy on the **staging** slot by replacing `Production` by `staging`:
+The current workflow contains jobs `build` and `deploy`. The swap operation can be put in the `deploy` job but doing this will create the need to create another job performs in case of failure only which can be confusing and error prone. The best is to create another job that will be focusing on the swap operation. In case of failure, it's possible to manually trigger this job and rollback the application. This can be performs in multiple way, but here we are just link jobs.
+
+Rename the `deploy` workflow to `deploy-on-staging` to be more precise then update the deployment step to point on the **staging** slot by replacing `Production` by `staging`:
 ```
-- name: 'Deploy to Azure Functions'
-  uses: Azure/functions-action@v1
-  id: deploy-to-function
-  with:
-    app-name: 'az-fct-python-ml'
-    slot-name: 'staging'
-    package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-    scm-do-build-during-deployment: true
-    enable-oryx-build: true
+deploy-on-staging:
+  runs-on: ubuntu-latest
+  needs: build
+  environment:
+    name: 'Production'
+    url: ${{ steps.deploy-to-function.outputs.webapp-url }}
+
+  steps:
+    ...
+
+    - name: 'Deploy to Azure Functions'
+      uses: Azure/functions-action@v1
+      id: deploy-to-function
+      with:
+        app-name: 'az-fct-python-ml'
+        slot-name: 'staging'
+        package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+        scm-do-build-during-deployment: true
+        enable-oryx-build: true
 ```
 
-Then, create a new step to swap slots:
+Then, create a new job to swap slots:
 ```
-- name: 'Swap slot'
-  run: az functionapp deployment slot swap -g az-fct-python-ml_group -n az-fct-python-ml --slot staging --target-slot production
+swap-staging-and-production:
+  runs-on: ubuntu-latest
+  needs: deploy-on-staging
+  environment:
+    name: 'Production'
+    url: ${{ steps.deploy-to-function.outputs.webapp-url }}
+
+  steps:
+    - name: 'Az CLI login'
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        enable-AzPSSession: true
+
+    - name: Swap staging and production
+      run: az functionapp deployment slot swap -g az-fct-python-ml_group -n az-fct-python-ml --slot staging --target-slot production
 ```
 Where `az-fct-python-ml_group` and `az-fct-python-ml` are respectively the Ressource Group and the Azure Function creates during the [step 1]({% link _posts/2023-12-24-azure-function-python-ml-part-4.markdown %}) of this guide.
 
-ADD GIF
+> For simplicity, we are only using one GitHub Environment and Azure pre-defined role for readability which is not the best for security.
 
-## In case of failure
-Currently, your new and old application are in a running state. In case of failure, you can re run the last step of the workflow restoring the previous version of your application. Because the next deployment will erase the **Staging** slot, rollbacks are not impacting next deployment.
-
-ADD GIFFFFFF
+ADD GIFF
 
 ## HTTP 503
 The reader is probably already aware of the [cold start](https://azure.microsoft.com/fr-fr/blog/understanding-serverless-cold-start/), but during a swap API users may also encountered [HTTP errors](https://github.com/projectkudu/kudu/wiki/Configurable-settings#disable-the-generation-of-bindings-in-applicationhostconfig) during a couple of seconds due to technical reasons. To limit this error, add in the app settings of all slots the variable `WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG` set to `1`.
 
 > A good article about that [here](https://medium.com/@yapaxinl/azure-deployment-slots-how-not-to-make-deployment-worse-23c5819d1a17).
 
-ADD GIFFFF
+![App settings](/assets/2023-12-24-azure-function-python-ml-part-4/app-settings.gif)
 
 # Summary and next step
 We can now quickly revert to the previous version of our application. But in fact, we're deploying an API that doesn't need updating: we're updating its model without touching the API code. The following article focuses on remote model storage, limiting infrastructure updates to each version.
