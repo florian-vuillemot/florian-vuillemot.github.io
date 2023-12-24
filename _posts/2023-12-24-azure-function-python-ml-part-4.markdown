@@ -5,7 +5,7 @@ categories: azure azure-function machine-learning python github github-action
 permalink: azure-function/machine-learning/part-4
 ---
 # Introduction
-The [previous article]({% link _posts/2023-12-17-azure-function-python-ml-part-3.markdown %}) improves delivery quality, adding a test and a human validation before deploying the application. Whatever precautions,  a new version of an application may fail, and restoring the service is a priority. To restore service more quickly, this article will integrate a rollback capability.
+The [previous article]({% link _posts/2023-12-17-azure-function-python-ml-part-3.markdown %}) improves delivery quality, adding a test and human validation before deploying the application. Despite precautions,  a new version of an application may fail, and restoring the service is a priority. In order to restore the service more quickly, this article integrates a rollback capability.
 
 > [Here](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-4) is the code for this article.
 
@@ -21,7 +21,7 @@ The [previous article]({% link _posts/2023-12-17-azure-function-python-ml-part-3
 - [.github/workflows/main_az-fct-python-ml.yml](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/.github/workflows/main_az-fct-python-ml.yml): the GitHub Action workflow doing the model training, asking for deployment validation then deploying the API.
 
 # Blue-green deployment
-Blue-green deployment is a pattern for instantaneously switching from one version of an application - called **blue** - to another - called **green**. The **blue** application runs at version **N**, and the **green** application runs at version **N'**. During deployment, requests sent to the **blue** application are redirected to the **green** application: they switch. But the **blue** application continues to run in the background, and in the event of failure, it receives back requests, putting offline the **green** application: they rollback.
+Blue-green deployment is a pattern for instantaneously switching from one version of an application - called **blue** - to another - called **green**. The **blue** application runs at version **N**, and the **green** application runs at version **N'**. During deployment, requests sent to the **blue** application are redirected to the **green** application: they switch. But the **blue** application continues to run in the background, and in the event of failure, it receives back requests, putting offline the **green** application: they roll back.
 
 Another advantage of this deployment model is that it's native in Azure Function.
 
@@ -30,7 +30,7 @@ Another advantage of this deployment model is that it's native in Azure Function
 # Azure Function deployment slot
 A [deployment slot](https://learn.microsoft.com/en-us/azure/azure-functions/functions-deployment-slots?tabs=azure-portal) is an independent live application with a dedicated endpoint and lifecycle hosted on an Azure Function. The default deployment slot is transparent: we use it to host the application. Deployment slots on the same Azure Function can swap, enabling the blue-green deployment feature.
 
-> The current [consumption plan](https://learn.microsoft.com/en-us/azure/azure-functions/consumption-plan) limits the number of deployment to two but [Prenium](https://learn.microsoft.com/en-us/azure/azure-functions/functions-premium-plan?tabs=portal) and [Dedicated](https://learn.microsoft.com/en-us/azure/azure-functions/dedicated-plan) allow more.
+> The current [consumption plan](https://learn.microsoft.com/en-us/azure/azure-functions/consumption-plan) limits the number of deployment slots to two, but [Prenium](https://learn.microsoft.com/en-us/azure/azure-functions/functions-premium-plan?tabs=portal) and [Dedicated](https://learn.microsoft.com/en-us/azure/azure-functions/dedicated-plan) allow more.
 
 ## Adding a slot
 Slots are in the "Deployment slots" panel of Azure Function. Initially, only the "Production" slot is present. Add a new slot by clicking "Add slot", name it **staging**, and confirm. Two slots are now present, but [the new slot](https://learn.microsoft.com/en-us/azure/app-service/deploy-staging-slots?tabs=portal) is empty and we need to push an application as we did on the production slot.
@@ -56,7 +56,7 @@ Then, allow GitHub Action to use the identity:
 Now, on GitHub, add the Microsoft Entra application information:
 ![GitHub secrets](/assets/2023-12-24-azure-function-python-ml-part-4/workflow-identity.gif)
 
-Then, update [the workflow](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-4/.github/workflows/main_az-fct-python-ml.yml) to use the Microsoft Entra application as explain [here](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#set-up-azure-login-with-openid-connect-authentication), then update the deploy step by removing the token usage letting OIDC take over the authentication:
+Now, update [the workflow](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-4/.github/workflows/main_az-fct-python-ml.yml) to use the Microsoft Entra application as explained [here](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#set-up-azure-login-with-openid-connect-authentication), then update the deploy step by removing the token usage letting OIDC take over the authentication:
 {% raw %}
 ```
 - name: 'Deploy to Azure Functions'
@@ -71,7 +71,7 @@ Then, update [the workflow](https://github.com/florian-vuillemot/az-fct-python-m
 ```
 {% endraw %}
 # Workflow
-Updating the **N** version of the application to the **N'** version with the blue-green deployment using the deployment slot and the GitHub action, leads to the following infrastructure interaction:
+Updating the **N** version of the application to the **N'** version with the blue-green deployment using the deployment slot and the GitHub Action leads to the following infrastructure interaction:
 <pre class="mermaid">
 sequenceDiagram
     participant GitHub Action
@@ -93,7 +93,7 @@ sequenceDiagram
 ## Update the GitHub Action workflow
 The current workflow contains the `build` and `deploy` jobs. The swap operation can be placed in the `deploy` job, which does not allow rollback. A solution is to create another job focused on the swap operation. In the event of failure, this job can be manually re-triggered, rollbacking the application.
 
-Rename the `deploy` workflow to `deploy-on-staging` to be more precise then update the deployment step to point on the **staging** slot by replacing `Production` by `staging`:
+Rename the `deploy` workflow to `deploy-on-staging` to be more precise, then update the deployment step to point on the **staging** slot by replacing `Production` by `staging`:
 {% raw %}
 ```
 deploy-on-staging:
@@ -147,7 +147,7 @@ Where `az-fct-python-ml_group` and `az-fct-python-ml` are, respectively, the Res
 ![Rollback](/assets/2023-12-24-azure-function-python-ml-part-4/rollback.gif)
 
 ## HTTP 503
-The reader is probably already aware of the [cold start](https://azure.microsoft.com/fr-fr/blog/understanding-serverless-cold-start/), but during a swap API users may also encounter [HTTP errors](https://github.com/projectkudu/kudu/wiki/Configurable-settings#disable-the-generation-of-bindings-in-applicationhostconfig) during a couple of seconds due to technical reasons. To limit this error, add in the app settings of all slots the variable `WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG` set to `1`.
+The reader is probably already aware of the [cold start](https://azure.microsoft.com/fr-fr/blog/understanding-serverless-cold-start/), but during a swap, API users may also encounter [HTTP errors](https://github.com/projectkudu/kudu/wiki/Configurable-settings#disable-the-generation-of-bindings-in-applicationhostconfig) during a couple of seconds due to technical reasons. To limit this error, add in the app settings of all slots the variable `WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG` set to `1`.
 
 > A good article on this topic [here](https://medium.com/@yapaxinl/azure-deployment-slots-how-not-to-make-deployment-worse-23c5819d1a17).
 
