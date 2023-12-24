@@ -166,6 +166,8 @@ curl -H "Accept: application/json" -H "Content-Type: application/json" -X POST -
 ]
 ```
 
+> As all serverless platform, Azure Function can take time to process a request due to the [cold start](https://azure.microsoft.com/fr-fr/blog/understanding-serverless-cold-start/).
+
 # The GitHub Action panel
 The GitHub Action panel contains the history of workflow runs. Currently, it only includes one run with the first deployment. Feel free to update the application to trigger a new deployment.
 ![GitHub Action panel](/assets/2023-12-03-azure-function-python-ml-part-1/github-actions-panel.png)

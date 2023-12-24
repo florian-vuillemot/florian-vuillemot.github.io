@@ -128,6 +128,7 @@ Human validation before updating the production environment is a common use case
 Environments on GitHub not only enable the scoping of [secrets](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#environment-secrets) and [variables](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#environment-variables), but also the management of [protection rules](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#deployment-protection-rules). Protection rules provide a powerful guardrail that protects an environment from common errors. Especially it allows to specify human [validators](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#required-reviewers) that have to approve changes to let the workflow continue its execution manually.
 
 In fact, our [workflow](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/.github/workflows/main_az-fct-python-ml.yml) already uses a **Production** environment created by Azure during the configuration:
+{% raw %}
 ```
 deploy:
   runs-on: ubuntu-latest
@@ -136,7 +137,7 @@ deploy:
     name: 'Production'
     url: ${{ steps.deploy-to-function.outputs.webapp-url }}
 ```
-
+{% endraw %}
 So, we only need to apply a protection rule to add the human validation:
 - Go under the "Settings" bar of the application repository.
 - Then click on the "Environments" panel.
@@ -167,6 +168,6 @@ Now, the user can verify the model's accuracy before deploying it.
 ![Global workflow](/assets/2023-12-17-azure-function-python-ml-part-3/global-workflow.gif)
 
 # Summary and next step
-Controlling what is deployed is a step in an application's journey. After deployment, an application must be monitored, and depending on the metrics, a rollback can take place. As explained in the following article, rollbacks can be automated, just as deployments.
+Controlling what is deployed is a step in an application's journey. After deployment, an application must be monitored, and depending on the metrics, a rollback can take place. As explained in the [following article]({% link _posts/2023-12-24-azure-function-python-ml-part-4.markdown %}), rollbacks can be automated, just as deployments.
 
 > Any comments, feedback, or problems? Please create an issue [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).
