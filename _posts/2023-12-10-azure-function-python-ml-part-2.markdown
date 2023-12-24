@@ -155,6 +155,7 @@ The application is now ready.
 
 ## Updating the GitHub Action workflow
 Add the training to the `build` step:
+{% raw %}
 ```
 build:
   runs-on: ubuntu-latest
@@ -189,7 +190,7 @@ build:
           release.zip
           !venv/
 ```
-
+{% endraw %}
 > The complete workflow is [here](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-2/.github/workflows/main_az-fct-python-ml.yml).
 
 And that's it! Next time this action runs, the GitHub Action will train, save, and then deploy the model beside the application code on the Azure Function. API consumers must notice an improvement in the response time.
