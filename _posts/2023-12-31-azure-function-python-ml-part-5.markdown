@@ -5,7 +5,7 @@ categories: azure azure-function machine-learning python github github-action
 permalink: azure-function/machine-learning/part-5
 ---
 # Introduction
-The [previous article]({% link _posts/2023-12-24-azure-function-python-ml-part-4.markdown %}) allows rollback improving reliability in case of failure. Unfortunatly, each deployment impact the application reliability and contains a risk so its better to limit them. Beside, because the model is in the artifact and mixed with the application code, its size is limited.
+The [previous article]({% link _posts/2023-12-24-azure-function-python-ml-part-4.markdown %}) allows rollback improving reliability in case of deployment failure. Unfortunatly, each deployment impact the application reliability and contains a risk so its better to limit decouple them. Beside, because the model is in the artifact and mixed with the application code, its size is limited.
 
 > [Here](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-5) is the code for this article.
 
@@ -178,16 +178,29 @@ az webapp config storage-account add --account-name azfctpythonmlmodel --access-
 Then restart the Function. It is not possible to retrieve mounted files on Azure function from the Azure Portal but it is from the CLI or API.
 
 ## Update the application
-Models are now available under the folder `/models`. Consequently, the only element to update in the application is the model path. This update must be propagate to tests. Because the `/models` folder may not exists on the runner, you can create it before running [tests](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-5/.github/workflows/main_az-fct-python-ml.yml).
+Models are now available under the folder `/models`. Consequently, the only element to update in the application is the model path. To be generic, and allow testing, we will use environment variable in place of hard coding the path.
 
-Consequently, the line:
+Update the `function_app.py` [file](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-5/function_app.py) and propagate those changes to the `test.py` [file](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-5/test.py):
 ```
-with open('model.pkl', 'rb') as f:
+import os
+
+MODEL_PATH = os.environ.get('MODEL_PATH')
+
+...
+
+with open(MODEL_PATH, 'rb') as f:
 ```
-Becomes:
+Then update the [GitHub Action workflow](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-5/.github/workflows/main_az-fct-python-ml.yml) `build` job to create the model in a temporary folder and not polute the artifact.
 ```
-with open('/models/model.pkl', 'rb') as f:
+- name: Test the API application
+  run: python test.py
+  env:
+    MODEL_PATH: /tmp/model.pkl
 ```
+
+Finally, add the new environment variable on the Azure Function.
+
+![Create environment variables](/assets/2023-12-31-azure-function-python-ml-part-5/create-env-var.gif)
 
 And that it! The API will now serve the model from the File Share and so serve each new model when deployed by the `train` workflow.
 
