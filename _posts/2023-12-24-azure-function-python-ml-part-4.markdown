@@ -56,20 +56,8 @@ Then, allow GitHub Action to use the identity:
 Now, on GitHub, add the Microsoft Entra application information:
 ![GitHub secrets](/assets/2023-12-24-azure-function-python-ml-part-4/workflow-identity.gif)
 
-Now, update [the workflow](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-4/.github/workflows/main_az-fct-python-ml.yml) to use the Microsoft Entra application as explained [here](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#set-up-azure-login-with-openid-connect-authentication), then update the deploy step by removing the token usage letting OIDC take over the authentication:
-{% raw %}
-```
-- name: 'Deploy to Azure Functions'
-  uses: Azure/functions-action@v1
-  id: deploy-to-function
-  with:
-    app-name: 'az-fct-python-ml'
-    slot-name: 'Production'
-    package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-    scm-do-build-during-deployment: true
-    enable-oryx-build: true
-```
-{% endraw %}
+Now, update [the workflow](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-4/.github/workflows/main_az-fct-python-ml.yml) to use the Microsoft Entra application as explained [here](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#set-up-azure-login-with-openid-connect-authentication). The workflow 'Deploy to Azure Functions' can not be updated yet and will still use the GitHub Secret to publish due to a [technical reason](https://github.com/Azure/functions-action/issues/147). But, the secret needs to be replaced by the [**publish profile** value](https://learn.microsoft.com/en-us/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal) of the **staging** slot because we are now publishing on it not on the **Production** slot.
+
 # Workflow
 Updating the **N** version of the application to the **N'** version with the blue-green deployment using the deployment slot and the GitHub Action leads to the following infrastructure interaction:
 <pre class="mermaid">
