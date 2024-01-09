@@ -95,42 +95,42 @@ train:
     name: 'Production'
     steps:
         - name: Checkout repository
-        uses: actions/checkout@v4
+          uses: actions/checkout@v4
 
         - name: Setup Python version
-        uses: actions/setup-python@v1
-        with:
+          uses: actions/setup-python@v1
+          with:
             python-version: ${{ env.PYTHON_VERSION }}
 
         - name: Create and start a virtual environment
-        run: |
+          run: |
             python -m venv venv
             source venv/bin/activate
 
         - name: Install the dependencies
-        run: pip install -r requirements.txt
+          run: pip install -r requirements.txt
         
         - name: Train the model
-        run: python train.py >> $GITHUB_STEP_SUMMARY
+          run: python train.py >> $GITHUB_STEP_SUMMARY
 
         - name: 'Az CLI login'
-        uses: azure/login@v1
-        with:
+          uses: azure/login@v1
+          with:
             client-id: ${{ secrets.AZURE_CLIENT_ID }}
             tenant-id: ${{ secrets.AZURE_TENANT_ID }}
             subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
             enable-AzPSSession: true
 
         - name: Backup the current model if it exists
-        continue-on-error: true
-        run: |
+          continue-on-error: true
+          run: |
             # Download the current model
             az storage file download --path ${{ env.CURRENT_MODEL_NAME }} --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --share-name ${{ env.FILE_SHARE_NAME }} --dest /tmp/previous-model
             # Upload the current model named as the previous model to the file share
             az storage file upload --path ${{ env.PREVIOUS_MODEL_NAME }} --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --share-name ${{ env.FILE_SHARE_NAME }} --source /tmp/previous-model
         
         - name: Replace the current model with the new one
-        run: |
+          run: |
             # Upload the new model to the file share
             az storage file upload --path ${{ env.CURRENT_MODEL_NAME }} --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --share-name ${{ env.FILE_SHARE_NAME }} --source ${{ env.CURRENT_MODEL_NAME }}
 ```
