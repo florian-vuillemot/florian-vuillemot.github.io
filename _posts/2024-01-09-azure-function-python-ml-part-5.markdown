@@ -5,7 +5,7 @@ categories: azure azure-function machine-learning python github github-action
 permalink: azure-function/machine-learning/part-5
 ---
 # Introduction
-The [previous article]({% link _posts/2023-12-24-azure-function-python-ml-part-4.markdown %}) allows rollback improving reliability in case of deployment failure. Unfortunatly, each deployment impact the application reliability and contains a risk so its better to limit decouple them. Beside, because the model is in the artifact and mixed with the application code, its size is limited.
+The [previous article]({% link _posts/2023-12-24-azure-function-python-ml-part-4.markdown %}) allows deployment rollback improving reliability in case of deployment failure. Unfortunately, each deployment impacts the application's reliability and contains a risk, especially in our case because we are training a model that can rely on a random state. Besides, its size is limited because the model is in the artifact and mixed with the application code.
 
 > [Here](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-5) is the code for this article.
 
@@ -23,9 +23,9 @@ The [previous article]({% link _posts/2023-12-24-azure-function-python-ml-part-4
 We also created the Microsoft Entra application **az-fct-python-ml**.
 
 # Azure File Share
-Azure File Share is a managed Azure service that allows remote files storage. It provides a simple and secure way to store both structured and unstructured data as in our case machine learning model. Azure File Share and Azure Function are well integrated and we will use both together to serve model that can become multi-Gb without problem.
+[Azure File Share](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-introduction) is a managed Azure service that allows remote file storage. It provides a simple and secure way to store structured and unstructured data, as in our case, a machine learning model. Azure File Share and Azure Function are well integrated, and we will use both together to serve a model that can become multi-Gb without problem.
 
-Thanks to Azure File Share, the deployment will be speed up and more agile. We will also be able to increase the model size. But this will update our workflows:
+Another advantage of using Azure File Share with Azure Function is the possibility of decoupling the model and API deployments. Indeed, because it's on the Azure File Share, the model doesn't need to be in the artifact anymore, and workflows can be rewritten as:
 <pre class="mermaid">
 sequenceDiagram
     participant User
@@ -47,35 +47,36 @@ sequenceDiagram
     Azure Function ->> User: HTTP Response
 </pre>
 
-Azure File Share is not a service directly instanciable from Azure. It's a service hold by Azure Storage Account. To create a File Share, let's first create an Azure Storage Account:
+## Creates the Azure File Share
+Azure File Share is not a service directly instantiable from Azure. [Azure Storage Account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview) holds it. To create a File Share, let's first create an Azure Storage Account:
 
-![Create Storage Account](/assets/2023-12-31-azure-function-python-ml-part-5/create-storage-account.gif)
+![Create Storage Account](/assets/2024-01-09-azure-function-python-ml-part-5/create-storage-account.gif)
 
 Now let's create the File Share **models**:
 
-![Create File Share](/assets/2023-12-31-azure-function-python-ml-part-5/create-file-share.gif)
+![Create File Share](/assets/2024-01-09-azure-function-python-ml-part-5/create-file-share.gif)
 
 # Exposing the model
-The model will no longer be in the artifact but on an Azure File Share. Consequently, we must upload the model on it. This imply to create a new GitHub Action workflow with correct permissions.
+Because the model will no longer be in the artifact but on an Azure File Share, we must upload the model on it after its training. This implies the creation of a new GitHub Action workflow with the upload permission.
 
 ## Update permissions
-To be able to upload a file on the Azure File Share we must provide the permission. To do so, go on the Azure File Share, then IAM and add role "Storage Account Contributor" to the Microsoft Entra application **az-fct-python-ml** used by the GitHub Action workflow.
+Go on the Azure File Share, then the IAM panel, and add the role "Storage Account Contributor" to the Microsoft Entra application **az-fct-python-ml** used by the GitHub Action workflow.
 
-![Update permission](/assets/2023-12-31-azure-function-python-ml-part-5/file-share-permission.gif)
+![Update permission](/assets/2024-01-09-azure-function-python-ml-part-5/file-share-permission.gif)
 
 > This permission is broad and can be improved.
 
 ## Updates the GitHub Action workflow
-Using Azure File Share we can now create two workflows in place of our current:
+Using Azure File Share we can now create two workflows instead of our current:
 - Updating the API: Create a new artifact containing the application code only and deploy it on the Azure Function.
-- Updating the model: Train the model then upload it to the Azure File Share.
+- Updating the model: Train the model, then upload it to the Azure File Share.
 
-What about rollbacking the model? Azure propose nothing in our case. But we can implement the same process then with Azure Function. We can create two files on the File Share, one with the current running model, the other with the previous model then erase the previous model with the current and the current with the new model. In case of problem, we rollout the previous working model in the blue-green mindset.
+But what about rollbacking the model? Azure proposes nothing in our case. But we can implement the same process then with Azure Function. We can create two files on the File Share, one with the current running model and the other with the previous model, then erase the previous model with the current and the current with the new model during the model's deployment. In case of a problem, we roll out the previous working model in the blue-green mindset.
 
-> Blue-green deployment with Azure Function is our context is explain [here]({% link _posts/2023-12-24-azure-function-python-ml-part-4.markdown %}).
+> Blue-green deployment with Azure Function is our context explained [here]({% link _posts/2023-12-24-azure-function-python-ml-part-4.markdown %}).
 
 ### Updates the API workflow
-We no longer need to train the model in the current workflow so let's remove this part our `build` job:
+We no longer need to train the model in the current workflow, so let's remove this part from our `build` job:
 {% raw %}
 ```
 - name: Train the model
@@ -83,10 +84,10 @@ We no longer need to train the model in the current workflow so let's remove thi
 ```
 {% endraw %}
 
-And that's all! Let's now dig in the more complex part, creates the training model workflow.
+And that's all! Let's now create the job replacing this step.
 
 ### Trains the model workflow
-Let's create a new job doing the training and the upload. This job also keep the previous model available for rollback.
+Let's create a new job doing the training and the upload. This job also keeps the previous model available for rollback. The first part is the same as the `build` steps and can be refactored later.
 ```
 train:
     runs-on: ubuntu-latest
@@ -120,7 +121,7 @@ train:
             subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
             enable-AzPSSession: true
 
-        - name: Backup the current model if exists
+        - name: Backup the current model if it exists
         continue-on-error: true
         run: |
             # Download the current model
@@ -128,14 +129,14 @@ train:
             # Upload the current model named as the previous model to the file share
             az storage file upload --path ${{ env.PREVIOUS_MODEL_NAME }} --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --share-name ${{ env.FILE_SHARE_NAME }} --source /tmp/previous-model
         
-        - name: Replace the current model by the new one
+        - name: Replace the current model with the new one
         run: |
             # Upload the new model to the file share
             az storage file upload --path ${{ env.CURRENT_MODEL_NAME }} --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --share-name ${{ env.FILE_SHARE_NAME }} --source ${{ env.CURRENT_MODEL_NAME }}
 ```
 
 ### Rollback the model
-Now, you can enable rollback by adding the following job. The review on the `Production` environment is the safeguard.
+Now, you can enable rollback by adding the following job. The review of the `Production` environment is the safeguard.
 ```
 swap-current-and-previous-model:
     runs-on: ubuntu-latest
@@ -164,21 +165,23 @@ swap-current-and-previous-model:
           az storage file upload --path ${{ env.PREVIOUS_MODEL_NAME }} --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --share-name ${{ env.FILE_SHARE_NAME }} --source /tmp/current-model
 ```
 
+We can now train, deploy, and roll back our model independently.
+
 # Consumming the model
 The simpler way to use the generated model is to mount the Azure File Share as a folder in our Azure Function. In that case, the model will be accessible directly as a file by the application.
 
 ## Mount File Share
-You must use a terminal or a [Cloud Shell](https://learn.microsoft.com/en-us/azure/cloud-shell/overview) to run the command line mounting the Azure File Share under the Azure Function. This command needs to be run once. In our case the File Share will be mounted on the default 'Production' slot but can also be mounted on the 'staging' slot is needed.
+You must use a terminal or a [Cloud Shell](https://learn.microsoft.com/en-us/azure/cloud-shell/overview) to run the command line mounting the Azure File Share under the Azure Function. This command needs to be run once. In our case, the File Share will be mounted on the default **Production** slot only.
 ```
 az webapp config storage-account add --account-name azfctpythonmlmodel --access-key <access-key> --custom-id models --share-name "models" --storage-type AzureFiles --resource-group az-fct-python-ml_group --name az-fct-python-ml --mount-path "/models"
 ```
 
 > More information on this command [here](https://learn.microsoft.com/en-us/cli/azure/webapp/config/storage-account?view=azure-cli-latest#az-webapp-config-storage-account-add).
 
-Then restart the Function. It is not possible to retrieve mounted files on Azure function from the Azure Portal but it is from the CLI or API.
+Then restart the Function. It is impossible to retrieve Azure Function mounted files from the Azure Portal.
 
 ## Update the application
-Models are now available under the folder `/models`. Consequently, the only element to update in the application is the model path. To be generic, and allow testing, we will use environment variable in place of hard coding the path.
+Models are now available under the folder `/models`. Consequently, the only element to update in the application is the model path. We will use environment variables to be generic and allow testing instead of hard coding the path.
 
 Update the `function_app.py` [file](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-5/function_app.py) and propagate those changes to the `test.py` [file](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-5/test.py):
 ```
@@ -190,7 +193,7 @@ MODEL_PATH = os.environ.get('MODEL_PATH')
 
 with open(MODEL_PATH, 'rb') as f:
 ```
-Then update the [GitHub Action workflow](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-5/.github/workflows/main_az-fct-python-ml.yml) `build` job to create the model in a temporary folder and not polute the artifact.
+Then update the [GitHub Action workflow](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-5/.github/workflows/main_az-fct-python-ml.yml) `build` job to create the model in a temporary folder and not pollute the artifact.
 ```
 - name: Test the API application
   run: python test.py
@@ -200,13 +203,13 @@ Then update the [GitHub Action workflow](https://github.com/florian-vuillemot/az
 
 Finally, add the new environment variable on the Azure Function.
 
-![Create environment variables](/assets/2023-12-31-azure-function-python-ml-part-5/create-env-var.gif)
+![Create environment variables](/assets/2024-01-09-azure-function-python-ml-part-5/create-env-var.gif)
 
-And that it! The API will now serve the model from the File Share and so serve each new model when deployed by the `train` workflow.
+And that is it! The API will now serve the model from the File Share and so serve each new model when deployed by the `train` workflow.
 
-> Serverless nature of Azure Function lead to load the model on each call. This can be time consuming and take time if the model model size is consequence. In that case, consider using another compute service as [Azure Web App](https://learn.microsoft.com/en-us/azure/app-service/overview).
+> The serverless nature of Azure Function leads to loading the model on each call. This can be time-consuming due to the network access and model size. Consider using another computing service such as [Azure Web App](https://learn.microsoft.com/en-us/azure/app-service/overview).
 
 # Summary and next step
-Decoupling the deployment of the API and the model improve the deployment process and the agility of the system.
+Decoupling API and model deployment improves the deployment process and system agility but increased the time of the CI/CD. Workflows are code, and like all code, refactoring is important, as we'll see in the next article.
 
 > Any comments, feedback or problems? Please create an issue [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).

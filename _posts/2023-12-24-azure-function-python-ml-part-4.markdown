@@ -142,6 +142,6 @@ The reader is probably already aware of the [cold start](https://azure.microsoft
 ![App settings](/assets/2023-12-24-azure-function-python-ml-part-4/app-settings.gif)
 
 # Summary and next step
-We can now quickly revert to the previous version of our application. But in fact, we're deploying an API that doesn't need updating: we're updating its model without touching the API code. The following article focuses on remote model storage, limiting infrastructure updates to each version.
+We can now quickly revert to the previous version of our application. But in fact, we're deploying an API that doesn't need updating: we're updating its model without touching the API code. The [following article]({% link _posts/2024-01-09-azure-function-python-ml-part-5.markdown %}) focuses on remote model storage, limiting infrastructure updates to each version.
 
 > Any comments, feedback or problems? Please create an issue [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).
