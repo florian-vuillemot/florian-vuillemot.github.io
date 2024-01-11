@@ -32,3 +32,27 @@ Diving into the [DevOps Engineer](https://learn.microsoft.com/en-us/collections/
 
 Good and smooth introduction of logs on Azure Web Application but too focus on Windows.
 
+## Control and organize Azure resources with Azure Resource Manager
+> [Link](https://learn.microsoft.com/en-us/training/modules/control-and-organize-with-azure-resource-manager/)
+
+- Resource Group organisation: ressource type, lifecycle, RBAC, prices.
+- Tags importances: finance, organisation, meta data, automation.
+- Policy usage: enforce standards, organisation, impact on ressources.
+- RBAC: usage, scope, best practices.
+- Resource locks: Read-only, delete, side effect - ex: list storage account -.
+
+Back to basic modules! Quick summary of some Azure services.
+
+## Deploy Spring microservices to Azure
+> [Link](https://learn.microsoft.com/en-us/training/modules/azure-spring-cloud-workshop/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- Create the Spring Cluster.
+- Create a GitHub repository.
+- Create a MYSQL database and integrate it in the Spring Boot Cluster.
+- Create a Spring Cloud Gateway.
+- Introduction to distributed tracing provided by default. Too quick to be pertinent. Adding some content would be appreciate.
+- Scaling the application from the Azure Portal. Unfortunalty there is nothing on the monitoring here and no introduction on this topic. Before scaling, a user need to know what is happening! 
+
+This module show how powerfull using PAAS services allows to quickly expose to your end user an application but nothing on the troubleshooting or the monitoring. I would appreciate monitoring content with the distributed tracing unit.
+
+
