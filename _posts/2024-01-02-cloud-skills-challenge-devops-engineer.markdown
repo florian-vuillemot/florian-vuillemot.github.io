@@ -55,4 +55,31 @@ Back to basic modules! Quick summary of some Azure services.
 
 This module show how powerfull using PAAS services allows to quickly expose to your end user an application but nothing on the troubleshooting or the monitoring. I would appreciate monitoring content with the distributed tracing unit.
 
+## Microsoft Azure Well-Architected Framework - Performance efficiency
+> [Link](https://learn.microsoft.com/en-us/training/modules/azure-well-architected-performance-efficiency/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- Identify the target, what the platform can offert and what the business need.
+- Idenfity potential growth and impact on the application.
+- Forecast capacity needs.
+- POC for testing application and infrastructure behaviours.
+- Check infrastructure is able to provide the capacity.
+- Test performance on development as on production.
+- Repeatable process for monitoring performance during lifecycle.
+- Allocate technical time on debt and performance.
+- Azure Application Insights can help on finding hotspots.
+
+High level view on performance problem with a kind introduction on the shift-left. Debt, performance and reliability are couple and well handle they help keep the velocity and anticipate problem. As tests this must be consider as soon as possible and its only possible with tools and processes.
+
+## Microsoft Azure Well-Architected Framework - Operational excellence
+> [Link](https://learn.microsoft.com/en-us/training/modules/azure-well-architected-operational-excellence/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- Introduction to project management with Azure DevOps. Nothing about GitHub Project, the doc must be to old.
+- Continous improvement with feedbacks, sharing knowledge, retrospective and sharing success.
+- A/B testing, decision based on data.
+- Introduction to SCRUM, relative tools and hygiene.
+- Keep relevant alerting and telemetry.
+- Introduction Infrastructure As Code.
+- Automation importance: Simple flows, design for automation, inforced standards.
+- Feature flags: limit exposition of new feature to get metrics and easy switch off.
+
 
