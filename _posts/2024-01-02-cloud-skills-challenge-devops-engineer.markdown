@@ -82,4 +82,53 @@ High level view on performance problem with a kind introduction on the shift-lef
 - Automation importance: Simple flows, design for automation, inforced standards.
 - Feature flags: limit exposition of new feature to get metrics and easy switch off.
 
+## Analyze your Azure infrastructure by using Azure Monitor logs
+> [Link](https://learn.microsoft.com/en-us/training/modules/analyze-infrastructure-with-azure-monitor-logs/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
+- Data collected:
+  - Application data: Data that relates to your custom application code.
+  - Operating-system data: Data from the Windows or Linux virtual machines that host your application.
+  - Azure resource data: Data that relates to the operations of an Azure resource, such as a web app or a load balancer.
+  - Azure subscription data: Data that relates to your subscription. It includes data about Azure health and availability.
+  - Azure tenant data: Data about your Azure organization-level services, such as Microsoft Entra ID.
+- Enabled diagnostic logging and agent with Log Analytics Workspace.
+- Logs: Time-stamped information organized as records. Event type, the quantity is difficult to predict.
+- Metrics: Numerical values describing aspect of the system at a point in time. Constant in time, the quantity is simple to predict.
+- [Introduction to Kusto](https://learn.microsoft.com/en-us/training/modules/analyze-infrastructure-with-azure-monitor-logs/3-create-log-queries).
+
+Good introduction on Azure Monitor. Exercices with Kusto is good but a dedicated module on can be better. This language is a pillar of the platform, and event if it is simple and near of SQL, it takes time to masterize.
+
+## Monitor cloud resources
+> [Link](https://learn.microsoft.com/en-us/training/modules/cmu-monitor-cloud-resources/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- Logs: Permanent immutable records containing information about changes, tasks and error. Intend to be redable by a human as it is.
+  - Log Management Platform: Scan and create response depending of the content. There do correlation, normalization and reporting.
+  - Key for diagnose and predict failure.
+- Metrics: Represent the relative health, stability, and availability. It's a quantitative value.
+  - Correlation based: Metrics are based on composition and comparisons of ratios.
+  - Can be high levels: Users sessions length, user sentiment.
+  - Fit in the service delivery framework.
+- Traces: Records of the paths of execution between services.
+  - Follow low level call between components with graph and performances.
+  - Usefull for analysis and find errors and they impacts.
+- Application Performance Management (APM) are agent based or agentless:
+  - Agent based can be a SDK in a Web Page. It's just something scrapping data where it is. Messages between agent are not human friendly and can drive to a huge amount of data difficult to manage. Protocol and data usage must be analysed.
+  - Agentless will grab metrics and logs from the outside on an human format. Generally its based on logs and passive data.
+- Metrics indicator and metrics correlation:
+  - Simple: CPU, idle, garbage collector invocation, error rate, response time,
+  - Complex:
+    - Saturation point: Point where the system start to enter in a bad state increasing the number of timeout, the size of a queue or error message impacting the end user.
+    - Application Performance Index ([Apdex](https://www.apdex.org/)): Metric from 0 (Satisfied) to 100 (Frustrated) based on the response time of an application from the end user perspective.
+  - Framework:
+    - [Utilization Saturation Errors](https://www.brendangregg.com/usemethod.html): Usage and error oriented on metrics particulary infrastructure.
+    - [Rate Errors Duration](https://thenewstack.io/monitoring-microservices-red-method/): Application oriented fit perfectly in microservice.
+- Remediation planning or how to fix when something **goes** or **will go**  wrong:
+  - Ticketing system or IT Operation Management (ITOM) integrate with alerts and notifications.
+  - KPI monitoring and alerting:
+    - Bussiness metrics
+    - Mean Time To Detection (MTTD)
+    - Mean Time To Resolution (MTTR)
+    - Percentage of system impact on issues
+- Everyday remediation
+  - Nothing is normal anymore, services are changing continously
+  - Continously improve the system to stay ahead of saturation and keep it agile and understandable
