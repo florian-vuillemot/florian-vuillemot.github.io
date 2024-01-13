@@ -132,3 +132,21 @@ Good introduction on Azure Monitor. Exercices with Kusto is good but a dedicated
 - Everyday remediation
   - Nothing is normal anymore, services are changing continously
   - Continously improve the system to stay ahead of saturation and keep it agile and understandable
+
+Great module on monitoring principal and how to define it inside your organisation.
+
+## React to state changes in your Azure services by using Event Grid
+> [Link](https://learn.microsoft.com/en-us/training/modules/react-to-state-changes-using-event-grid/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- Event Grid
+  - Event based routing service
+  - Event are infrastructure updated that be filtered and custom
+  - 24 hour retries to ensure message delivrery
+  - Webhook handler to call endpoint outside Azure
+- Logic App
+  - Can be triggered by Event Grid
+  - Designer and JSON view
+  - Allow logic flow and condition
+  - Plethora of connector
+
+Interresting module on Event Grid with a exercice including Logic App on an use case near from a real usage.
