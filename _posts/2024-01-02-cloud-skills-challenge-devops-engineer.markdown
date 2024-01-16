@@ -150,3 +150,31 @@ Great module on monitoring principal and how to define it inside your organisati
   - Plethora of connector
 
 Interresting module on Event Grid with a exercice including Logic App on an use case near from a real usage.
+
+## Design a full-stack monitoring strategy on Azure
+> [Link](https://learn.microsoft.com/en-us/training/modules/design-monitoring-strategy-on-azure/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- Full Stack Monitoring: Monitor Infrastructure and services (Azure Monitor), application (Application Insight) and security (Microsoft defender and Sentinel).
+- Microsoft Defender for Cloud.
+  - Natively integrate in the platform it centralize security information at one place.- Connected to a Log Analytics Workspace to grab and analyse logs.
+  - Analyses data, network and application security but also identity and access.
+  - Show recommandation with a score. Ex: enforce MFA.
+  - Enable Just-in-time (JIT) VM access to enable VM access during a limited amount of time and audit them.
+  - Adaptive Application Controls to verify conformity of running process on a VM. In case of un usual running process, raised an alert.
+  - Propose remedation, alerts and prevention.
+- Microsoft Sentinel.
+  - Thread hunting, alerting and proactive response based on users and platform logs.
+  - Multi-cloud and on-prem solution.
+  - Plethora of connectors including **Microsoft Entra** and **Office 365**.
+  - Custom or build-in workbook and alerts.
+  - Incident investigation and management.
+- Application Insight for application monitoring for performance, availability, user behavior.
+- Azure Monitor insights hub for ressource monitoring on the platform.
+  - VM insights for monitoring at scale accross subscriptions and get processes and network topology.
+  - Container insights for AKS accross subscriptions and get metrics, logs and performance.
+  - Prometheus support for querying in PromQL and display with Graphana.
+- Azure Monitor can be used with an Managed Graphana.
+- All collected information can be used to create alerts rules.
+
+Broad theorical module. The security aspect is new but a lot of information on the monitoring are redundante with previous modules.
+
