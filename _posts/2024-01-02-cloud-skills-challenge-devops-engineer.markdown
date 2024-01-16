@@ -160,7 +160,7 @@ Interresting module on Event Grid with a exercice including Logic App on an use 
   - Analyses data, network and application security but also identity and access.
   - Show recommandation with a score. Ex: enforce MFA.
   - Enable Just-in-time (JIT) VM access to enable VM access during a limited amount of time and audit them.
-  - Adaptive Application Controls to verify conformity of running process on a VM. In case of un usual running process, raised an alert.
+  - *Adaptive Application Controls* to verify conformity of running process on a VM. In case of un usual running process, raised an alert.
   - Propose remedation, alerts and prevention.
 - Microsoft Sentinel.
   - Thread hunting, alerting and proactive response based on users and platform logs.
@@ -178,3 +178,14 @@ Interresting module on Event Grid with a exercice including Logic App on an use 
 
 Broad theorical module. The security aspect is new but a lot of information on the monitoring are redundante with previous modules.
 
+## Introduction to GitHub
+> [Link](https://learn.microsoft.com/en-us/training/modules/introduction-to-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- Code repository integrating code security tools, CI/CD, AI, wiki, etc.
+- Code snippets using *gist*.
+- Git flows with branches and commits but also GitHub features flow based on Pull Request, reviewers.
+- Collaboration with issues, pull requests, discussion.
+- Keep updating using subscription
+- GitHub Pages for static hosting.
+
+Overall GitHub guide. It's a nice tutorial really usefull for new to the platform.
