@@ -232,3 +232,19 @@ Basic good practices around Git and the integration in GitHub.
 
 Still on the GitHub usage, it's a good module on common pure GitHub usage.
 
+## Manage an InnerSource program by using GitHub
+> [Link](https://learn.microsoft.com/en-us/training/modules/manage-innersource-program-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- Using OpenSource in compagny by keeping best practises: [InnerSource](https://resources.github.com/innersource/fundamentals/).
+  - Keeping transparency, communication, history.
+  - Reduce friction by enabling self doing from a team to another and even fork.
+  - Standardize practices.
+- Repository permissions
+  - Read level is recommended for non-code contributors who want to view or discuss the project.
+  - Triage level is recommended for contributors who need to proactively manage issues and pull requests without write access.
+  - Write level is recommended for contributors who actively push to the project.
+  - Maintain level is recommended for project managers who need to manage the repository without access to sensitive or destructive actions.
+  - Admin level is recommended for people who need full access to the project, including sensitive and destructive actions like managing security or deleting a repository.
+- Readme, naming and description to allow retrieve information at scale.
+- Readme.md, codeowner and contributing.md can be put in the `.github` folder.
+- Standardize process using pull request templates.
