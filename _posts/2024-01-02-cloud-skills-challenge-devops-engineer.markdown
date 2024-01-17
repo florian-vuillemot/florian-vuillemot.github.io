@@ -223,5 +223,12 @@ GitHub practices around Pull Request and processes.
 
 Basic good practices around Git and the integration in GitHub.
 
+## Search and organize repository history by using GitHub
+> [Link](https://learn.microsoft.com/en-us/training/modules/search-organize-repository-history-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
+- Search on [GitHub](https://github.com/search/advanced) in repository and pull requests.
+  - The search [syntax](https://docs.github.com/en/search-github/getting-started-with-searching-on-github/about-searching-on-github)
+- [Links](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/autolinked-references-and-urls) between PR, issues, comment based on tag and keywords.
+
+Still on the GitHub usage, it's a good module on common pure GitHub usage.
 
