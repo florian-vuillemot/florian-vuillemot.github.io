@@ -189,3 +189,39 @@ Broad theorical module. The security aspect is new but a lot of information on t
 - GitHub Pages for static hosting.
 
 Overall GitHub guide. It's a nice tutorial really usefull for new to the platform.
+
+## Migrate your repository by using GitHub best practices
+> [Link](https://learn.microsoft.com/en-us/training/modules/migrate-repository-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- GitHub is a Cloud based solution and all on GitHub must be considered as compromised.
+- History can be keept.
+- Support Large File is needed via [Git LFS](https://git-lfs.com/).
+- Understand files as a Gitignore for simpler and safer collaboration. [Here some best practices](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions).
+
+Getting started practise around GitHub with a lab.
+
+## Upload your project by using GitHub best practices
+> [Link](https://learn.microsoft.com/en-us/training/modules/upload-project-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- Import project in GitHub.
+- Add meta data on the project as email for commits.
+- Import or create a project with the GitHub website, the Git command or the GitHub CLI.
+
+The content is near from the previous module but with a example focused on the migration from another code management platform.
+
+## Manage repository changes by using pull requests on GitHub
+> [Link](https://learn.microsoft.com/en-us/training/modules/manage-changes-pull-requests-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- Pull Request and review as communication tool.
+
+GitHub practices around Pull Request and processes.
+
+## Settle competing commits by using merge conflict resolution on GitHub
+> [Link](https://learn.microsoft.com/en-us/training/modules/resolve-merge-conflicts-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- Git branch and rebase management.
+
+Basic good practices around Git and the integration in GitHub.
+
+
+
