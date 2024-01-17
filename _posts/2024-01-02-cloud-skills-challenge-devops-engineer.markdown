@@ -248,3 +248,15 @@ Still on the GitHub usage, it's a good module on common pure GitHub usage.
 - Readme, naming and description to allow retrieve information at scale.
 - Readme.md, codeowner and contributing.md can be put in the `.github` folder.
 - Standardize process using pull request templates.
+
+Great module on how to use InnerSource and mesure if its working.
+
+## Communicate effectively on GitHub using Markdown
+> [Link](https://learn.microsoft.com/en-us/training/modules/communicate-using-markdown/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- Broad description of the Markdown language.
+- Introduction to the GitHub-Flavored Markdown (GFM).
+- Reference using a URL, the syntax '#', 'GH-' or 'Username/Repository#' for pull request and issues. Similar syntax for commit and users.
+- Commands base on '/command' as '/code' or '/details'.
+
+Good review of the Markdown/GFM on GitHub to be more efficient on day to day tasks.
