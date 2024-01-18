@@ -260,3 +260,57 @@ Great module on how to use InnerSource and mesure if its working.
 - Commands base on '/command' as '/code' or '/details'.
 
 Good review of the Markdown/GFM on GitHub to be more efficient on day to day tasks.
+
+## Maintain a secure repository by using GitHub best practices
+> [Link](https://learn.microsoft.com/en-us/training/modules/maintain-secure-repository-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- Shift left the security and must be handle at the begining of the project.
+- Use the "security" tab of the repository
+  - Security policies that allow you to specify how to report a security vulnerability in your project by adding a SECURITY.md file to your repository.
+  - Dependabot alerts that notify you when GitHub detects that your repository is using a vulnerable dependency or malware.
+  - Security advisories that you can use to privately discuss, fix, and publish information about security vulnerabilities in your repository.
+  - Code scanning that helps you find, triage, and fix vulnerabilities and errors in your code with CodeQL.
+  - Secret scanning to prevent credential leaks. In case of leak, remove and push the history then contact GitHub to clear some cache.
+- Use `.gitignore` for sensitive files.
+- Assume your GitHub account as compromised.
+- Use branch protection rules.
+- Use codeowner.
+
+Good introduction! CodeQL can be complex but really powerfull, a deep dive would be appreciate.
+
+## Automate DevOps processes by using GitHub Apps
+> [Link](https://learn.microsoft.com/en-us/training/modules/automate-devops-github-apps/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- Use API to extend GitHub functionality.
+- Permission can be at the repository level.
+- Oauth App
+  - Application acting on behalf of a user.
+  - Consume a seat on GitHub Orga.
+  - For read, write and modify user data.
+- GitHub App
+  - Install on personal, orga or repository. Need admin access.
+  - Does not consume GitHub seat.
+  - Need token.
+  - Customize permissions.
+  - Support auth as user as Oauth App.
+- Events can be
+  - GitHub webhooks
+  - Polling
+- Github tokens
+  - GitHub personal access tokens (ghp)
+    - Individual token for user
+    - Can be fined-grained
+  - Device token (gup)
+    - Machine version of PAT.
+    - Mainly for runners.
+  - GitHub Application Installation tokens (ghs)
+    - Valid for a short period of time
+    - Perfect for installation actions
+  - OAuth access tokens (gho)
+    - For headless CLI
+    - Can be acquired using the web application flow
+    - Behalf oauth.
+  - Refresh tokens (ghr): OAuth token refreshed
+- There is rate limits on tokens delivrery. GitHub allows to monitor and manage it.
+
+Great module with total new content. Github App is a good topic and market for numerous tools.
