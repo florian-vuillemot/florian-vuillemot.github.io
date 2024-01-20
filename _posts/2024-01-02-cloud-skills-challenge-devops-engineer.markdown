@@ -350,4 +350,19 @@ Each organisation creates their own process and GitHub Script helps a lot for im
 
 Managing project release is simplify by Git, GitHub release and GitHub Project and this module clearly explain how to do it correctly.
 
+## Build continuous integration (CI) workflows by using GitHub Actions
+> [Link](https://learn.microsoft.com/en-us/training/modules/github-actions-ci/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac&ns-enrollment-type=Collection&ns-enrollment-id=67pku71drej4)
+
+- GitHub Action for automated task on a repository and its content based on event.
+- An [Artifact](https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts) is a job output other then logs and it can be keept and stored.
+- Environment variable for workflows can be provided
+  - At the GitHub level in [secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) and [variable](https://docs.github.com/en/actions/learn-github-actions/variables) - defined by someone with permission -
+  - At the workflow and job level - defined by the developper -
+  - By GitHub directly - defined by GitHub -
+- Customs scripts for the CI can directly be put in the `.github/scripts` folder.
+- Reproductible action in workflow - as installing dependencies - can be reuse between runs and reduce the CI time by using [cache](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows).
+- More [debugging information](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging) can be provided at the runner or step level by defining in GitHub secrets respectively `ACTIONS_RUNNER_DEBUG` and `ACTIONS_STEP_DEBUG` to true.
+- Logs are accessible from the GitHub UI or by API.
+
+This module well introduce the GitHub Action syntax and the possiblity offer. I'm surprised it comes after the module **Automate GitHub by using GitHub Script** introducing the `Octokit` framework which imply a GitHub workflow.
 
