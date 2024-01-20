@@ -379,4 +379,7 @@ This module well introduce the GitHub Action syntax and the possiblity offer. I'
 
 Great module on how to use GitHub with Azure. Unfortunatly, this module only talk about auth based on token between both platforms. Even if more complex, an [OpenId](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-azure) configuration steps would be appreciate.
 
+## Implement a code workflow in your build pipeline by using Git and GitHub
+> [Link](https://learn.microsoft.com/en-us/training/modules/implement-code-workflow/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
+This module is a complete project showing the integration between Azure DevOps - the board and pipeline - and GitHub. It's interesting to understand how to use both together and how both platforms provide similar or additional features.
