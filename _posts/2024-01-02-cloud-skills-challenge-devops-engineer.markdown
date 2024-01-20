@@ -366,3 +366,17 @@ Managing project release is simplify by Git, GitHub release and GitHub Project a
 
 This module well introduce the GitHub Action syntax and the possiblity offer. I'm surprised it comes after the module **Automate GitHub by using GitHub Script** introducing the `Octokit` framework which imply a GitHub workflow.
 
+## Build and deploy applications to Azure by using GitHub Actions
+> [Link](https://learn.microsoft.com/en-us/training/modules/github-actions-cd/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- GitHub Action can upload a container image on Azure using pre build actions on the [GitHub marketplace](https://github.com/marketplace).
+- GitHub Action can also interact with resources on cloud provider as Azure. It can be use to create, modify or delete cloud resources.
+- Workflow status badges can provide visibility.
+  - They can display information on any branch or event on the repository.
+  - They can be integrated in website, not only GitHub.
+  - Ex: `![example branch parameter.](https://github.com/mona/special-octo-eureka/actions/workflows/grading.yml/badge.svg?branch=my-workflow)`
+- Workflow can use [environments](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment) with custom secrets and variables. As branches, they can be protected with reviewer or delay with a timer.
+
+Great module on how to use GitHub with Azure. Unfortunatly, this module only talk about auth based on token between both platforms. Even if more complex, an [OpenId](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-azure) configuration steps would be appreciate.
+
+
