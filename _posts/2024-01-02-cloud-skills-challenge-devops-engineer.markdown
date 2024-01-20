@@ -313,4 +313,41 @@ Good introduction! CodeQL can be complex but really powerfull, a deep dive would
   - Refresh tokens (ghr): OAuth token refreshed
 - There is rate limits on tokens delivrery. GitHub allows to monitor and manage it.
 
-Great module with total new content. Github App is a good topic and market for numerous tools.
+Great module with total new content. Github App is a good topic and market for numerous tools. The exercice based on a video is interesting fit well behalf this module.
+
+## Automate GitHub by using GitHub Script
+> [Link](https://learn.microsoft.com/en-us/training/modules/automate-github-using-github-script/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- Based on [Octokit](https://octokit.github.io/rest.js/v20).
+- Provide a Octokit client authenticate on the repository.
+- Another way to interact with GitHub APIs and act on them.
+
+Ex:
+```
+- uses: actions/github-script@0.8.0
+  with:
+    github-token: ${{secrets.GITHUB_TOKEN}}
+    script: |
+      github.issues.createComment({
+        issue_number: context.issue.number,
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        body: "🎉 You've created this issue comment using GitHub Script!!!"
+      })
+```
+
+Each organisation creates their own process and GitHub Script helps a lot for implement them and this module provides valuable information on it.
+
+## Manage software delivery by using a release based workflow on GitHub
+> [Link](https://learn.microsoft.com/en-us/training/modules/release-based-workflow-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
+
+- Using GitHub Project and issues to create sprint.
+- Sprint are time-boxed period to produce incremental changes.
+- Milestones are similar to project tracking but focused on product features.
+- Long-lived branches should mainly be for released and must come from the `main` branch. Also they must be protected against write and delete.
+- Use `git cherry-pick` to apply specific commits from a branch to another and update releases.
+- Releasing to consumers must be based on [GitHub releases](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases).
+
+Managing project release is simplify by Git, GitHub release and GitHub Project and this module clearly explain how to do it correctly.
+
+
