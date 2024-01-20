@@ -7,9 +7,9 @@ permalink: microsof-learn/cloud-skills-challenge/devops-engineer
 # Introduction
 Deep dive into the [DevOps Engineer](https://learn.microsoft.com/en-us/collections/67pku71drej4?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac) challenge from Microsoft Learn.
 
-This challenge is a personal way of staying up to date in a neutral context. I use GitHub every day as part of my job, but - as everyone - I'm not familiar with all the platform's features and best practices. Beside, my usage is drive by my compagny needs, that can be far away from best practices and scope on certain topic.
+This challenge is a personal way of staying updated in a neutral context. I use Azure and GitHub every day as part of my job, but - like everyone - I can improve my knowledge of these platforms and their best practices. Besides, my daily usage is driven by my company's needs, which can be far from best practices and scope on specific topics.
 
-Here are my notes. I capture what I consider interesting and make a quick summary. If you're familiar with GitHub and don't want to read the whole challenge, this is a way of taking only what you want.
+Here are my notes. I capture what I consider interesting and make a quick summary. Feel free to use them as you need.
 
 # Modules
 ## Capture Web Application Logs with App Service Diagnostics Logging
@@ -18,7 +18,7 @@ Here are my notes. I capture what I consider interesting and make a quick summar
 - File system log:
   - Windows supports [Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction) as a logging target.
   - Contains *Stderr* and *Stdout* outputs except for Windows *ASP.NET* and *ASP.NET Core* applications, which are managed by IIS.
-  - If file system logs on Windows are configured, they are automatically reset to **off** after 12 hours for "performance reasons": This is not usable in production.
+  - If file system logs on Windows is configured, it is automatically reset to **off** after 12 hours for "performance reasons": This is not usable in production.
   - The *Quota* and *Retention period* are available for **Azure Blob Storage** and Linux file system logs.
   - Storage location:
     - Windows & File System: Virtual drive in `D:\Home`.
@@ -27,173 +27,176 @@ Here are my notes. I capture what I consider interesting and make a quick summar
   - Windows storage access: [Az CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli), [Kudu](https://learn.microsoft.com/en-us/azure/app-service/resources-kudu) and the storage browser depending on log destination.
 - Azure Application Insight:
   - More info: Monitoring, performance, designed for production.
-  - SDK-based, so requires configuration.
+  - SDK-based, so it requires configuration.
   - Billable service.
   - [Doc](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview)
 - Log feeds panel:
   - Real-time analysis.
-  - Connection to a single instance, so not totally useful with a multi-instance application - and so production -.
+  - Connection to a single instance, so not useful with a multi-instance application - and so production -.
   - Accessible with **curl** but requires FTPS credentials.
 
-Good introduction to logs on Azure Web Application, but too Windows-centric.
+A good introduction to logs on Azure Web Application, but too Windows-centric.
 
 ## Control and organize Azure resources with Azure Resource Manager
 > [Link](https://learn.microsoft.com/en-us/training/modules/control-and-organize-with-azure-resource-manager/)
 
-- Resource Group organisation: ressource type, lifecycle, RBAC, prices.
-- Tags importances: finance, organisation, meta data, automation.
-- Policy usage: enforce standards, organisation, impact on ressources.
-- RBAC: usage, scope, best practices.
-- Resource locks: Read-only, delete, side effect - ex: list storage account -.
+- Resource group organization: resource type, lifecycle, RBAC, price.
+- Tags are essential for finance, organization, metadata, automation, etc.
+- Use of policies: application of standards, organization, impact on resources.
+- RBAC: use, scope, best practices.
+- Resource locking: read-only, delete. Be careful with side effects! Ex: the storage account list key is no longer possible with a read-only lock.
 
-Back to basic modules! Quick summary of some Azure services.
+Back to the basics! Quick summary of some Azure services.
 
 ## Deploy Spring microservices to Azure
 > [Link](https://learn.microsoft.com/en-us/training/modules/azure-spring-cloud-workshop/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
 - Create the Spring Cluster.
 - Create a GitHub repository.
-- Create a MYSQL database and integrate it in the Spring Boot Cluster.
-- Create a Spring Cloud Gateway.
-- Introduction to distributed tracing provided by default. Too quick to be pertinent. Adding some content would be appreciate.
-- Scaling the application from the Azure Portal. Unfortunalty there is nothing on the monitoring here and no introduction on this topic. Before scaling, a user need to know what is happening! 
+- Create a MYSQL database and integrate it into the Spring Boot Cluster.
+- Create a Spring Cloud gateway.
+- Short introduction to distributed tracing provided by default.
+- Scaling the application from the Azure portal. Unfortunately, there's nothing about monitoring here and no introduction to the subject. Before scaling, a user needs to know what's going on! 
 
-This module show how powerfull using PAAS services allows to quickly expose to your end user an application but nothing on the troubleshooting or the monitoring. I would appreciate monitoring content with the distributed tracing unit.
+This module shows how PAAS services can quickly expose an application to the end user, but there needs to be something on troubleshooting or monitoring. I'd appreciate some monitoring content with the distributed tracing unit.
 
 ## Microsoft Azure Well-Architected Framework - Performance efficiency
 > [Link](https://learn.microsoft.com/en-us/training/modules/azure-well-architected-performance-efficiency/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
-- Identify the target, what the platform can offert and what the business need.
-- Idenfity potential growth and impact on the application.
-- Forecast capacity needs.
-- POC for testing application and infrastructure behaviours.
-- Check infrastructure is able to provide the capacity.
-- Test performance on development as on production.
-- Repeatable process for monitoring performance during lifecycle.
-- Allocate technical time on debt and performance.
-- Azure Application Insights can help on finding hotspots.
+- Identify the target: what a platform can offer vs what the company needs.
+- Identify potential growth and impact on the application.
+- Forecast capacity requirements.
+- POC and test application and infrastructure behavior.
+- Verify that the infrastructure can deliver the capacity.
+- Test performance in development and production.
+- Reproducible performance control process throughout the lifecycle.
+- Allocate technical time to debt and performance.
+- Azure Application Insights can help find hot spots.
 
-High level view on performance problem with a kind introduction on the shift-left. Debt, performance and reliability are couple and well handle they help keep the velocity and anticipate problem. As tests this must be consider as soon as possible and its only possible with tools and processes.
+A high-level module on performance problems, including a gentle introduction to the DevOps shift-left methodology. Debt, performance, and reliability are linked and well managed, helping to maintain velocity and anticipate problems. As tests, they need to be addressed as early as possible, and this is only possible with tools and processes.
 
 ## Microsoft Azure Well-Architected Framework - Operational excellence
 > [Link](https://learn.microsoft.com/en-us/training/modules/azure-well-architected-operational-excellence/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
-- Introduction to project management with Azure DevOps. Nothing about GitHub Project, the doc must be to old.
-- Continous improvement with feedbacks, sharing knowledge, retrospective and sharing success.
-- A/B testing, decision based on data.
-- Introduction to SCRUM, relative tools and hygiene.
-- Keep relevant alerting and telemetry.
-- Introduction Infrastructure As Code.
-- Automation importance: Simple flows, design for automation, inforced standards.
-- Feature flags: limit exposition of new feature to get metrics and easy switch off.
+- Introduction to project management with Azure DevOps. There is nothing on the GitHub project; the doc must be too old.
+- Continuous improvement with feedback, knowledge sharing, retrospective and success sharing.
+- A/B testing, data-driven decision making.
+- Introduction to SCRUM, tools and hygiene.
+- Keeping alerts and telemetry relevant.
+- Introduction to infrastructure as code.
+- Importance of automation: simple workflows, design for automation, computerized standards.
+- Feature flags: limit exposure of new features for metrics and easy deactivation.
+
+What's interesting about this module is the importance of project management. Technology isn't everything; process and knowledge are essential.
 
 ## Analyze your Azure infrastructure by using Azure Monitor logs
 > [Link](https://learn.microsoft.com/en-us/training/modules/analyze-infrastructure-with-azure-monitor-logs/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
-- Data collected:
-  - Application data: Data that relates to your custom application code.
-  - Operating-system data: Data from the Windows or Linux virtual machines that host your application.
-  - Azure resource data: Data that relates to the operations of an Azure resource, such as a web app or a load balancer.
-  - Azure subscription data: Data that relates to your subscription. It includes data about Azure health and availability.
-  - Azure tenant data: Data about your Azure organization-level services, such as Microsoft Entra ID.
-- Enabled diagnostic logging and agent with Log Analytics Workspace.
-- Logs: Time-stamped information organized as records. Event type, the quantity is difficult to predict.
-- Metrics: Numerical values describing aspect of the system at a point in time. Constant in time, the quantity is simple to predict.
-- [Introduction to Kusto](https://learn.microsoft.com/en-us/training/modules/analyze-infrastructure-with-azure-monitor-logs/3-create-log-queries).
+- Data collected :
+  - Application data: Data relating to your customized application code.
+  - Operating system data: Data from the Windows or Linux virtual machines hosting your application.
+  - Azure resource data: Data relating to the operations of an Azure resource, such as a web application or a load balancer.
+  - Azure subscription data: Data relating to your subscription. This includes data on Azure status and availability.
+  - Azure tenant data: Data relating to your Azure services at the organization level, such as [Microsoft Entra](https://learn.microsoft.com/fr-fr/entra/).
+- Activation of logging and diagnostic agent with [Log Analytics Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/log-analytics-workspace-overview).
+- Logs: Time-stamped information organized in the form of records. The type of event and quantity are difficult to predict.
+- Metrics: Numerical values describing an aspect of the system at a given time. Constant over time, the quantity is easy to predict.
+- [Introduction to Kusto] (https://learn.microsoft.com/en-us/training/modules/analyze-infrastructure-with-azure-monitor-logs/3-create-log-queries).
 
-Good introduction on Azure Monitor. Exercices with Kusto is good but a dedicated module on can be better. This language is a pillar of the platform, and event if it is simple and near of SQL, it takes time to masterize.
+Good overview of the [Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/overview) service. The exercises with Kusto are good, but a dedicated module might be better. This language is a pillar of the platform, and even though it's simple and close to SQL, it takes time to master.
 
 ## Monitor cloud resources
 > [Link](https://learn.microsoft.com/en-us/training/modules/cmu-monitor-cloud-resources/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
-- Logs: Permanent immutable records containing information about changes, tasks and error. Intend to be redable by a human as it is.
-  - Log Management Platform: Scan and create response depending of the content. There do correlation, normalization and reporting.
-  - Key for diagnose and predict failure.
-- Metrics: Represent the relative health, stability, and availability. It's a quantitative value.
-  - Correlation based: Metrics are based on composition and comparisons of ratios.
-  - Can be high levels: Users sessions length, user sentiment.
-  - Fit in the service delivery framework.
-- Traces: Records of the paths of execution between services.
-  - Follow low level call between components with graph and performances.
-  - Usefull for analysis and find errors and they impacts.
-- Application Performance Management (APM) are agent based or agentless:
-  - Agent based can be a SDK in a Web Page. It's just something scrapping data where it is. Messages between agent are not human friendly and can drive to a huge amount of data difficult to manage. Protocol and data usage must be analysed.
-  - Agentless will grab metrics and logs from the outside on an human format. Generally its based on logs and passive data.
-- Metrics indicator and metrics correlation:
-  - Simple: CPU, idle, garbage collector invocation, error rate, response time,
+- Logs: Permanent, immutable records containing information on changes, tasks, and errors. They are intended to be read by a human being in their current state.
+  - Log management platform: Analyzes and creates a response based on content. It provides correlation, normalization, and reporting.
+  - Essential for fault diagnosis and prediction.
+- Metrics: Represent a system's relative health, stability, and availability. It is a quantitative value.
+  - Correlation-based: Metrics are based on the composition and comparison of ratios.
+  - Can be high-level: user session duration, user sentiment.
+  - Part of service delivery.
+- Traces: Records of execution paths between services.
+  - They enable tracking low-level calls between components using graphs and performance.
+  - Useful for analyzing and tracing errors and their impact.
+- Application Performance Management (APM) is agent-based or agentless:
+  - The agent can be an SDK in a Web page. It's a tool that retrieves data from where it is. Messages between agents are machine-to-machine oriented and can lead to huge amounts of data that are difficult to manage. The protocol and use of data need to be analyzed.
+  - Agentless retrieves metrics and logs from the outside world in a human format. Generally, it is based on logs and passive data.
+- Indicator and correlation measurements:
+  - Simple: CPU, inactivity, garbage collection invocation, error rate, response time.
   - Complex:
-    - Saturation point: Point where the system start to enter in a bad state increasing the number of timeout, the size of a queue or error message impacting the end user.
-    - Application Performance Index ([Apdex](https://www.apdex.org/)): Metric from 0 (Satisfied) to 100 (Frustrated) based on the response time of an application from the end user perspective.
+    - Saturation point: The point at which the system begins to enter a bad state by increasing the waiting times, the size of a queue, or error messages impacting the end user.
+    - Application performance index ([Apdex](https://www.apdex.org/)): A measure ranging from 0 (satisfied) to 100 (frustrated) based on an application's response time from the end-users point of view.
   - Framework:
-    - [Utilization Saturation Errors](https://www.brendangregg.com/usemethod.html): Usage and error oriented on metrics particulary infrastructure.
-    - [Rate Errors Duration](https://thenewstack.io/monitoring-microservices-red-method/): Application oriented fit perfectly in microservice.
-- Remediation planning or how to fix when something **goes** or **will go**  wrong:
-  - Ticketing system or IT Operation Management (ITOM) integrate with alerts and notifications.
-  - KPI monitoring and alerting:
-    - Bussiness metrics
-    - Mean Time To Detection (MTTD)
-    - Mean Time To Resolution (MTTR)
-    - Percentage of system impact on issues
-- Everyday remediation
-  - Nothing is normal anymore, services are changing continously
-  - Continously improve the system to stay ahead of saturation and keep it agile and understandable
+    - [Utilization Saturation and Errors](https://www.brendangregg.com/usemethod.html): Utilization and errors oriented towards metrics, in particular infrastructure.
+    - [Rate Errors Duration](https://thenewstack.io/monitoring-microservices-red-method/): Application-oriented, it integrates perfectly with microservices.
+- Remediation planning or how to fix when something **goes** or **will** go wrong:
+  - Ticketing system or IT operations management (ITOM) integrates with alerts and notifications.
+  - KPI monitoring and alerts:
+    - Activity indicators.
+    - Mean time to detection (MTTD).
+    - Mean time to resolution (MTTR).
+    - Percentage of system impact on problems.
+- Daily remediation:
+  - Nothing is normal anymore; services are constantly changing.
+  - Continuously improve the system to stay ahead of saturation and keep it agile and understandable.
 
-Great module on monitoring principal and how to define it inside your organisation.
+A key module on monitoring and how to define it within your organization.
 
 ## React to state changes in your Azure services by using Event Grid
 > [Link](https://learn.microsoft.com/en-us/training/modules/react-to-state-changes-using-event-grid/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
-- Event Grid
-  - Event based routing service
-  - Event are infrastructure updated that be filtered and custom
-  - 24 hour retries to ensure message delivrery
-  - Webhook handler to call endpoint outside Azure
-- Logic App
-  - Can be triggered by Event Grid
-  - Designer and JSON view
-  - Allow logic flow and condition
-  - Plethora of connector
+- [Event Grid](https://learn.microsoft.com/en-us/azure/event-grid/):
+  - Event-based routing service.
+  - Events are updated infrastructures that can be filtered and customized.
+  - 24-hour retries to ensure message delivery.
+  - Webhook manager for calling an endpoint outside Azure.
+- Logical application:
+  - Can be triggered by the Event Grid.
+  - Designer and JSON view.
+  - Allows logical flow and conditions.
+  - Plenty of connectors.
 
-Interresting module on Event Grid with a exercice including Logic App on an use case near from a real usage.
+Interesting module with an exercise using Event Grid with the Logic App on a good use case.
 
 ## Design a full-stack monitoring strategy on Azure
 > [Link](https://learn.microsoft.com/en-us/training/modules/design-monitoring-strategy-on-azure/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
-- Full Stack Monitoring: Monitor Infrastructure and services (Azure Monitor), application (Application Insight) and security (Microsoft defender and Sentinel).
-- Microsoft Defender for Cloud.
-  - Natively integrate in the platform it centralize security information at one place.- Connected to a Log Analytics Workspace to grab and analyse logs.
-  - Analyses data, network and application security but also identity and access.
-  - Show recommandation with a score. Ex: enforce MFA.
-  - Enable Just-in-time (JIT) VM access to enable VM access during a limited amount of time and audit them.
-  - *Adaptive Application Controls* to verify conformity of running process on a VM. In case of un usual running process, raised an alert.
-  - Propose remedation, alerts and prevention.
-- Microsoft Sentinel.
-  - Thread hunting, alerting and proactive response based on users and platform logs.
-  - Multi-cloud and on-prem solution.
-  - Plethora of connectors including **Microsoft Entra** and **Office 365**.
-  - Custom or build-in workbook and alerts.
+- Full stack monitoring: monitoring of infrastructure and services (with Azure Monitor), applications (with Application Insight) and security (with [Microsoft Defender](https://learn.microsoft.com/en-us/training/modules/intro-to-defender-cloud/) and [Sentinel](https://learn.microsoft.com/en-us/training/modules/intro-to-azure-sentinel/)).
+- Microsoft Defender for Cloud:
+  - Integrated natively into the platform, it centralizes security information in one place
+  - Connects to a Log Analysis Workspace to capture and analyze logs.
+  - Analyzes data, network, and application security, as well as identity and access.
+  - Recommendation based on scoring simplifying prioritization. Ex: apply MFA.
+  - Enable just-in-time (JIT) access to virtual machines to authorize access to virtual machines for a limited period and audit them.
+  - *Adaptive Application Control* to verify the conformity of processes running on a virtual machine. If an unusual process is running, trigger an alert.
+  - Suggest remedies, alerts, and preventive measures.
+- Microsoft Sentinel:
+  - Thread search, alerts and proactive responses based on user and platform logs.
+  - Multi-cloud and on-premise solution.
+  - Plethora of connectors, including **Microsoft Entra** and **Office 365**.
+  - Customized or integrated binder and alerts.
   - Incident investigation and management.
-- Application Insight for application monitoring for performance, availability, user behavior.
-- Azure Monitor insights hub for ressource monitoring on the platform.
-  - VM insights for monitoring at scale accross subscriptions and get processes and network topology.
-  - Container insights for AKS accross subscriptions and get metrics, logs and performance.
-  - Prometheus support for querying in PromQL and display with Graphana.
-- Azure Monitor can be used with an Managed Graphana.
-- All collected information can be used to create alerts rules.
+- Application Insight is used to monitor application performance, availability, but also the user behavior.
+- Azure Monitor insights hub for monitoring resources on the platform:
+  - VM insights for monitoring at scale across subscriptions and obtaining processes and network topology.
+  - Container insights for AKS across subscriptions and get metrics, logs and performance.
+  - Prometheus support for PromQL querying and Graphana display.
+- Azure Monitor can be used with managed Graphana.
+- All collected information can be used to create alert rules.
 
-Broad theorical module. The security aspect is new but a lot of information on the monitoring are redundante with previous modules.
+General theory module. The security topic is new, but much of the monitoring information is redundant with previous modules.
 
 ## Introduction to GitHub
 > [Link](https://learn.microsoft.com/en-us/training/modules/introduction-to-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
-- Code repository integrating code security tools, CI/CD, AI, wiki, etc.
-- Code snippets using *gist*.
-- Git flows with branches and commits but also GitHub features flow based on Pull Request, reviewers.
-- Collaboration with issues, pull requests, discussion.
-- Keep updating using subscription
+- Code repository with integrated tools for code security, CI/CD, AI, wiki, etc.
+- Code snippets with *gist*.
+- Git flows with branches and commits, but also GitHub features based on pull requests and reviewers.
+- Collaboration with issues, pull requests, and discussions.
+- Keeping updated with a notification system on users, repository and organisation.
 - GitHub Pages for static hosting.
 
-Overall GitHub guide. It's a nice tutorial really usefull for new to the platform.
+Overall GitHub guide. It's a nice tutorial that is really useful for those new to the platform.
 
 ## Migrate your repository by using GitHub best practices
 > [Link](https://learn.microsoft.com/en-us/training/modules/migrate-repository-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
@@ -388,4 +391,3 @@ Great module on how to use GitHub with Azure. Unfortunatly, this module only tal
 > [Link](https://learn.microsoft.com/en-us/training/modules/implement-code-workflow/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
 This module is a complete project showing the integration between Azure DevOps - the board and pipeline - and GitHub. It's interesting to understand how to use both together and how both platforms provide similar or additional features.
-
