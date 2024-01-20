@@ -1,36 +1,41 @@
 ---
 layout: post
-title:  "Cloud Skills Challenge - Azure AI Language"
+title:  "Cloud Skills Challenge - DevOps Engineer"
 categories: azure azure-devops devops github feedback microsoft-learn
 permalink: microsof-learn/cloud-skills-challenge/devops-engineer
 ---
 # Introduction
-Diving into the [DevOps Engineer](https://learn.microsoft.com/en-us/collections/67pku71drej4?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac).
+Deep dive into the [DevOps Engineer](https://learn.microsoft.com/en-us/collections/67pku71drej4?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac) challenge from Microsoft Learn.
+
+This challenge is a personal way of staying up to date in a neutral context. I use GitHub every day as part of my job, but - as everyone - I'm not familiar with all the platform's features and best practices. Beside, my usage is drive by my compagny needs, that can be far away from best practices and scope on certain topic.
+
+Here are my notes. I capture what I consider interesting and make a quick summary. If you're familiar with GitHub and don't want to read the whole challenge, this is a way of taking only what you want.
 
 # Modules
 ## Capture Web Application Logs with App Service Diagnostics Logging
 > [Link](https://learn.microsoft.com/en-us/training/modules/capture-application-logs-app-service/1-introduction)
 
-- Recall file system logs limitation.
-  - Windows support Blob Storage as log target.
-  - Stderr and Stdout except for Windows ASP.NET and ASP.NET Core apps which are well handle by IIS.
-  - If File System logs on **Windows** is configured, it is automatically reset to **off** after 12 hours for "performance reason": not usable in production.
-  - **Quota** and **Retention period** are available for Blob Storage and Linux File System logs.
+- File system log:
+  - Windows supports [Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction) as a logging target.
+  - Contains *Stderr* and *Stdout* outputs except for Windows *ASP.NET* and *ASP.NET Core* applications, which are managed by IIS.
+  - If file system logs on Windows are configured, they are automatically reset to **off** after 12 hours for "performance reasons": This is not usable in production.
+  - The *Quota* and *Retention period* are available for **Azure Blob Storage** and Linux file system logs.
   - Storage location:
     - Windows & File System: Virtual drive in `D:\Home`.
-    - Windows & Blob Storage: Store as year, month, date and hour hierarchy.
-    - Linux: Docker log files accessible from SSH.
-  - Storage access for Windows: Az CLI, Kudu and Az Storage browser depending of the log destination.
-- Azure Application Insight.
-  - More information: Monitoring, performance, designed for production.
-  - SDK based and so need configuration.
+    - Windows & **Azure Blob Storage**: Storage in year, month, date and time hierarchies.
+    - Linux: Docker log files accessible via SSH.
+  - Windows storage access: [Az CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli), [Kudu](https://learn.microsoft.com/en-us/azure/app-service/resources-kudu) and the storage browser depending on log destination.
+- Azure Application Insight:
+  - More info: Monitoring, performance, designed for production.
+  - SDK-based, so requires configuration.
   - Billable service.
-- Log stream
-  - Real time analysis.
-  - Connect to a single instance so not fully usefull with multi-instance app.
-  - Accessible with **curl** but need FTPS credentials.
+  - [Doc](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview)
+- Log feeds panel:
+  - Real-time analysis.
+  - Connection to a single instance, so not totally useful with a multi-instance application - and so production -.
+  - Accessible with **curl** but requires FTPS credentials.
 
-Good and smooth introduction of logs on Azure Web Application but too focus on Windows.
+Good introduction to logs on Azure Web Application, but too Windows-centric.
 
 ## Control and organize Azure resources with Azure Resource Manager
 > [Link](https://learn.microsoft.com/en-us/training/modules/control-and-organize-with-azure-resource-manager/)
@@ -383,3 +388,4 @@ Great module on how to use GitHub with Azure. Unfortunatly, this module only tal
 > [Link](https://learn.microsoft.com/en-us/training/modules/implement-code-workflow/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
 This module is a complete project showing the integration between Azure DevOps - the board and pipeline - and GitHub. It's interesting to understand how to use both together and how both platforms provide similar or additional features.
+
