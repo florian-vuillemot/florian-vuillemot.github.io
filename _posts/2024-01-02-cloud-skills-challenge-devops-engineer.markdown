@@ -165,7 +165,7 @@ Interesting module with an exercise using Event Grid with the Logic App on a goo
 - Microsoft Defender for Cloud:
   - Integrated natively into the platform, it centralizes security information in one place
   - Connects to a Log Analysis Workspace to capture and analyze logs.
-  - Analyzes data, network, and application security, as well as identity and access.
+  - Analyzes data, network, application security, identity, and access.
   - Recommendation based on scoring simplifying prioritization. Ex: apply MFA.
   - Enable just-in-time (JIT) access to virtual machines to authorize access to virtual machines for a limited period and audit them.
   - *Adaptive Application Control* to verify the conformity of processes running on a virtual machine. If an unusual process is running, trigger an alert.
@@ -201,28 +201,28 @@ Overall GitHub guide. It's a nice tutorial that is really useful for those new t
 ## Migrate your repository by using GitHub best practices
 > [Link](https://learn.microsoft.com/en-us/training/modules/migrate-repository-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
-- GitHub is a Cloud based solution and all on GitHub must be considered as compromised.
-- History can be keept.
+- GitHub is a cloud-based solution, and everything on GitHub must be considered compromised.
+- History can be kept.
 - Support Large File is needed via [Git LFS](https://git-lfs.com/).
-- Understand files as a Gitignore for simpler and safer collaboration. [Here some best practices](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions).
+- Understand collaboration files as a Gitignore or README.md to simplify the collaboration. [Here some best practices](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions).
 
-Getting started practise around GitHub with a lab.
+Getting started, practice around GitHub.
 
 ## Upload your project by using GitHub best practices
 > [Link](https://learn.microsoft.com/en-us/training/modules/upload-project-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
 - Import project in GitHub.
-- Add meta data on the project as email for commits.
+- Add metadata on the project as email for commits.
 - Import or create a project with the GitHub website, the Git command or the GitHub CLI.
 
-The content is near from the previous module but with a example focused on the migration from another code management platform.
+The migration example from another code management platform is interesting.
 
 ## Manage repository changes by using pull requests on GitHub
 > [Link](https://learn.microsoft.com/en-us/training/modules/manage-changes-pull-requests-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
-- Pull Request and review as communication tool.
+- Pull Requests and review as a communication tool.
 
-GitHub practices around Pull Request and processes.
+The module focuses on GitHub practices around Pull Request and processes.
 
 ## Settle competing commits by using merge conflict resolution on GitHub
 > [Link](https://learn.microsoft.com/en-us/training/modules/resolve-merge-conflicts-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
@@ -236,98 +236,100 @@ Basic good practices around Git and the integration in GitHub.
 
 - Search on [GitHub](https://github.com/search/advanced) in repository and pull requests.
   - The search [syntax](https://docs.github.com/en/search-github/getting-started-with-searching-on-github/about-searching-on-github)
-- [Links](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/autolinked-references-and-urls) between PR, issues, comment based on tag and keywords.
+- [Links](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/autolinked-references-and-urls) between PR, issues, comments based on tag and keywords.
 
-Still on the GitHub usage, it's a good module on common pure GitHub usage.
+Common standard GitHub usage.
 
 ## Manage an InnerSource program by using GitHub
 > [Link](https://learn.microsoft.com/en-us/training/modules/manage-innersource-program-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
-- Using OpenSource in compagny by keeping best practises: [InnerSource](https://resources.github.com/innersource/fundamentals/).
-  - Keeping transparency, communication, history.
-  - Reduce friction by enabling self doing from a team to another and even fork.
+- Using OpenSource best practices but in companies context by using [InnerSource](https://resources.github.com/innersource/fundamentals/).
+  - Keeping transparency, communication, and history.
+  - Reduce friction by enabling self-doing from one team to another and even repository fork if needed.
   - Standardize practices.
 - Repository permissions
   - Read level is recommended for non-code contributors who want to view or discuss the project.
   - Triage level is recommended for contributors who need to proactively manage issues and pull requests without write access.
-  - Write level is recommended for contributors who actively push to the project.
-  - Maintain level is recommended for project managers who need to manage the repository without access to sensitive or destructive actions.
-  - Admin level is recommended for people who need full access to the project, including sensitive and destructive actions like managing security or deleting a repository.
-- Readme, naming and description to allow retrieve information at scale.
-- Readme.md, codeowner and contributing.md can be put in the `.github` folder.
-- Standardize process using pull request templates.
+  - *Write* level is recommended for contributors who actively push to the project.
+  - *Maintain* level is recommended for project managers who manage the repository without access to sensitive or destructive actions.
+  - *Admin* level is recommended for people who need full access to the project, including sensitive and destructive actions like managing security or deleting a repository.
+- `Readme.md`, `CODEOWNER.md`, and `CONTRIBUTING.md` can be put in the `.github` folder. They are essential to retrieve information at scale.
+- Standardize processes using templates for Pull Requests and Issues.
 
-Great module on how to use InnerSource and mesure if its working.
+Great module on how to use InnerSource and measure if it's working.
 
 ## Communicate effectively on GitHub using Markdown
 > [Link](https://learn.microsoft.com/en-us/training/modules/communicate-using-markdown/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
 - Broad description of the Markdown language.
 - Introduction to the GitHub-Flavored Markdown (GFM).
-- Reference using a URL, the syntax '#', 'GH-' or 'Username/Repository#' for pull request and issues. Similar syntax for commit and users.
-- Commands base on '/command' as '/code' or '/details'.
+- Reference using a URL, the syntax '#', 'GH-' or 'Username/Repository#' for *Pull Request* and *Issues*. Similar syntax for commit and users.
+- Commands based on '/command' as '/code' or '/details'.
 
-Good review of the Markdown/GFM on GitHub to be more efficient on day to day tasks.
+Good review of the Markdown/GFM on GitHub to be more efficient on day-to-day tasks.
 
 ## Maintain a secure repository by using GitHub best practices
 > [Link](https://learn.microsoft.com/en-us/training/modules/maintain-secure-repository-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
-- Shift left the security and must be handle at the begining of the project.
-- Use the "security" tab of the repository
-  - Security policies that allow you to specify how to report a security vulnerability in your project by adding a SECURITY.md file to your repository.
-  - Dependabot alerts that notify you when GitHub detects that your repository is using a vulnerable dependency or malware.
-  - Security advisories that you can use to privately discuss, fix, and publish information about security vulnerabilities in your repository.
-  - Code scanning that helps you find, triage, and fix vulnerabilities and errors in your code with CodeQL.
-  - Secret scanning to prevent credential leaks. In case of leak, remove and push the history then contact GitHub to clear some cache.
+- Handle the security at the beginning of the project.
+- Security is like deployment or tests; it must **shift left**.
+- Use the *Security* tab of the repository
+  - *Security policies* allow you to specify how to report a security vulnerability in your project by adding a `SECURITY.md` file to your repository.
+  - *Dependabot* alerts notify you when GitHub detects that your repository uses a vulnerable dependency or malware.
+  - *Security advisories* that you can use to privately discuss, fix, and publish information about security vulnerabilities in your repository.
+  - *Code scanning* that helps you find, triage, and fix vulnerabilities and errors in your code with [CodeQL](https://codeql.github.com/).
+  - *Secret scanning* to prevent credential leaks. Remove the secret from the history by rewriting it, then contact GitHub to clear some cache. Of course, don't forget to revoke the leaked credentials.
 - Use `.gitignore` for sensitive files.
-- Assume your GitHub account as compromised.
+- Assume your GitHub account is compromised.
 - Use branch protection rules.
-- Use codeowner.
+- Use code owner file.
 
-Good introduction! CodeQL can be complex but really powerfull, a deep dive would be appreciate.
+Good inputs on the security shift left. However, a deep dive into CodeQL would have been appreciated.
 
 ## Automate DevOps processes by using GitHub Apps
 > [Link](https://learn.microsoft.com/en-us/training/modules/automate-devops-github-apps/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
-- Use API to extend GitHub functionality.
+- Use API to extend GitHub functionalities.
 - Permission can be at the repository level.
 - Oauth App
-  - Application acting on behalf of a user.
+  - The application acts on behalf of a user.
   - Consume a seat on GitHub Orga.
-  - For read, write and modify user data.
+  - For reading, writing, and modifying user data.
 - GitHub App
-  - Install on personal, orga or repository. Need admin access.
+  - Install on personal, orga or repository.
+  - Need admin access.
   - Does not consume GitHub seat.
   - Need token.
   - Customize permissions.
-  - Support auth as user as Oauth App.
+  - Support auth on behalf of the user as Oauth App.
 - Events can be
-  - GitHub webhooks
-  - Polling
+  - GitHub webhooks.
+  - Polling.
 - Github tokens
   - GitHub personal access tokens (ghp)
-    - Individual token for user
-    - Can be fined-grained
+    - Individual token for user.
+    - Can be fined-grained.
   - Device token (gup)
     - Machine version of PAT.
     - Mainly for runners.
   - GitHub Application Installation tokens (ghs)
-    - Valid for a short period of time
-    - Perfect for installation actions
+    - Valid for a short period.
+    - Perfect for installation actions.
   - OAuth access tokens (gho)
-    - For headless CLI
-    - Can be acquired using the web application flow
-    - Behalf oauth.
-  - Refresh tokens (ghr): OAuth token refreshed
-- There is rate limits on tokens delivrery. GitHub allows to monitor and manage it.
+    - For headless CLI.
+    - Can be acquired using the web application flow.
+    - Behalf the user.
+  - Refresh tokens (ghr)
+     - OAuth token refreshed.
+- There are rate limits on token delivery. GitHub allows to monitor and manage it.
 
-Great module with total new content. Github App is a good topic and market for numerous tools. The exercice based on a video is interesting fit well behalf this module.
+GitHub App is a good topic and market for numerous tools. The exercise based on a video is interesting and fits well for this module.
 
 ## Automate GitHub by using GitHub Script
 > [Link](https://learn.microsoft.com/en-us/training/modules/automate-github-using-github-script/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
 - Based on [Octokit](https://octokit.github.io/rest.js/v20).
-- Provide a Octokit client authenticate on the repository.
+- Provide an Octokit client authentication on the repository.
 - Another way to interact with GitHub APIs and act on them.
 
 Ex:
@@ -344,50 +346,53 @@ Ex:
       })
 ```
 
-Each organisation creates their own process and GitHub Script helps a lot for implement them and this module provides valuable information on it.
+Each organization creates its own processes, and GitHub Script helps a lot in implementing them.
 
 ## Manage software delivery by using a release based workflow on GitHub
 > [Link](https://learn.microsoft.com/en-us/training/modules/release-based-workflow-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
 - Using GitHub Project and issues to create sprint.
-- Sprint are time-boxed period to produce incremental changes.
+- Sprints are time-boxed periods to produce incremental changes.
 - Milestones are similar to project tracking but focused on product features.
-- Long-lived branches should mainly be for released and must come from the `main` branch. Also they must be protected against write and delete.
-- Use `git cherry-pick` to apply specific commits from a branch to another and update releases.
+- Long-lived branches should mainly be for released and must come from the `main` branch. Also, they must be protected against modifications or deletions.
+- Use `git cherry-pick` to apply specific commits from one branch to another and update releases.
 - Releasing to consumers must be based on [GitHub releases](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases).
 
-Managing project release is simplify by Git, GitHub release and GitHub Project and this module clearly explain how to do it correctly.
+Managing project releases is simplified by Git, GitHub Releases, and GitHub Project, and this module clearly explains how to do it correctly.
 
 ## Build continuous integration (CI) workflows by using GitHub Actions
 > [Link](https://learn.microsoft.com/en-us/training/modules/github-actions-ci/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac&ns-enrollment-type=Collection&ns-enrollment-id=67pku71drej4)
 
-- GitHub Action for automated task on a repository and its content based on event.
-- An [Artifact](https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts) is a job output other then logs and it can be keept and stored.
-- Environment variable for workflows can be provided
-  - At the GitHub level in [secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) and [variable](https://docs.github.com/en/actions/learn-github-actions/variables) - defined by someone with permission -
-  - At the workflow and job level - defined by the developper -
-  - By GitHub directly - defined by GitHub -
-- Customs scripts for the CI can directly be put in the `.github/scripts` folder.
-- Reproductible action in workflow - as installing dependencies - can be reuse between runs and reduce the CI time by using [cache](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows).
+- GitHub Action automated tasks on a repository and its content based on events.
+- An [Artifact](https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts) is a job output besides logs that can be kept and stored.
+- Environment variables for workflows can be provided
+  - At the GitHub level in [secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) and [variable](https://docs.github.com/en/actions/learn-github-actions/variables) - by someone with permission -.
+  - At the workflow and job level - defined by the developer -.
+  - By GitHub directly.
+- Customs scripts for the CI can be put directly in the `.github/scripts` folder.
+- Reproducible action in the workflow - as installing dependencies - can be reused between workflows to reduce the CI time thanks to [cache](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows).
 - More [debugging information](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging) can be provided at the runner or step level by defining in GitHub secrets respectively `ACTIONS_RUNNER_DEBUG` and `ACTIONS_STEP_DEBUG` to true.
 - Logs are accessible from the GitHub UI or by API.
 
-This module well introduce the GitHub Action syntax and the possiblity offer. I'm surprised it comes after the module **Automate GitHub by using GitHub Script** introducing the `Octokit` framework which imply a GitHub workflow.
+This module introduces the GitHub Action syntax and the possibilities offered. I'm surprised it comes after the module **Automate GitHub by using GitHub Script**, which needs GitHub workflow.
 
 ## Build and deploy applications to Azure by using GitHub Actions
 > [Link](https://learn.microsoft.com/en-us/training/modules/github-actions-cd/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
-- GitHub Action can upload a container image on Azure using pre build actions on the [GitHub marketplace](https://github.com/marketplace).
-- GitHub Action can also interact with resources on cloud provider as Azure. It can be use to create, modify or delete cloud resources.
-- Workflow status badges can provide visibility.
+- GitHub Action can upload a container image on Azure using pre-build actions on the [GitHub marketplace](https://github.com/marketplace).
+- GitHub Action can also interact with resources on cloud providers such as Azure and can create, modify, or delete cloud resources.
+- Workflow status badges can provide visibility
   - They can display information on any branch or event on the repository.
-  - They can be integrated in website, not only GitHub.
+  - They can be integrated into a website, not only GitHub.
   - Ex: `![example branch parameter.](https://github.com/mona/special-octo-eureka/actions/workflows/grading.yml/badge.svg?branch=my-workflow)`
-- Workflow can use [environments](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment) with custom secrets and variables. As branches, they can be protected with reviewer or delay with a timer.
+- Workflow can use [environments](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment) with custom secrets and variables. As branches, they can be protected with reviewers or delayed with a timer.
 
-Great module on how to use GitHub with Azure. Unfortunatly, this module only talk about auth based on token between both platforms. Even if more complex, an [OpenId](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-azure) configuration steps would be appreciate.
+This module only talks about authentication between Azure and GitHub based on tokens, forgetting tokenless solution as [OpenId](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-azure).
 
 ## Implement a code workflow in your build pipeline by using Git and GitHub
 > [Link](https://learn.microsoft.com/en-us/training/modules/implement-code-workflow/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
-This module is a complete project showing the integration between Azure DevOps - the board and pipeline - and GitHub. It's interesting to understand how to use both together and how both platforms provide similar or additional features.
+This module is a complete project showing the integration between Azure DevOps - the board and pipeline - and GitHub. It's interesting to understand how to use both and how both platforms provide similar or additional features.
+
+# Summary
+This challenge is perfect for a new GitHub and Azure user. My initial goal was a success; I learned. However, what I've learned pales in comparison to the time spent. If you're already familiar with Azure and GitHub, I hope this article will help you choose the most useful modules for you and save you time.
