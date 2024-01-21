@@ -29,7 +29,7 @@ Here are my notes. I capture what I consider interesting and make a quick summar
   - More info: Monitoring, performance, designed for production.
   - SDK-based, so it requires configuration.
   - Billable service.
-  - [Doc](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview)
+  - [Doc](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview).
 - Log feeds panel:
   - Real-time analysis.
   - Connection to a single instance, so not useful with a multi-instance application - and so production -.
@@ -92,7 +92,7 @@ What's interesting about this module is the importance of project management. Te
 ## Analyze your Azure infrastructure by using Azure Monitor logs
 > [Link](https://learn.microsoft.com/en-us/training/modules/analyze-infrastructure-with-azure-monitor-logs/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
-- Data collected :
+- Data collected:
   - Application data: Data relating to your customized application code.
   - Operating system data: Data from the Windows or Linux virtual machines hosting your application.
   - Azure resource data: Data relating to the operations of an Azure resource, such as a web application or a load balancer.
@@ -101,7 +101,7 @@ What's interesting about this module is the importance of project management. Te
 - Activation of logging and diagnostic agent with [Log Analytics Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/log-analytics-workspace-overview).
 - Logs: Time-stamped information organized in the form of records. The type of event and quantity are difficult to predict.
 - Metrics: Numerical values describing an aspect of the system at a given time. Constant over time, the quantity is easy to predict.
-- [Introduction to Kusto] (https://learn.microsoft.com/en-us/training/modules/analyze-infrastructure-with-azure-monitor-logs/3-create-log-queries).
+- [Introduction to Kusto](https://learn.microsoft.com/en-us/training/modules/analyze-infrastructure-with-azure-monitor-logs/3-create-log-queries).
 
 Good overview of the [Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/overview) service. The exercises with Kusto are good, but a dedicated module might be better. This language is a pillar of the platform, and even though it's simple and close to SQL, it takes time to master.
 
@@ -150,13 +150,13 @@ A key module on monitoring and how to define it within your organization.
   - Events are updated infrastructures that can be filtered and customized.
   - 24-hour retries to ensure message delivery.
   - Webhook manager for calling an endpoint outside Azure.
-- Logical application:
+- [Logic Apps](https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-overview):
   - Can be triggered by the Event Grid.
   - Designer and JSON view.
   - Allows logical flow and conditions.
   - Plenty of connectors.
 
-Interesting module with an exercise using Event Grid with the Logic App on a good use case.
+Interesting exercise using Event Grid with the Logic App on a good use case.
 
 ## Design a full-stack monitoring strategy on Azure
 > [Link](https://learn.microsoft.com/en-us/training/modules/design-monitoring-strategy-on-azure/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
@@ -184,7 +184,7 @@ Interesting module with an exercise using Event Grid with the Logic App on a goo
 - Azure Monitor can be used with managed Graphana.
 - All collected information can be used to create alert rules.
 
-General theory module. The security topic is new, but much of the monitoring information is redundant with previous modules.
+The security topic is new, but much of the monitoring information is redundant with previous modules.
 
 ## Introduction to GitHub
 > [Link](https://learn.microsoft.com/en-us/training/modules/introduction-to-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
@@ -234,8 +234,8 @@ Basic good practices around Git and the integration in GitHub.
 ## Search and organize repository history by using GitHub
 > [Link](https://learn.microsoft.com/en-us/training/modules/search-organize-repository-history-github/?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac)
 
-- Search on [GitHub](https://github.com/search/advanced) in repository and pull requests.
-  - The search [syntax](https://docs.github.com/en/search-github/getting-started-with-searching-on-github/about-searching-on-github)
+- Search on [GitHub](https://github.com/search/advanced) in repository and pull requests:
+  - The search [syntax](https://docs.github.com/en/search-github/getting-started-with-searching-on-github/about-searching-on-github).
 - [Links](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/autolinked-references-and-urls) between PR, issues, comments based on tag and keywords.
 
 Common standard GitHub usage.
@@ -247,7 +247,7 @@ Common standard GitHub usage.
   - Keeping transparency, communication, and history.
   - Reduce friction by enabling self-doing from one team to another and even repository fork if needed.
   - Standardize practices.
-- Repository permissions
+- Repository permissions:
   - Read level is recommended for non-code contributors who want to view or discuss the project.
   - Triage level is recommended for contributors who need to proactively manage issues and pull requests without write access.
   - *Write* level is recommended for contributors who actively push to the project.
@@ -263,8 +263,8 @@ Great module on how to use InnerSource and measure if it's working.
 
 - Broad description of the Markdown language.
 - Introduction to the GitHub-Flavored Markdown (GFM).
-- Reference using a URL, the syntax '#', 'GH-' or 'Username/Repository#' for *Pull Request* and *Issues*. Similar syntax for commit and users.
-- Commands based on '/command' as '/code' or '/details'.
+- Reference using a URL, the syntax `#`, `GH-` or `Username/Repository#` for *Pull Request* and *Issues*. Similar syntax for commit and users.
+- Commands based on `/command` as `/code` or `/details`.
 
 Good review of the Markdown/GFM on GitHub to be more efficient on day-to-day tasks.
 
@@ -273,7 +273,7 @@ Good review of the Markdown/GFM on GitHub to be more efficient on day-to-day tas
 
 - Handle the security at the beginning of the project.
 - Security is like deployment or tests; it must **shift left**.
-- Use the *Security* tab of the repository
+- Use the *Security* tab of the repository:
   - *Security policies* allow you to specify how to report a security vulnerability in your project by adding a `SECURITY.md` file to your repository.
   - *Dependabot* alerts notify you when GitHub detects that your repository uses a vulnerable dependency or malware.
   - *Security advisories* that you can use to privately discuss, fix, and publish information about security vulnerabilities in your repository.
@@ -291,35 +291,35 @@ Good inputs on the security shift left. However, a deep dive into CodeQL would h
 
 - Use API to extend GitHub functionalities.
 - Permission can be at the repository level.
-- Oauth App
+- Oauth App:
   - The application acts on behalf of a user.
   - Consume a seat on GitHub Orga.
   - For reading, writing, and modifying user data.
-- GitHub App
+- GitHub App:
   - Install on personal, orga or repository.
   - Need admin access.
   - Does not consume GitHub seat.
   - Need token.
   - Customize permissions.
   - Support auth on behalf of the user as Oauth App.
-- Events can be
+- Events can be:
   - GitHub webhooks.
   - Polling.
-- Github tokens
-  - GitHub personal access tokens (ghp)
+- Github tokens:
+  - GitHub personal access tokens (ghp):
     - Individual token for user.
     - Can be fined-grained.
-  - Device token (gup)
+  - Device token (gup):
     - Machine version of PAT.
     - Mainly for runners.
-  - GitHub Application Installation tokens (ghs)
+  - GitHub Application Installation tokens (ghs):
     - Valid for a short period.
     - Perfect for installation actions.
-  - OAuth access tokens (gho)
+  - OAuth access tokens (gho):
     - For headless CLI.
     - Can be acquired using the web application flow.
     - Behalf the user.
-  - Refresh tokens (ghr)
+  - Refresh tokens (ghr):
      - OAuth token refreshed.
 - There are rate limits on token delivery. GitHub allows to monitor and manage it.
 
@@ -365,7 +365,7 @@ Managing project releases is simplified by Git, GitHub Releases, and GitHub Proj
 
 - GitHub Action automated tasks on a repository and its content based on events.
 - An [Artifact](https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts) is a job output besides logs that can be kept and stored.
-- Environment variables for workflows can be provided
+- Environment variables for workflows can be provided:
   - At the GitHub level in [secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) and [variable](https://docs.github.com/en/actions/learn-github-actions/variables) - by someone with permission -.
   - At the workflow and job level - defined by the developer -.
   - By GitHub directly.
@@ -381,7 +381,7 @@ This module introduces the GitHub Action syntax and the possibilities offered. I
 
 - GitHub Action can upload a container image on Azure using pre-build actions on the [GitHub marketplace](https://github.com/marketplace).
 - GitHub Action can also interact with resources on cloud providers such as Azure and can create, modify, or delete cloud resources.
-- Workflow status badges can provide visibility
+- Workflow status badges can provide visibility:
   - They can display information on any branch or event on the repository.
   - They can be integrated into a website, not only GitHub.
   - Ex: `![example branch parameter.](https://github.com/mona/special-octo-eureka/actions/workflows/grading.yml/badge.svg?branch=my-workflow)`
