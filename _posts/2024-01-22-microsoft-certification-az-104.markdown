@@ -110,9 +110,25 @@ These notes are personal documentation on Az-104 certification. Readers may use 
 - Can't be nested.
 - Groups can be added but not users of the groups. So AU adminstrator can't control users outside their AU.
 
+## Entitlement management
+- Allow to create access packages (typical for a new collaborator).
+- Allow self requests with approvers and time box.
+- Access to Sharepoint, Application using Entra.
+- Concepts
+  - Catalog
+    - Resources (1)
+    - Access packages
+      - Resources (1)
+      - Lifecycle
+      - Resources Roles
+      - Requests
+        - In directory, external users, administrator assignmeents.
+        - Require approval
+        - Enable new requests.
+
 # Azure Storage solution
 - Azure Blob Storage support the protocol NFS.
-- Azure Queue Storage: messge can be up to 64KB.
+- Azure Queue Storage: message can be up to 64KB.
 - Standard general-purpose v2 support services:
   - Blob Storage - including Data Lake Storage -.
   - Queue Storage.
@@ -123,7 +139,7 @@ These notes are personal documentation on Az-104 certification. Readers may use 
   => Block blobs and append blobs. For smaller objects and low storage latency.
 - Premium file share:
   - Azure Files.
-  - SMB and NFS support.
+  - SMB (port 445) and NFS (port 2049) support.
 - Premium page blobs:
   - Page blobs only.
   - For storing index and sparse data structures.
@@ -159,14 +175,38 @@ These notes are personal documentation on Az-104 certification. Readers may use 
   - Archive:
     - Min storage retention: 180 days.
     - Redundancy conf: LRS, GRS, RA-GRS.
+    - Rehydration priority can be specify when asking for rehydration and specify at the blob level:
+      - Standard priority:
+        - Default option.
+        - Up to 15 hours to complete for objects > 10 GB.
+      - High priority:
+        - Additional cost.
+        - Complete in less then 1 hour for objects < 10 GB.
 - Blob lifecycle are based on if/then condition.
 - Snapshot are not replicated across region.
 - **Client-side encryption** allows user to protect data in transit by doing the encryption locally.
 - User delegate key is a key secured by Entra.
 - The Stored Access Policy is used to grant permissions on containers, and can be associated with SAS to restrict them.
+- Object storage replication
+  - Change feed on source account.
+  - Blob versioning on source and dest => This is why this functionality is not available with Hierarchical Namespace on DataLake.
+- Redundancy migration can need to perform a conversion in the redundancy panel before or after changing the SKU.
+
+## Storage Insights
+- Allows sorting
+  - Transactions
+  - Latency
+  - Errors
+  - Availability
+- Max 200 storage accounts displayed.
+- Cross subscription.
 
 # Virtual Machine
 - Only support 64 bits system.
+- Diagnostics Extension allows to collect application logs and performance from a Windows VM and put them in a storage account.
+- Encryption
+  - Can be performed with the machine running.
+  - Can target "OS", "DATA" or "All" disks.
 
 # Azure Backup
 - Contains Backup Center for managing all backups.
@@ -178,6 +218,9 @@ These notes are personal documentation on Az-104 certification. Readers may use 
   - Compatible with Microsoft Azure Backup Server (MABS) and System Center Data Protection Manager (DPM) server.
   - Data are saved on Azure.
   - Can save only a file or folder.
+- Azure Site Recovery.
+  - **High Churn** support for VM like database for a better RPO.
+    - Using *Prenium Block Blob* the cost is higher.
 
 # Permissions
 - Azure roles manages Azure ressources as VM or blob.
@@ -189,4 +232,60 @@ These notes are personal documentation on Az-104 certification. Readers may use 
 - Member users can invite guest users.
 - Use Entra B2B for collaboration between companies.
 - Roles are provided with the combination of Roles Definitions, Scopes an the Security Principal targetted.
+- By default all users can create Management Group. Toggle the "Require permissions for creating new management groups" under the root management group.
 
+# Alerting
+- Rate limit
+  - Email alerts: 100/hour.
+  - Voice and SMS: 12/hour.
+
+# Azure Container Instances
+- Container Groups can be deployed in a subnet:
+  - Empty
+  - Containing another Container Group.
+
+# Dashboard
+- No more then 30 days of data can be displayed.
+
+# Miscellianous
+- SFTP => 22
+- FTPS => 989 & 990
+
+# Load balancer
+- Standard SKU
+  - Only supports Standard Public IP.
+  - **Deny** inbound connection by default.
+  - HTTPS health probe.
+  - Backend based on IP or NIC.
+  - Allow outbound with NAT.
+  - Private link and Global.
+- Basic SKU
+  - Support Standard and default Public IP.
+  - **Allow** inbound connection by default.
+  - Only backend based on NIC.
+  - No availability zones.
+  - No diagnostic.
+  - No SLA.
+
+# App Service plan
+- WebJobs
+  - Continuous or triggered
+    - Continuous:
+      - Can run on all instances of the linked web app.
+      - The program run in a endless loop. If end, it can be restarted.
+      - Starts when created.
+      - Support remote debugging.
+    - Triggered:
+      - Can **only** run on one instance. Selected by Azure for load balancing.
+      - Start when manually triggered or schedule.
+  - Support basic plan.
+  - Can be linked to a web project to run in its context. Otherwise, it can run as web app by itself.
+  - For Windows only.
+  - D1 Shared plan allow 240 CPU minutes /day.
+
+# Azure Policy
+- Evaluation order: Disabled, Append, Deny, Audit.
+- Append:
+  - Add additional field during the creation/update of resource.
+  - If field already exists but value different, then the policy acts as deny and rejects the request.
+- DeployIfNotExists effect is only evaluated if the request is a success.
