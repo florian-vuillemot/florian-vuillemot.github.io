@@ -74,6 +74,8 @@ These notes are personal documentation on Az-104 certification. Readers may use 
   - Premium P1:
     - Self-service password reset (SSPR) for on-premises users.
       - Global Administrator can always reset their passwords.
+      - WriteBack on-premise is possible.
+      - Can be registered by groups or for all domain users.
     - Conditional Access.
     - Advanced Group Access Management.
     - Hybrid identites - for on-premises accesses -.
@@ -82,13 +84,15 @@ These notes are personal documentation on Az-104 certification. Readers may use 
     - Identity Protection.
     - Just-in-time access.
     - Identity Governance.
+  - Microsoft 365 Business Standard;
+    - Does not support writeback on AD.
 
 ## User accounts
 - Cloud identity: Only defined in Microsoft Entra ID.
 - Directory-synchronized identity: From Active Directory.
 - Guest user: Outside as other cloud provider, XBOX Live, etc.
 - Create or invite by **Global Administrator** or **User Administrator**.
-- Can be restored after 30 days.
+- Can't be restored after 30 days.
 
 ## Group accounts
 - Security groups:
@@ -191,6 +195,7 @@ These notes are personal documentation on Az-104 certification. Readers may use 
   - Change feed on source account.
   - Blob versioning on source and dest => This is why this functionality is not available with Hierarchical Namespace on DataLake.
 - Redundancy migration can need to perform a conversion in the redundancy panel before or after changing the SKU.
+- With AzCopy `sync` command, the flag `--delete-destination` delete files that are in the dest folder but not the origin.
 
 ## Storage Insights
 - Allows sorting
@@ -207,6 +212,14 @@ These notes are personal documentation on Az-104 certification. Readers may use 
 - Encryption
   - Can be performed with the machine running.
   - Can target "OS", "DATA" or "All" disks.
+- Boot diagnostics
+  - Doesn't support Prenium and ZRS Storage Account.
+  - The Storage Account must be located in the same region as the VM.
+- Fault Domains (physically separeted) max 3.
+- The update domains is how VMs are separed in scale set and packet for software updates. Ex: for 6 VMs, a update domains of 2 lead to updates VMs by block of 3.
+- Disks
+  - Can be attached or dettached while the VM is running
+  - `Update-AzVM` after attached or dettached a disk to update the VM state.
 
 # Azure Backup
 - Contains Backup Center for managing all backups.
@@ -233,6 +246,14 @@ These notes are personal documentation on Az-104 certification. Readers may use 
 - Use Entra B2B for collaboration between companies.
 - Roles are provided with the combination of Roles Definitions, Scopes an the Security Principal targetted.
 - By default all users can create Management Group. Toggle the "Require permissions for creating new management groups" under the root management group.
+- The Entra role **User Administrator** allows user management without access to Azure ressources.
+- The role **User Access Administrator** allows to create and manage users and group but manage support tickets and service health.
+
+# Monitor
+- APIs
+  - metric:getBatch
+    - Retrieved batch data in place of multiple API calls.
+    - All resources must be in the same subscription, region and of the same type.
 
 # Alerting
 - Rate limit
@@ -281,7 +302,30 @@ These notes are personal documentation on Az-104 certification. Readers may use 
   - Support basic plan.
   - Can be linked to a web project to run in its context. Otherwise, it can run as web app by itself.
   - For Windows only.
-  - D1 Shared plan allow 240 CPU minutes /day.
+- D1 Shared plan allow 240 CPU minutes /day.
+- Scaling
+  - Basic => No autoscale and max 3 instances.
+  - Standard => Max 10 instances.
+  - Premium => Max 30 instances.
+  - Isolated => Max 100 instances.
+- Backups
+  - Support Prenium and Standard storage.
+  - Can be restored to an Deployment Slot.
+  - Automatic
+    - Without settings.
+    - Support 0-30 days of retention.
+    - Restored in the **same** App Service Plan.
+    - 30GB.
+    - Hourly.
+  - Custom
+    - Linked database backup for SQL Database, Azure Database for MySQL/PostgreSQL.
+    - Indefinite retention point.
+    - Restored in the same or another App Service Plan.
+    - 10GB with max 4GB for the database linked.
+    - Storaged account required.
+    - Can be download.
+    - Partial backup.
+    - Over VNET.
 
 # Azure Policy
 - Evaluation order: Disabled, Append, Deny, Audit.
@@ -289,3 +333,12 @@ These notes are personal documentation on Az-104 certification. Readers may use 
   - Add additional field during the creation/update of resource.
   - If field already exists but value different, then the policy acts as deny and rejects the request.
 - DeployIfNotExists effect is only evaluated if the request is a success.
+
+# Network
+## Troubleshoot
+- **Network Watcher IP Flow** test the outbound connection from the source VM and source port to a IP. If a NSG block the communication, it will display it.
+- **Effective Network Security Group** returns network security rules associated with a network interface.
+- **Connection troublesshoot** is for checking if there was a TCP connection between a source and destination VM.
+- **Next hop** allows to fin the packets travel from a VM to somewhere.
+## VNEt
+- There is no name resolution (DNS) between VNET even if peered.
