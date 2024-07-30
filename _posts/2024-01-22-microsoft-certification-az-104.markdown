@@ -81,6 +81,7 @@ These notes are personal documentation on Az-104 certification. Readers may use 
     - Hybrid identites - for on-premises accesses -.
     - Prenium Features.
   - Premium P2:
+    - Privileged Identity Management.
     - Identity Protection.
     - Just-in-time access.
     - Identity Governance.
@@ -195,7 +196,10 @@ These notes are personal documentation on Az-104 certification. Readers may use 
   - Change feed on source account.
   - Blob versioning on source and dest => This is why this functionality is not available with Hierarchical Namespace on DataLake.
 - Redundancy migration can need to perform a conversion in the redundancy panel before or after changing the SKU.
-- With AzCopy `sync` command, the flag `--delete-destination` delete files that are in the dest folder but not the origin.
+- AzCopy
+  - `sync` command, the flag `--delete-destination` delete files that are in the dest folder but not the origin.
+  - Work with Entra ID and SAS token
+- File share oauth in hybrid => kerberos
 
 ## Storage Insights
 - Allows sorting
@@ -220,6 +224,7 @@ These notes are personal documentation on Az-104 certification. Readers may use 
 - Disks
   - Can be attached or dettached while the VM is running
   - `Update-AzVM` after attached or dettached a disk to update the VM state.
+- File Mapping with Azure File for VM Windows 2019 or younger.
 
 # Azure Backup
 - Contains Backup Center for managing all backups.
@@ -247,7 +252,7 @@ These notes are personal documentation on Az-104 certification. Readers may use 
 - Roles are provided with the combination of Roles Definitions, Scopes an the Security Principal targetted.
 - By default all users can create Management Group. Toggle the "Require permissions for creating new management groups" under the root management group.
 - The Entra role **User Administrator** allows user management without access to Azure ressources.
-- The role **User Access Administrator** allows to create and manage users and group but manage support tickets and service health.
+- The role **User Access Administrator** allows to create and manage users and group but not password.
 
 # Monitor
 - APIs
@@ -271,6 +276,7 @@ These notes are personal documentation on Az-104 certification. Readers may use 
 # Miscellianous
 - SFTP => 22
 - FTPS => 989 & 990
+- SMB => 445
 
 # Load balancer
 - Standard SKU
