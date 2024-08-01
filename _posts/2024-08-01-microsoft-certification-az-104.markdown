@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Microsoft learn - Azure Administrator Associate (AZ-104)"
+title: "Microsoft learn - Azure Administrator Associate (AZ-104)"
 categories: azure feedback microsoft-learn certification az-104 azure-administrator-associate
-permalink: microsof-learn/certification/azure-administrator-associate
+permalink: microsof-learn/certifications/azure-administrator-associate
 ---
 # Introduction
 These are personal notes on the [Azure Administrator Associate](https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/) certification. Readers may use and share them, but they do not constitute a certification tutorial.
