@@ -1,9 +1,8 @@
 ---
-layout: post
-title:  "Cloud Skills Challenge - Azure AI Language"
-categories: azure azure-ai azure-ai-services machine-learning python c# github feedback microsoft-learn nlp
-permalink: microsof-learn/cloud-skills-challenges/azure-ai-language
+title: Cloud Skills Challenge - Azure AI Language
+description: An feedback on the Azure AI Language Cloud Skills Challenge (2024).
 ---
+
 # Introduction
 Diving into the [Azure AI Languages challenge](https://learn.microsoft.com/en-us/collections/qdgnhjj8o7jr?WT.mc_id=cloudskillschallenge_950cffad-678a-41ac-b1f2-cbb50504a35e) wasn't just about winning a [VIP pass for Microsoft Ignite or Microsoft Build](https://www.microsoft.com/en-us/cloudskillschallenge/ignite/registration/2023?ocid=ignite23_CSC_fabricdocs_card) - which would be great - but the occasion to explore the Azure AI Service in an estimated 8 hours based on Microsoft insights. In this article, I'll share my thoughts on whether those hours were well spent and worth it.
 

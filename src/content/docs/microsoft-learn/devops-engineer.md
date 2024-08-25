@@ -1,9 +1,8 @@
 ---
-layout: post
-title:  "Cloud Skills Challenge - DevOps Engineer"
-categories: azure azure-devops devops github feedback microsoft-learn
-permalink: microsof-learn/cloud-skills-challenges/devops-engineer
+title: Cloud Skills Challenge - DevOps Engineer
+description: An feedback on the DevOps Engineer Cloud Skills Challenge (2024).
 ---
+
 # Introduction
 Deep dive into the [DevOps Engineer](https://learn.microsoft.com/en-us/collections/67pku71drej4?WT.mc_id=cloudskillschallenge_8351edfe-a67a-46d4-81cd-6439844b72ac) challenge from Microsoft Learn.
 
