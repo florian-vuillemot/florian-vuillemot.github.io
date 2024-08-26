@@ -1,0 +1,28 @@
+---
+title: Let's talk about Cloud
+description: A technical blog around Cloud technologies
+template: doc
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+	<LinkCard
+		title="Microsoft learn"
+		icon="pencil"
+		href="/guides/example/"
+		description="Certifications, cloud skills challenges and other feedbacks around the Microsoft Learn."
+	/>
+	<LinkCard
+		title="Azure network"
+		icon="setting"
+		description="Network relative topics."
+		href="/guides/example/"
+	/>
+	<LinkCard
+		title="A GitHub, Azure Function and Machine Learning journey"
+		icon="add-document"
+		description="Tutorial on how to train a Machine Learning model on GitHub then deploy it on an Azure Function."
+		href="/guides/example/"
+	/>
+</CardGrid>

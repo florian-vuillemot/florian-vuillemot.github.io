@@ -1,11 +1,10 @@
 ---
-layout: mermaid
-title:  "[Part 3] Azure Functions and machine learning applications"
-categories: azure azure-function machine-learning python github github-action
-permalink: azure-function/machine-learning/part-3
+title: Part 3 - Deployment based on the scoring
+description: Deploy only models with a certain score.
 ---
+
 # Introduction
-The [previous article]({% link _posts/2023-12-10-azure-function-python-ml-part-2.markdown %}) transforms our application enabling remote training through a GitHub Action. This remote training is the basis of the current article, which focuses on improving the application's quality by verifying the trained model's integrity and correctness.
+The [previous article](./part-2) transforms our application enabling remote training through a GitHub Action. This remote training is the basis of the current article, which focuses on improving the application's quality by verifying the trained model's integrity and correctness.
 
 > [Here](https://github.com/florian-vuillemot/az-fct-python-ml/tree/main/part-3) is the code for this article.
 
@@ -13,7 +12,7 @@ The [previous article]({% link _posts/2023-12-10-azure-function-python-ml-part-2
 
 
 # Current status
-The [previous article]({% link _posts/2023-12-10-azure-function-python-ml-part-2.markdown %}) leads to these files:
+The [previous article](./part-2) leads to these files:
 - [function_app.py](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-2/function_app.py): with the application API.
 - [train.py](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-2/train.py): running the model training.
 - [requirements.txt](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-2/requirements.txt): containing the application dependencies.
@@ -120,7 +119,7 @@ Now, add the following step in the GitHub Action workflow [file](https://github.
 
 In case of an error, the GitHub Action stops the workflow and, thus, the deployment.
 
-![Failing test stop the workflow](/assets/2023-12-17-azure-function-python-ml-part-3/failing-test.png)
+![Failing test stop the workflow](../../../assets/serverless-machine-learning/part-3/failing-test.png)
 
 ## Manual validation
 Human validation before updating the production environment is a common use case. GitHub allows this with the [environment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment).
@@ -128,7 +127,6 @@ Human validation before updating the production environment is a common use case
 Environments on GitHub not only enable the scoping of [secrets](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#environment-secrets) and [variables](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#environment-variables), but also the management of [protection rules](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#deployment-protection-rules). Protection rules provide a powerful guardrail that protects an environment from common errors. Especially it allows to specify human [validators](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#required-reviewers) that have to approve changes to let the workflow continue its execution manually.
 
 In fact, our [workflow](https://github.com/florian-vuillemot/az-fct-python-ml/blob/main/part-3/.github/workflows/main_az-fct-python-ml.yml) already uses a **Production** environment created by Azure during the configuration:
-{% raw %}
 ```
 deploy:
   runs-on: ubuntu-latest
@@ -137,7 +135,7 @@ deploy:
     name: 'Production'
     url: ${{ steps.deploy-to-function.outputs.webapp-url }}
 ```
-{% endraw %}
+
 So, we only need to apply a protection rule to add the human validation:
 - Go under the "Settings" bar of the application repository.
 - Then click on the "Environments" panel.
@@ -145,11 +143,11 @@ So, we only need to apply a protection rule to add the human validation:
 - Click "Required reviewers" and add the reviewer: it can be yourself.
 - Then click on "Save protection rules".
 
-![GitHub secret](/assets/2023-12-17-azure-function-python-ml-part-3/protection-rules.gif)
+![GitHub secret](../../../assets/serverless-machine-learning/part-3/protection-rules.gif)
 
 The next time the workflow is executed, it will pause and wait for human validation before performing the `deploy` step.
 
-> For more information about secrets and variables in the context of our application, take a look at the [previous article]({% link _posts/2023-12-10-azure-function-python-ml-part-2.markdown %}).
+> For more information about secrets and variables in the context of our application, take a look at the [previous article](./part-2).
 
 # Training output
 The `train.py` script prints information about the model: 
@@ -165,9 +163,9 @@ This information is essential before validating a deployment, and we want to avo
 
 Now, the user can verify the model's accuracy before deploying it.
 
-![Global workflow](/assets/2023-12-17-azure-function-python-ml-part-3/global-workflow.gif)
+![Global workflow](../../../assets/serverless-machine-learning/part-3/global-workflow.gif)
 
 # Summary and next step
-Controlling what is deployed is a step in an application's journey. After deployment, an application must be monitored, and depending on the metrics, a rollback can take place. As explained in the [following article]({% link _posts/2023-12-24-azure-function-python-ml-part-4.markdown %}), rollbacks can be automated, just as deployments.
+Controlling what is deployed is a step in an application's journey. After deployment, an application must be monitored, and depending on the metrics, a rollback can take place. As explained in the [following article](./part-4), rollbacks can be automated, just as deployments.
 
 > Any comments, feedback, or problems? Please create an issue [here](https://github.com/florian-vuillemot/florian-vuillemot.github.io).

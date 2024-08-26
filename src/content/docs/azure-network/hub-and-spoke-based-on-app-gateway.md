@@ -1,9 +1,8 @@
 ---
-layout: post
-title:  "Hub-spoke based on Azure Application Gateway"
-categories: azure azure-app-gateway hub-and-spoke network
-permalink: azure-application-gateway/simple-hub-and-spoke
+title: Hub-and-spoke based on Azure Application Gateway
+description: Cheap hub and spoke for limited need.
 ---
+
 # Introduction
 
 The hub-spoke architecture is becoming a standard in companies due to its ability to centralize network management, enhance security, improve scalability, and streamline connectivity between various components within the network infrastructure. In Azure, this architecture is frequently based on Azure Firewall; nevertheless, in specific contexts, Azure Application Gateway can offer a cost-effective alternative, ensuring secure and optimized traffic management while reducing overall expenses.
@@ -30,7 +29,7 @@ This section will go over the [reference hub-spoke documentation](https://learn.
 
 The following diagrams show how Azure Firewall can be the bridge between on-premise networks, the cloud or the Internet.
 
-![Firewall based hub-spoke](/assets/2023-06-11-hub-and-spoke-based-on-azure-app-gateway/firewall-based-hub-spoke.png)
+![Firewall based hub-spoke](../../../assets/azure-network/hub-and-spoke-based-on-app-gateway/firewall-based-hub-spoke.png)
 
 Azure Application Gateway is not built to do this job because it works at Layer 7 of the model OSI. Even if possible to obtain some success focussing on HTTP/HTTPS, it is probably a short-term solution.
 
@@ -41,14 +40,14 @@ Spoke to spoke communication can be centralized or not.
 
 ### Centralized with Azure Firewall
 
-![Firewall based hub-spoke - spoke to spoke routing](/assets/2023-06-11-hub-and-spoke-based-on-azure-app-gateway/spoke-spoke-routing.png)
+![Firewall based hub-spoke - spoke to spoke routing](../../../assets/azure-network/hub-and-spoke-based-on-app-gateway/spoke-spoke-routing.png)
 
 That topology is possible with Azure Application Gateway but is limited to HTTP/HTTPS communication. Database protocols or even gRPC and SSH will not be allowed.
 
 
 ### Direct communication
 
-![Firewall based hub-spoke - mesh routing](/assets/2023-06-11-hub-and-spoke-based-on-azure-app-gateway/spoke-spoke-avnm.png)
+![Firewall based hub-spoke - mesh routing](../../../assets/azure-network/hub-and-spoke-based-on-app-gateway/spoke-spoke-avnm.png)
 
 In that case, the protocol will not be a problem because the communication can be direct between spokes.
 
