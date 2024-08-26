@@ -6,6 +6,8 @@ import remarkMermaid from 'remark-mermaidjs'
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://florian-vuillemot.github.io',
+  //base: 'florian-vuillemot.github.io',
   markdown: {
     // Applied to .md and .mdx files
     remarkPlugins: [remarkMermaid],
