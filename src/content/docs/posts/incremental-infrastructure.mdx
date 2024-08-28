@@ -1,0 +1,51 @@
+---
+title: Challenges of incremental infrastructure
+description: Feedback from an incident that led to the complete re-deployment of part of the infrastructure and impacted our increment.
+pubDate: 2024-08-28
+tags: ["incident", "infrastructure", "feedback"]
+---
+
+As the infrastructure evolves daily, it adapts and grows based on previous configurations.
+This dynamic behavior often creates dependencies between resources, which can become challenging to manage during updates or incidents.
+
+## What is incremental infrastructure?
+Incremental infrastructure refers to building your infrastructure step by step, where each resource depends on the previously deployed resources.
+
+For example, consider a team using an Infrastructure as Code (IaC) tool to deploy a Kubernetes Cluster alongside a Container Registry in the cloud.
+They start by deploying the network, followed by the Container Registry, and finally, the Kubernetes Cluster.
+Each component is built upon the previous one, which is what incremental infrastructure is.
+
+## What is the drawback?
+
+The downside of this approach is the "invisible" dependencies between resources, making re-deployment and updates more complex.
+
+A common scenario occurs when someone tries to deploy infrastructure in a new environment and encounters an error due to a missing resource or a dependency on an attribute that has yet to be created in this new environment.
+This situation is akin to circular dependencies in software, but unlike software, these issues don't surface during compilation; they emerge during updates, possibly months after the dependencies were established.
+
+This kind of situation is common when the IAC is through multiple codebases.
+Considering the previous example, but with the network, the Container Registry, and the Kubernetes Cluster in three different codebases.
+Let's say the Container Registry codebase defined the permissions to pull container images from itself.
+This situation creates a circular dependency between the Container Registry and the Kubernetes Cluster.
+Doing so is correct, but it creates circular dependencies between both resources, leading to the impossibility of redeploying them from scratch.
+
+## Why it may be a problem
+In a cloud environment, many resources are purely software-defined; consequently, software updates and bugs are inevitable from the cloud provider's side.
+
+Recently, we faced an issue in which one of our Spark clusters lost its connection to our Container Registry, even though we had made no changes.
+After hours of unsuccessful debugging, we had to delete and recreate the Spark cluster and its associated network spoke.
+Deleting our Spark cluster lead to remove links to other components, such as databases and storage.
+Although our infrastructure was managed through IaC, we had to update several codebases to remove links and add them back after recreating the Spark cluster.
+
+Yes, this extreme and real example is true, and yes, cloud provider contracts include the risk of bugs.
+
+## How can we mitigate these challenges?
+In our case, we should have included the deployment design in our infrastructure design.
+All our infrastructure was designed at a final state and then improved with time without considering re-deployability.
+We never considered it because we were too confident in our IaC, thinking everything could be quickly and simply redeployed by running some pipeline.
+
+Another critical point was knowing which pipeline to run and when.
+It looks stupid, but when everything is down, it can be hard to know what to run and when to increment the infrastructure.
+Worst, some pipelines may run several times to get the correct state due, for example, to some "init" variable in scripts.
+
+## Conclusion
+Incremental infrastructure can lead to a state machine complex being redeployed even with IaC and can lead to a precious loss of time in case of an incident.
