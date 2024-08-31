@@ -3,15 +3,15 @@ title: OAuth with Python and Microsoft Entra ID
 description: Connect to your Python WebApp with your Microsoft Entra account
 ---
 
-This documentation provides a step-by-step guide to creating an application in Microsoft Entra ID and using OAuth 2.0 for authentication in a Python web application. By following this guide, you will be able to authenticate users with their Microsoft Entra accounts using Single Sign-On (SSO). This integration enhances security and simplifies users' login process by leveraging Microsoft's robust identity management platform.
+This documentation provides a step-by-step guide for using Microsoft Entra ID as an identity provider for a Python web application. Leveraging Microsoft's robust identity management platform enhances security and simplifies users' login processes of the application adoption.
 
 # What is Entra ID
 
-[Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/fundamentals/whatis) is a comprehensive cloud identity and access management solution. It provides a robust set of capabilities to manage users and groups, secure access to applications, and ensure compliance with organizational policies.
+[Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/fundamentals/whatis) is a comprehensive cloud identity and access management solution. It provides a robust set of capabilities to manage users and groups and secure access to applications.
 
 This service is used by [Azure](https://azure.microsoft.com/en-us), but both services are independent, and Microsoft Entra ID can be used independently of Azure.
 
-Last point, Microsoft Entra ID is a service provided by [Microsoft Entra](https://learn.microsoft.com/en-us/entra/fundamentals/what-is-entra) that refers to the broader suite of identity and access management solutions offered by Microsoft.
+Last point, Microsoft Entra ID is a service provided by [Microsoft Entra](https://learn.microsoft.com/en-us/entra/fundamentals/what-is-entra) which is a broader suite of identity and access management solutions offered by Microsoft.
 
 # Creates the Entra Application
 
