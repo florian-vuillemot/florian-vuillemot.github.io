@@ -9,11 +9,11 @@ This documentation provides a step-by-step guide to creating an application in M
 
 (Microsoft Entra ID)[https://learn.microsoft.com/en-us/entra/fundamentals/whatis] is a comprehensive identity and access management solution for the cloud. It provides a robust set of capabilities to manage users and groups, secure access to applications, and ensure compliance with organizational policies.
 
-This service is used by [Azure](https://azure.microsoft.com/en-us) but both services are independ and Microsoft Entra ID can be used by its own without Azure.
+This service is used by [Azure](https://azure.microsoft.com/en-us) but both services are independent and Microsoft Entra ID can be used on its own without Azure.
 
-Last point, Microsoft Entra ID is a service provived by (Microsoft Entra)[https://learn.microsoft.com/en-us/entra/fundamentals/what-is-entra] that refers to the broader suite of identity and access management solutions offered by Microsoft.
+Last point, Microsoft Entra ID is a service provided by [Microsoft Entra](https://learn.microsoft.com/en-us/entra/fundamentals/what-is-entra) that refers to the broader suite of identity and access management solutions offered by Microsoft.
 
-# Creates the Entra application
+# Creates the Entra Application
 
 1. **Navigate to the Entra Portal**
    - Open your web browser and go to [Microsoft Entra Portal](https://entra.microsoft.com).
