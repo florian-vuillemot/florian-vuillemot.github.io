@@ -3,7 +3,7 @@ title: OAuth with Python and Microsoft Entra ID
 description: Connect to your Python WebApp with your Microsoft Entra account
 ---
 
-This documentation provides a step-by-step guide for using Microsoft Entra ID as an identity provider for a Python web application. Leveraging Microsoft's robust identity management platform enhances security and simplifies users' login processes of the application adoption.
+This documentation provides a step-by-step guide for using Microsoft Entra ID as an identity provider for a Python web application. Leveraging Microsoft's robust identity management platform enhances security and simplifies users' login processes.
 
 # What is Entra ID
 
