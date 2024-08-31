@@ -27,6 +27,12 @@ export default defineConfig({
         slug: 'azure-network/hub-and-spoke-based-on-app-gateway'
       }]
     }, {
+      label: 'Microsoft Entra',
+      items: [{
+        label: 'OAuth with Python',
+        slug: 'microsoft-entra/oauth-with-python'
+      }]
+    }, {
       label: 'Microsoft Learn',
       items: [{
         label: 'AZ 104',
