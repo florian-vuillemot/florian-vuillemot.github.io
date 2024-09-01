@@ -15,30 +15,29 @@ Last point, Microsoft Entra ID is a service provided by [Microsoft Entra](https:
 
 # Creates the Entra Application
 
-1. **Navigate to the Entra Portal**
-   - Open your web browser and visit [Microsoft Entra Portal](https://entra.microsoft.com).
+1. **Navigate to the Entra Portal and Sign IN**
+- Open your web browser and visit [Microsoft Entra Portal](https://entra.microsoft.com).
+- Sign in with your Microsoft account credentials.
 
-2. **Sign In**
-   - Sign in with your Microsoft account credentials.
+2. **Create a New Application**
+- In the left-hand navigation pane, select **"Identity"** then **"Applications"** and click on **"App registrations"**.
+- Click on **"New registration"**.
 
-3. **Create a New Application**
-   - In the left-hand navigation pane, select **"Identity"** then **"Applications"** and click on **"App registrations"**.
-   - Click on **"New registration"**.
+3. **Configure the Application**
+- Enter the name of the application.
+- Choose the supported account types. For most use cases, select **"Accounts in this organizational directory only"**.
+- Under **Redirect URI**, select **"Web"** and enter the URL `http://localhost:5000/callback` where your application will handle sign-in responses.
+- Click **"Register"**.
 
-4. **Configure the Application**
-   - Enter the name of the application.
-   - Choose the supported account types. For most use cases, select **"Accounts in this organizational directory only"**.
-   - Under **Redirect URI**, select **"Web"** and enter the URL `http://localhost:5000/callback` where your application will handle sign-in responses.
-   - Click **"Register"**.
+4. **Copy the Application (client) ID and the Tenant ID**
+- You will be redirected to the application's overview page after registration.
+- Note down the **Application (client) ID** and the **Tenant ID** as you will need them later.
 
-5. **Copy the Application (client) ID**
-   - You will be redirected to the application's overview page after registration. Note down the **Application (client) ID** as you will need it later.
-
-6. **Generate a Client Secret**
-   - In the left-hand menu, select **"Certificates & secrets"**.
-   - Under **Client secrets**, click **"New client secret"**.
-   - Add a description and choose an expiration period.
-   - Click **"Add"** and note down the **Value** of the client secret.
+5. **Generate a Client Secret**
+- In the left-hand menu, select **"Certificates & secrets"**.
+- Under **Client secrets**, click **"New client secret"**.
+- Add a description and choose an expiration period.
+- Click **"Add"** and note down the **Value** of the client secret.
 
 ![Creates the Entra Application](../../../assets/microsoft-entra/oauth-with-python/create-entra-app.gif)
 
