@@ -1,0 +1,81 @@
+---
+title: Managing dependencies in an opensource library
+description: .
+pubDate: 2024-09-04
+tags: ["python", "library", "feedback", "dependencies"]
+---
+
+Today, all organizations are using open-source libraries in their workflow to create their software.
+But open-source libraries are also relying on open-source libraries to provide their features but with another difficulty: they have to be more compatible then possible.
+
+## Context
+[Taipy](https://taipy.io) is an open-source library designed to streamline the development of data-driven applications.
+As a library, our customer considered us as a dependency, but we are also consumer of other libraries.
+Let's take the example of [Pandas](https://pandas.pydata.org/).
+Taipy is using Pandas so when a user install Taipy it installs Pandas too.
+Well, normal behavior, but what version of Pandas should we use?
+And - more importantly - which version of Pandas are using our customer?
+As a library, we can't just keep the latest version of Pandas otherwise we will limit our customer or worst break their code.
+Consequently, to be more open to our customer, we have to provide a large support of Pandas version and of course, all our dependencies.
+
+In fact their is three principal aspects to consider when managing dependencies in an open-source library:
+- Usability
+- Reliability
+- Security
+
+### Usability
+Restriction on dependencies must be as low as possible to let our customer use the library in most context.
+Ex: when released, the latest version of Pandas was not available on all cloud platform as Databricks or Dataiku.
+Forcing the user to use the latest version of Pandas would have a bad impact on the community using those platform with the Taipy.
+
+### Reliability
+When a new version of a dependency is released, it can break the code of the library.
+Libraries as Pandas strictly defined versionning and impact on users but it is not always the case.
+Some libraries can break their API at the same time then a security fix which put consumers in a stressfull situation because they have to update their code to provide the security fix.
+And of course, libraries are not always well tested and can introduce bugs which must be discover as soon as possible to limit the customer impact.
+When Pandas released the version 2.0 they respect their versionning convention and so, Taipy users were stuck in a old version of taipy (prior to 2.0) until Taipy was compatible with it.
+The reliability of Taipy wasn't impacted but the usability was.
+
+### Security
+Security is a major concern for any software.
+When a security fix is released, it is important to update the library as soon as possible to limit the risk of being hacked.
+When Pandas released a security fix, Taipy users want it as soon as possible without waiting a new release of Taipy.
+Thanks to dependencies manager as pip, uv, etc. it is possible to update the library without waiting a new release of Taipy if dependencies are well defined.
+
+The problem is that those three aspects are not always compatible.
+Usability as security lead to a broad definition of dependencies, the reliability to a strict definition.
+
+## Our approached
+As the community was growing, the Taipy team has to find a way to manage dependencies in a more efficient way.
+We decided to create a process and a tool to manage dependencies in a more efficient way.
+
+### The process
+At the beggining of each sprint, our update bot will create a Pull Request to update dependencies and report unmaintained libraries.
+This Pull Request contains the updated dependencies and the tests results with the lowest and the latest version of dependencies.
+In case of error, an issue can be created and handle during the sprint.
+
+### What do you mean by "lowest and latest version of dependencies"?
+Before starting this process, Taipy developer were working with the lowest version of dependencies to ensure that the library is compatible with the oldest version of dependencies.
+Consequently, the CI never ran with the latest version of dependencies.
+So we created another dependencies file specifying the latest version supported by Taipy and let the dependencies manager install the latest version possible.
+Each times our CI runs, it tests Taipy with both the lowest and the latest version of dependencies.
+
+This step was straightforward because everything was already in place.
+Now, to be able to test with the latest available version of dependencies, we created a bot similar to the GitHub dependabot.
+At the beginning of each sprint, the bot will check the latest version of each dependencies and create a Pull Request to update the dependencies file.
+
+
+## Improvements
+As describe above beeing compatible with the maximum version possible is good for the usability and Taipy is doing an excellent job.
+In fact too well and we now have a huge gap between the minimum and the maximum version of dependencies.
+Not only, this lead to a lot of code in our side to ensure the compatiblity but also, test are not running with middle version of dependencies and it is not possible to test all combination or versions.
+A good Improvements would be to let the bot update the lowest version we are supporting and stop supporting version that are becoming old and not used anymore.
+
+Another interesting improvement would be to let the bot doing the same on previous released of the product.
+Currently, when a new version of Taipy is released, we only update dependencies for security fix whereas we could do the same process for supported.
+But, doing so would lead to a lot of Pull Request and we have to find a way to manage them.
+
+## Conclusion
+Managing dependencies in an open-source library can be a complex task especially when dealing with dependencies that are not well maintained or not rigourous on version control.
+The Taipy team has been able to manage this complexity by creating a process and a tool to manage dependencies in a more efficient way that increase our community satifaction on that topic.
+We consider this first step as a success and we are looking forward to improve it in the future.
