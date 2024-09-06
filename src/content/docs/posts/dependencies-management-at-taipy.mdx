@@ -1,0 +1,80 @@
+---
+title: Managing dependencies in an open-source library
+description: Explore the challenges and solutions for managing dependencies in the Taipy open-source library. Learn about best practices for usability, reliability, and security, and discover the processes and improvements implemented by the Taipy team to ensure optimal performance and community satisfaction.
+pubDate: 2024-09-06
+tags: ["python", "library", "feedback", "dependencies", "open-source"]
+---
+
+In today's software landscape, managing the versions of open-source libraries is crucial for maintaining stability and security.
+Open-source libraries also rely on open-source libraries, but with an additional difficulty: they are used as a dependencies.
+
+## Context
+[Taipy](https://taipy.io) is an open-source library designed to streamline the development of data-driven applications.
+As a library, users install it as a dependency and decide which version to use.
+However, Taipy also uses open-source libraries, which can be the same as its users, and Taipy must allow it.
+Let's take the example of [Pandas](https://pandas.pydata.org/).
+Taipy uses Pandas, so when a user installs Taipy, it also installs Pandas.
+But what version of Pandas should Taipy use?
+And - more importantly - which version of Pandas are using Taipy users?
+This question has no easy answer because the solution will depend on three factors: *usability*, *reliability* and *security*.
+
+### Usability
+Restrictions on dependencies should be minimized to allow users to utilize the library in various contexts, providing them with maximum flexibility.
+
+For example, Pandas's `2.0` was unavailable on some cloud platforms such as [Databricks](https://www.databricks.com/) or [Dataiku](https://www.dataiku.com/) when it was released.
+Forcing users to adopt the latest version of Pandas could negatively impact those using platforms like Databricks or Dataiku with Taipy.
+Consequently, Taipy has to be compatible with older and younger Pandas versions and let its users pick up what they want.
+
+### Reliability
+When a new dependency version is released, it can break the library's code.
+Libraries, such as Pandas, strictly define versioning to limit impacts on users, but this is not always the case.
+For example, some libraries can break their API simultaneously as a security fix, putting users in a stressful situation because they have to update their code to provide the security fix.
+And, of course, libraries can introduce bugs that must be discovered as soon as possible to limit the user's impact.
+
+When Pandas released version `2.0`, they respected their versioning convention, so Taipy users were stuck in an old version of Pandas (prior to `2.0`) until Taipy was compatible with it.
+The reliability of Taipy wasn't impacted, but its usability was until a new release.
+
+### Security
+Security is a significant concern for any software.
+When a security fix is released, updating the library as soon as possible is essential to limit the risk of being hacked.
+Besides, the latest version is not always the most secure, so using the previous, still-supported version can be the best security choice.
+
+When Pandas releases a security fix, Taipy users want it as soon as possible without having to wait for a new release of Taipy.
+Users must have the flexibility to update security fixes without being blocked or introducing bugs.
+It's also true for Taipy security fixes; they must remove the security concern without impacting the user application.
+
+## Our approach
+As the community grew, the Taipy team had to find a way to manage dependencies more efficiently and broadly.
+They created a process and a tool to manage dependencies more efficiently.
+
+### The process
+At the start of each sprint, a bot generates a Pull Request to update dependencies and report potential unmaintained libraries based on their latest updates.
+This Pull Request contains updated dependencies and tests with the lowest and the latest version of dependencies.
+An issue can be created and handled during the sprint in case of an error.
+
+### What do I mean by "the lowest and latest version of dependencies"?
+Before starting this process, Taipy developers worked with the lowest supported version of dependencies, such as the CI.
+So, another dependencies file was created specifying the latest version supported by Taipy and included in the CI.
+Consequently, the CI runs tests at the two extremities of the supported versions of the dependencies.
+
+### The latest version supported VS the latest version installable
+Dependencies used by Taipy also impact the version that can be installed.
+For example, Pandas constrain the [Numpy](https://numpy.org/) version, so Taipy can't install all Numpy versions.
+But, if Pandas allows you to install the latest version of Numpy at a point, Taipy may automatically use it.
+The paradox is the possibility of bugs in this situation because Taipy has yet to be tested with this new version of Numpy.
+
+To limit this kind of issue, another CI was created to run tests without restrictions on dependencies.
+This CI lets the dependencies manager retrieve the latest installable version and compare installable versus supported versions.
+Following the Pandas example, the team realized that even if the lib was compatible with the latest Pandas version, a normal installation led to a Pandas version older than `2.0`.
+Consequently, Taipy wasn't compatible with Pandas `2.0` because users couldn't install it because a sub-dependency still needed to be compatible.
+
+## Improvements
+A significant improvement for the Taipy team would be running tests with intermediate dependencies versions.
+Unfortunately, the complexity is far more significant due to the number of combinations.
+
+Another exciting improvement would be letting the bot do the same job on previous Taipy releases.
+Currently, only security fixes are backported to the previous version of Taipy.
+
+## Conclusion
+Managing dependencies in an open-source library is complex, mainly when dealing with poorly maintained dependencies or those with lax version control.
+The Taipy team's structured approach has significantly improved community satisfaction by addressing these challenges effectively.
