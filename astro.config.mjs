@@ -56,7 +56,7 @@ export default defineConfig({
 			slug: 'serverless-machine-learning/part-2'
 		},
 		{
-			label: 'Part 3: Deployment based on the scoring',
+			label: 'Part 3: Conditional deployment',
 			slug: 'serverless-machine-learning/part-3'
 		},
 		{
