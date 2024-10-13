@@ -43,6 +43,9 @@ export default defineConfig({
       }, {
         label: 'DevOps Engineer challenge',
         slug: 'microsoft-learn/devops-engineer'
+      }, {
+        label: 'DP-900',
+        slug: 'microsoft-learn/dp-900'
       }]
     }, {
       label: 'Azure Functions and Machine Learning',
