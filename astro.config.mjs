@@ -31,6 +31,9 @@ export default defineConfig({
       items: [{
         label: 'OAuth with Python',
         slug: 'microsoft-entra/oauth-with-python'
+      }, {
+        label: 'Azure Managed Identity Performance Impact',
+        slug: 'microsoft-entra/azure-managed-identity-performance-impact'
       }]
     }, {
       label: 'Microsoft Learn',
