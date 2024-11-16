@@ -27,6 +27,12 @@ export default defineConfig({
         slug: 'azure-network/hub-and-spoke-based-on-app-gateway'
       }]
     }, {
+      label: 'GitHub',
+      items: [{
+        label: 'Self-Hosted Runners on AKS',
+        slug: 'github/self-hosted-runner'
+      }]
+    }, {
       label: 'Microsoft Entra',
       items: [{
         label: 'OAuth with Python',
