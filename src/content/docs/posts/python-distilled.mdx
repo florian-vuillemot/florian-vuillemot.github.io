@@ -1,0 +1,114 @@
+---
+title: Python Distilled
+description: Review of *Python Distilled* by David M. Beazley
+pubDate: 2024-09-06
+tags: ["python", "book", "feedback"]
+---
+
+If you're learning Python or want to understand it better, [Python Distilled by David M. Beazley](https://www.dabeaz.com/python-distilled/index.html) is an excellent choice.
+The book is easy to read, well-written, and full of clear examples that help readers understand tricky topics.
+Here are some things I found especially interesting or useful:
+
+## Using `repr` to Show Objects as Strings
+
+The `repr` method helps turn an object into a string, and the `eval` function can use that string to recreate the object:
+
+```python
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __repr__(self):
+        return f'Point({self.x!r}, {self.y!r})'
+
+# Example
+p = Point(2, 3)
+print(repr(p))        # Output: "Point(2, 3)"
+print(eval(repr(p)))  # Recreates the object
+```
+
+
+## How Lambda Functions Work with Variables
+
+Lambda functions (short, one-line functions) can behave differently than you might expect when variables change after the lambda is created:
+
+```python
+x = 10
+f = lambda y: x + y
+print(f(10))  # Output: 20
+
+x = 20
+print(f(10))  # Output: 30
+```
+
+The lambda uses the current value of `x`, not the value it had when the lambda was created. If you want to "freeze" the value of `x` in the lambda, use a default argument:
+
+```python
+x = 10
+g = lambda y, x=x: x + y
+print(g(10))  # Output: 20
+
+x = 20
+print(g(10))  # Output: 20
+```
+
+But keep in mind it's only a pointer copy, so if you change the object, it will be reflected in the lambda:
+
+```python
+x = {'a': 1}
+f = lambda y, x=x: x['a'] + y
+print(f(10))  # Output: 11
+
+x['a'] = 2
+print(f(10))  # Output: 12
+```
+
+## Introspection
+
+Instrospection in Python is a powerful tool for understanding code and objects. 
+I appreciated the used cases provided in the example that can make sense in frameworks.
+
+Example with the `inspect` module:
+
+```python
+import inspect
+
+def add(x, y):
+    return x + y
+
+def sub(x, y):
+    return x + y
+
+assert inspect.signature(add) == inspect.signature(sub)
+```
+
+## Writing "Pythonic" Code
+
+The book continuously reminds the reader how to write Pythonic and avoid falling into design patterns that are not adapted to the language.
+
+## Inheritance And Metaclasses
+
+A good part of the book is about inheritance, metaclasses, composition and how to use them in Python.
+I discovered the `__init_subclass__` method, a tool you can use when creating subclasses that can interfere on the Subclass structure before the instantiation:
+
+```python
+class Base:
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        print(f"Subclass created: {cls.__name__}")
+
+class Derived(Base):
+    pass  # Output: "Subclass created: Derived"
+```
+
+## Speeding Up Your Code
+
+Optimization in memory and speed follow the reader in each chapter.
+Slots, weak references, and function generation are covered and analyzed to help you write better code.
+
+
+## Final Thoughts
+
+*Python Distilled* is an excellent guide to Python.
+It's full of valuable tips and profound analysis of the language, and its practices.
