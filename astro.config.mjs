@@ -25,6 +25,9 @@ export default defineConfig({
       }, {
         label: 'Hub and spoke based on Application Gateway',
         slug: 'azure-network/hub-and-spoke-based-on-app-gateway'
+      }, {
+        label: 'Understanding Azure Service Endpoints',
+        slug: 'azure-network/service-endpoints'
       }]
     }, {
       label: 'GitHub',
