@@ -5,41 +5,63 @@ description: A small tutorial about Service Endpoint and there implication
 
 # Introduction
 
-Azure Service Endpoints are a powerful feature designed to enhance security and optimize network traffic within your Azure environment. In this blog post, we'll explore what Azure Service Endpoints are, how they work, their routing and impact, Service Endpoint Policies, and their cost implications.
+Azure Service Endpoints are a powerful feature designed to enhance security and optimize network traffic within your Azure environment. In this post, we will explore what Azure Service Endpoints are, how they work, their routing and impact, Service Endpoint Policies, and their cost implications.
 
-# Some context
+# Context
 
-Imagine you have an Azure Virtual Machine (VM) running in a Virtual Network (VNet) that needs to access Azure Blob Storage to store and retrieve data. By default, the VM connects to Blob Storage over the public internet, even though both resources are part of Azure. Here’s what happens:
-1. The VM sends requests to the Blob Storage account's public endpoint, which has a public IP address.
-2. The traffic may flows through the public internet, which introduces potential risks such as data interception or unauthorized access.
-3. The blob Storage is open on the Internet and for security reason it's better to to configure at least its firewalls with IP restriction.
-4. While this setup works, it's less secure and can result in higher latency because the traffic may leaves the secure Azure backbone network.
+Consider a scenario where you have an Azure Virtual Machine (VM) running in a Virtual Network (VNet) that needs to access Azure Blob Storage. By default, the VM connects to Blob Storage over the public internet, despite both resources being part of Azure.
+
+Here's the Azure resources not configured with the Azure VM in the VNET `serviceendpoint-vnet`:
+![Resources](../../../assets/azure-network/service-endpoint/init-state.png)
+
+The default setup involves:
+
+- The VM sending requests to the Blob Storage account's public endpoint.
+- Traffic potentially flowing through the public internet, introducing risks such as data interception or unauthorized access.
+- The Blob Storage being open to the internet, necessitating firewall configuration with IP restrictions.
+- Increased latency as traffic leaves the secure Azure backbone network.
+- This setup, while functional, is suboptimal in terms of security and performance.
 
 Now, let's see how Azure Service Endpoints simplify this process.
 
-# What is an Azure Service Endpoint and how it works?
+# What is an Azure Service Endpoint and How Does It Work?
 
-An Azure Service Endpoint is a network link between a VNET and an Azure service supporting this feature.
-This link, transparent from the user point of view, is an optimized route to reach a ressource with the certitude to stay on the Azure Backbone.
-This feature is free and can even save you money by limiting the data transfer costs.
+An Azure Service Endpoint is a network link between a VNet and an Azure service that supports this feature.
+It create a link between the VNet and the Azure service, allowing traffic to flow over the Azure backbone network instead of the public internet without consuming any IP from the VNET and quicker.
 
-![Network path](../../../assets/azure-network/service-endpoint/network-path.png)
+![Service Endpoint path](../../../assets/azure-network/service-endpoint/network-path.png)
 
-# Security impact
+You can see this configuration at the VNET level in the Azure Portal with an important detail, the geographic region reachable from with this Service Endpoint:
+![Network path](../../../assets/azure-network/service-endpoint/impact-on-the-vnet.png)
 
-While service endpoints provide a secure connection to Azure services, it is important to understand that they open the network on the service globally, not just on the user's resources.
-This means that service endpoints alone do not protect against data leaks.
-To enhance security and limit this risk, you can use Service Endpoint Policies to restrict access to the resources to specific subnets or VNets.
+Ressources trying to access to the resource using Service Endpoint must be allow at the resource firewall level.
+Example, for our Azure Blob Storage, we need to allow the subnet to access the storage account as you can see in the image below where the firewall of the Azure Storage Account allows our VM subnet.
+
+![Storage Firewall](../../../assets/azure-network/service-endpoint/add-my-ip.png)
+
+Consequently, when activated, our VM will be able to reach all Azure Blob Storage resources directly which can be a problem if you want to restrict access to a specific storage account.
+To solve this problem, you can use Service Endpoint Policies.
 
 # Service Endpoint Policies
 
-Service Endpoint Policies can restrict connectivity to specific Azure services from specific **subnets** or **VNets**, enhancing the security of your network.
-This restriction helps reduce the attack surface and ensures only authorized resources can communicate with your critical services.
-Policies can be applied to different types of Azure services, including storage accounts, SQL databases, and other PaaS offerings.
-
-Implementing Service Endpoint Policies provides a more granular control over network traffic, ensuring compliance with organizational security requirements and regulatory standards.
+Service Endpoint Policies can restrict connectivity from a VNET to an Azure Storage Account.
+Because it's apply at the subnet level, the restriction is for the resource trying to access to the storage from the VNET and not on the storage directly.
+Consequently, it doesn't prevent the connection on another storage through the Internet.
 
 ![Service Endpoint Policy in action](../../../assets/azure-network/service-endpoint/service-endpoint-policy.png)
+
+# Routing
+
+When configured, Service Endpoint add to the VNET route table range(s) of IP targetting the configured service and creating the routing optimization.
+Keeping the example, if we have a look to the "Effective routes" of the VM Network Interface, we can see them:
+
+![Service Endpoint IPs ranges](../../../assets/azure-network/service-endpoint/effective-routes.png)
+
+Due to the precision of the range, it's also possible to override Service Endpoint routing using User Defined Route and Service Tag.
+
+![UDR blocking Service Endpoint](../../../assets/azure-network/service-endpoint/route-table.png)
+
+It can be noted, that due to the implementation of Private Link, Service Endpoint are by passed because Private Link announced an IP more precise then the Service Endpoint range.
 
 # Summary
 
