@@ -20,6 +20,11 @@ We will not cover the GitHub App creation process here, but you can find detaile
 
 ## Components
 
+### Update the Base Image
+
+You may need custom tools in your CI and don't want to install them each time in your GitHub Workflow. In that case, you can extend the [default image](https://github.com/actions/runner/pkgs/container/actions-runner) and reference it in the Helm.
+
+
 ### The Controller
 
 First, you must deploy the [GitHub Actions Runner Controller](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners-with-actions-runner-controller/about-actions-runner-controller) on your Kubernetes cluster.
@@ -42,7 +47,7 @@ resource "helm_release" "github-runner" {
     name                = "arc"
     namespace           = "arc-systems"
     repository          = "oci://ghcr.io/actions/actions-runner-controller-charts/"
-    version             = "0.9.3"
+    version             = "0.10.1"
     create_namespace    = true
 
     # You can defined additional configuration here.
@@ -70,7 +75,7 @@ resource "helm_release" "runner" {
     name                = "myworkflow"
     namespace           = "myworkflow"
     repository          = "oci://ghcr.io/actions/actions-runner-controller-charts/"
-    version             = "0.9.3"
+    version             = "0.10.1"
     create_namespace    = true
 
     values = [
