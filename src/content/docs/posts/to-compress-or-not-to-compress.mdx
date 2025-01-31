@@ -1,0 +1,170 @@
+---
+title: To Compress or Not to Compress - That is the Question
+description: Benchmarking the impact of compression on upload performance in cloud storage.
+pubDate: 2025-01-31
+tags: ["python", "cshelve", "azure", "azure-blob-storage", "azure-storage-account", "compression", "performance"]
+---
+
+## Introduction
+
+When using cloud storage, both upload speed and storage costs matter. Compression can impact both positively or negatively.
+
+In this post, we explore the impact of compression on the total time required for data compression and upload. We utilize the Python library [`cshelve`](https://github.com/Standard-Cloud/cshelve) with Azure Blob Storage for our benchmarking.
+
+## Test Setup
+
+We ran two sets of tests:
+1. **Small data**
+2. **Large data**
+
+For each test, we measured upload times with and without compression.
+The tests were conducted on an [Ubuntu 24.04](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal?tabs=ubuntu) system using Python 3.12, `cshelve` 1.0.0, and a premium [Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction) account located in the same Azure region as the virtual machine.
+
+## What is `cshelve`?
+
+`cshelve` is a Python library that provides a key-value storage interface, similar to Python's built-in `shelve` module. It simplifies cloud storage interactions, making it easy to store data in Azure Blob Storage.
+
+If you find `cshelve` useful, please consider [starring the project on GitHub](https://github.com/Standard-Cloud/cshelve).
+
+## Experiment Details
+
+We tested compression using two datasets:
+
+1. **Small dataset:**
+   - **String data:** 30 bytes (uncompressed) → 34 bytes (compressed)
+   - **Binary data:** 946 bytes (uncompressed) → 540 bytes (compressed)
+
+2. **Large dataset:**
+   - **String data:** 160 MiB (uncompressed) → 122.99 MiB (compressed)
+   - **Binary data:** 167.46 MiB (uncompressed) → 34.22 MiB (compressed)
+
+We measured upload times with and without compression for both cases.
+
+> **Note:** The size values reflect data stored in Azure Blob Storage.
+
+### Configuration Files
+
+We used two configuration files:
+
+#### With Compression (`compression.ini`)
+```ini
+[default]
+provider        = azure-blob
+account_url     = https://<blob>.blob.core.windows.net
+auth_type       = passwordless
+container_name  = benchmark
+
+[compression]
+algorithm   = zlib
+level       = 1
+```
+
+#### Without Compression (`no-compression.ini`)
+```ini
+[default]
+provider        = azure-blob
+account_url     = https://<blob>.blob.core.windows.net
+auth_type       = passwordless
+container_name  = benchmark
+```
+
+## Benchmarking Code
+
+### Small Data Upload Test
+```python
+import time
+import cshelve
+import numpy as np
+import pandas as pd
+
+def benchmark_string(filename):
+    start_time = time.time()
+    with cshelve.open(filename) as db:
+        for _ in range(1_000):
+            db['small-string'] = 'value'
+    return time.time() - start_time
+
+def benchmark_binary(filename):
+    df = pd.DataFrame(np.random.randint(0, 100, size=(10, 3)), columns=list("ABC"))
+    start_time = time.time()
+    with cshelve.open(filename) as db:
+        for _ in range(1_000):
+            db['small-binary'] = df
+    return time.time() - start_time
+
+print(f"Time with compression (string): {benchmark_string('compression.ini')}")
+print(f"Time with compression (binary): {benchmark_binary('compression.ini')}")
+print(f"Time without compression (string): {benchmark_string('no-compression.ini')}")
+print(f"Time without compression (binary): {benchmark_binary('no-compression.ini')}")
+```
+
+### Large Data Upload Test
+```python
+import random
+import string
+import time
+import cshelve
+import numpy as np
+import pandas as pd
+
+def benchmark_string(filename):
+    value = ''.join(random.choices(string.ascii_letters + string.digits, k=160 * 1024 * 1024))
+    start_time = time.time()
+    with cshelve.open(filename) as db:
+        for _ in range(10):
+            db['large-string'] = value
+    return time.time() - start_time
+
+def benchmark_binary(filename):
+    df = pd.DataFrame(np.random.randint(0, 100, size=(844221, 26)), columns=list("ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
+    start_time = time.time()
+    with cshelve.open(filename) as db:
+        for _ in range(10):
+            db['large-binary'] = df
+    return time.time() - start_time
+
+print(f"Time with compression (string): {benchmark_string('compression.ini')}")
+print(f"Time with compression (binary): {benchmark_binary('compression.ini')}")
+print(f"Time without compression (string): {benchmark_string('no-compression.ini')}")
+print(f"Time without compression (binary): {benchmark_binary('no-compression.ini')}")
+```
+
+## Results
+
+### Small Data Test
+```
+Time with compression (string): 9.34s
+Time with compression (binary): 9.40s
+Time without compression (string): 8.98s
+Time without compression (binary): 9.13s
+```
+
+### Large Data Test
+```
+Time with compression (string): 70.81s
+Time with compression (binary): 17.47s
+Time without compression (string): 26.95s
+Time without compression (binary): 24.16s
+```
+
+### Insights
+
+For small data, compression increases completion times, making it generally unnecessary.
+However, for large data, compression improved upload times for binary files but slowed down string uploads.
+This is because our benchmark used fully random string data, which is hard to compress. If we replace the random string with:
+```python
+value = 'a' * 160 * 1024 * 1024
+```
+the compression time drops to **5 seconds**, and the file size shrinks to **715 KiB**!
+
+### Should You Compress?
+
+It depends on your data. Testing on real-world datasets is ideal. Since this can be cumbersome, tools like `cshelve` are working on algorithms to automatically decide the best approach. Until then, a good rule of thumb is:
+- **Compression helps with large datasets**
+- **Compression may hurt performance for small or highly random data**
+
+## Conclusion
+
+Whether to use compression depends on your data type and size.
+From experience, compression is usually beneficial, but testing on your specific workload is the best approach.
+Thankfully, `cshelve` makes it easy to enable or disable compression with a simple configuration change.
