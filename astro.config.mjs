@@ -60,7 +60,13 @@ export default defineConfig({
             label: 'The SQL Over() function',
             slug: 'database/over'
         }]
-      },{
+      }, {
+        label: 'Fabric',
+        items: [{
+            label: 'Key Concepts',
+            slug: 'fabric/key-concepts'
+        }]
+      }, {
         label: 'GitHub',
         items: [{
             label: 'Self-Hosted Runners on AKS',
