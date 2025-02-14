@@ -1,0 +1,84 @@
+---
+title: "SBOM is not yet for libraries"
+date: "2025-02-13"
+description: "Exploring the process of adding a Software Bill of Materials (SBOM) to a Python library which supports multiple dependency versions."
+categories: ["Software Supply Chain", "Python", "SBOM"]
+tags: ["SBOM", "CycloneDX", "SPDX", "Software Security", "Python Packaging"]
+---
+
+## Introduction
+
+Software Bill of Materials (SBOM) is becoming an important part of software security. It provides a list of all the dependencies in a project, helping to identify security risks, outdated packages, and licensing issues. However, for libraries that support multiple versions of dependencies, creating an accurate and useful SBOM is not always straightforward.
+
+In this article, I will share my experience of adding an SBOM to [`cshelve`](https://github.com/Standard-Cloud/cshelve), a Python library for cloud storage. `cshelve` allows users to install optional dependencies depending on the cloud provider they use, which makes defining an exact SBOM more complicated.
+
+## What is SBOM?
+
+SBOM is a list of all the components (dependencies, libraries, and packages) used in a software project. It helps with:
+
+- Identifying security vulnerabilities (e.g., using CVE databases)
+- Tracking outdated or unsupported versions
+- Ensuring license compliance
+- Improving software transparency
+
+### Difference Between CycloneDX and SPDX
+
+Two common SBOM formats are **CycloneDX** and **SPDX**:
+
+- **CycloneDX** ([OWASP CycloneDX](https://cyclonedx.org/)) is designed for software supply chain security, focusing on dependency tracking and vulnerability management. It is widely used in DevSecOps workflows.
+- **SPDX** ([Software Package Data Exchange](https://spdx.dev/)) is more focused on licensing and compliance, providing a standard way to share software component metadata. SPDX is recognized by organizations for legal and regulatory purposes.
+
+While both formats aim to improve software transparency, **CycloneDX is more security-focused**, while **SPDX is stronger in license and compliance tracking**.
+
+Some tools, such as **Syft** or **Trivy**, can create both formats.
+
+## Difficulties in Creating an SBOM for Libraries with Optional Dependencies
+
+Unlike applications, libraries do not have fixed dependencies. In `cshelve`, there are no required external dependencies, but users can install optional ones:
+
+```bash
+pip install cshelve[azure-blob]   # Installs Azure dependencies
+pip install cshelve[aws-s3]       # Installs AWS dependencies
+```
+
+### SBOM Includes All Possible Dependencies
+
+When installed without optional dependencies, the SBOM for `cshelve` is nearly empty because it does not have any required dependencies.
+
+However, when optional dependencies are installed, the SBOM grows to include those specific dependencies.
+Generating an SBOM that includes all possible dependencies can lead to unnecessary security alerts, as users typically do not install every optional dependency.
+
+For example, a user installing `cshelve[azure-blob]` should not receive security warnings related to AWS dependencies. Therefore, it is crucial to generate the SBOM based on the actual installed packages rather than all potential dependencies.
+
+### SBOM Reflects Installed Packages, Not Defined Requirements
+
+SBOM generation usually happens in one of two ways:
+
+1. **From a running environment** (e.g., scanning a virtual environment or container)
+2. **From a lock file** (e.g., `poetry.lock`, or `requirements.txt` with pinned versions and not optional dependencies definitions)
+
+Since `cshelve` supports multiple versions of dependencies, the SBOM cannot be accurately generated from `pyproject.toml` alone. For example, if dependencies are defined as:
+
+```toml
+[project.optional-dependencies]
+azure-blob = ["azure-storage-blob>=12.0.0"]
+```
+
+The installed version may vary based on the environment. A valid SBOM must be created **after** the installation process, requiring users to install dependencies first, making it hard to provide a universal SBOM for `cshelve`.
+
+## Future Improvements for SBOM in Python Libraries
+
+Current SBOM tools, including CycloneDX, have limitations when dealing with external dependencies that are not bundled with the software but are required at runtime.
+A relevant discussion on the CycloneDX GitHub repository ([issue #321](https://github.com/CycloneDX/specification/issues/321)) highlights potential improvements to better document external dependencies.
+
+### Proposed Enhancements:
+- **Describing external dependencies**: CycloneDX is working on a way to document dependencies that are not shipped with a product but are required at runtime, such as shared libraries, OS-level dependencies, or dynamically linked binaries.
+- **Defining version ranges**: Instead of requiring exact versions, allowing SBOMs to express compatible version ranges for runtime dependencies.
+- **Better transparency for library users**: This would help users understand what external software they need to provide and ensure compatibility.
+
+These changes could make SBOMs more useful for Python libraries like `cshelve`, where optional dependencies and external runtime requirements play a key role.
+
+## Conclusion
+
+The Software Bill of Materials is an essential part of software security and transparency for end products, but it is not yet fully adapted for libraries.
+When it is adapted and we can include our libraries alongside our applications in SBOM reports, it will be a significant step forward for software supply chain security.
