@@ -83,12 +83,18 @@ export default defineConfig({
         }]
       }, {
         label: 'Microsoft Learn',
-        items: [{
-            label: 'AZ 104',
-            slug: 'microsoft-learn/az-104'
+        items: [
+          {
+            label: 'AI 900',
+            items: [
+              'microsoft-learn/ai-900/overview',
+            ]
           }, {
             label: 'AI Language challenge',
             slug: 'microsoft-learn/ai-language'
+          }, {
+            label: 'AZ 104',
+            slug: 'microsoft-learn/az-104'
           }, {
             label: 'DevOps Engineer challenge',
             slug: 'microsoft-learn/devops-engineer'
