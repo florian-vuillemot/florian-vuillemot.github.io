@@ -88,6 +88,7 @@ export default defineConfig({
             label: 'AI 900',
             items: [
               'microsoft-learn/ai-900/overview',
+              'microsoft-learn/ai-900/vision',
             ]
           }, {
             label: 'AI Language challenge',

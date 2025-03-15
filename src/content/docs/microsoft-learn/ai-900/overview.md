@@ -62,13 +62,13 @@ Common algorithms:
 
 Evaluated using a confusion matrix and related metrics:
 
-- **Accuracy:** \( \frac{TP + TN}{TP + TN + FP + FN} \)
+- **Accuracy:**
   - Accuracy can be misleading if the data is imbalanced. For example, 95% accuracy on a dataset with 95% negatives means the algorithm always returns False.
 
-- **Recall:** \( \frac{TP}{TP + FN} \)
+- **Recall:**
   - Measures how many actual positives were correctly identified.
 
-- **Precision:** \( \frac{TP}{TP + FP} \)
+- **Precision:**
   - Measures how many predicted positives were correct.
 
 ### Regression
