@@ -92,6 +92,7 @@ export default defineConfig({
               'microsoft-learn/ai-900/nlp',
               'microsoft-learn/ai-900/knowledge-mining',
               'microsoft-learn/ai-900/generative-ai',
+              'microsoft-learn/ai-900/responsible',
             ]
           }, {
             label: 'AI Language challenge',
