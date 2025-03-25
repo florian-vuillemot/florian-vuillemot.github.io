@@ -11,16 +11,17 @@ description: A Comprehensive Guide to Service Endpoints and Their Implications
 
 # Context: The Problem with Public Network Traffic
 
-Imagine you have an [Azure Virtual Machine (VM)](https://learn.microsoft.com/en-us/azure/virtual-machines/overview) running inside a [Virtual Network (VNet)](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview) that needs to communicate with an [Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction). By default, this communication occurs over the public internet, even though both resources reside in Azure. 
+Imagine you have an [Azure Virtual Machine (VM)](https://learn.microsoft.com/en-us/azure/virtual-machines/overview) running inside a [Virtual Network (VNet)](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview) that needs to communicate with an [Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction). By default, this communication acts as if it is going over the public internet, even though both resources reside in Azure*.
 
 Here's how the default setup works:
 
 - The VM sends requests to the Blob Storage account's **public endpoint** using a [public IP](https://learn.microsoft.com/en-us/azure/virtual-network/ip-services/public-ip-addresses).
-- Traffic flows go over the public internet.
+- Traffic flows go over the Azure Backbone.
 - Traffic reaches the Azure Blob Storage public endpoint.
 
 This setup, while functional, is suboptimal for both security and performance.
 
+*If you think the data is genuinely traveling over the public internet, check this [excellent article](https://blog.cloudtrooper.net/2025/02/17/private-link-reality-bites-service-endpoints-vs-private-link/). Still not convinced? Analyze the cost of outbound traffic from Azure to the public internet.
 ---
 
 # Configuration used for this article
@@ -34,8 +35,7 @@ All examples of this article are based on a Virtual Machine accessing to a Azure
 An Azure Service Endpoint is a network link that connects a VNet directly to an Azure service. Instead of routing traffic over the public internet, Service Endpoints ensure that communication stays on Azure's backbone. 
 
 ## Key Features of Service Endpoints:
-- They provide **direct and secure access** to Azure services.
-- Traffic bypasses the public internet, reducing risks, latency and costs.
+- The Azure service must explicitly permit traffic originating from the VNet.
 - The communication is directly visible at the resource firewall level.
 - No IPs are consumed from the VNet.
 
