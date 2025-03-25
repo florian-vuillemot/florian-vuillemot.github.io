@@ -10,6 +10,15 @@ description: AI-900 Certification Learning Notes - Responsible AI
 ## What is Responsible AI?
 Responsible AI refers to the ethical, transparent, and accountable development and deployment of AI systems. It ensures alignment with legal frameworks, ethical principles, and societal expectations. Responsible AI includes practices designed to minimize risks, prevent biases, and foster fairness in AI applications.
 
+## Key Points of Responsible AI
+
+- **Fairness**: Ensure AI systems treat all individuals equitably, without bias.
+- **Reliability and Safety**: AI is based on probability, so its outputs should be controlled and monitored.
+- **Privacy and Security**: Protect user data and ensure compliance with privacy regulations.
+- **Inclusiveness**: Ensure AI systems are accessible to all users, regardless of background or abilities.
+- **Transparency**: Make AI systems understandable and explainable to users and stakeholders.
+- **Accountability**: Developers and organizations are ultimately responsible for the outcomes of AI systems. Governance frameworks should be in place to ensure accountability.
+
 ## How to Implement Responsible AI
 
 Follow these key steps to successfully implement Responsible AI:
