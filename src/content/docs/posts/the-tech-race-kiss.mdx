@@ -1,0 +1,70 @@
+---
+title: The Tech Race - KISS
+description: Keep It Simple and Stupid
+pubDate: 2025-04-09
+tags: ["python", "cloud", "azure", "docker"]
+---
+
+Today, many people believe that using more technology leads to better results.
+I work as a cloud engineer, designing secure, reliable, and cost-effective cloud systems with the latest technologies.
+In my spare time, I collaborate with researchers who need precise and simple tools that are easy for non-coding experts to use.
+My experience shows that new, fancy technology is not always the best solution.
+
+## Different Technology Needs
+
+### For Cloud and DevOps Teams
+
+In my job, I work with data scientists, engineers, and developers.
+They want and sometimes need the newest trends like Kubernetes, managed services, and large language models.
+They often change their tools quickly because they follow the latest trends.
+
+### For Researchers
+
+In my free time, I work on projects for researchers who are not concerned with the latest trends.
+They prefer tools that work well, have few bugs, and are easy to use and improve.
+For them, stability, precision, and good documentation are the most important factors.
+They create custom software to conduct experiments, but their primary goal and expertise lie in analyzing the results.
+
+## When Modernization Goes Wrong
+
+I often hear, "Let's rewrite this software to be modern."
+However, many good systems are thrown away just because they are not trendy.
+Changing to a new tool does not always mean the system becomes better.
+Sometimes, more technology makes the system more complicated without real benefit.
+I like to remind people that [Facebook's codebase](https://engineering.fb.com/2020/05/08/web/facebook-redesign/) is not small, yet it runs on PHP.
+
+## A Real Case: Migration from On-Prem to Cloud
+
+Recently, I migrated a [Django-based](https://www.djangoproject.com/) application from an on-premises VM to the cloud. Here is what happened:
+
+- **Old System:**  
+    The application used [PostgreSQL, Celery, and Redis](https://django-celery-beat.readthedocs.io/en/latest/). It was deployed using docker-compose. Celery and Redis were reset during each deployment since they did not store any critical data.
+
+- **Cloud Migration:**
+    I moved the database to an [Azure PostgreSQL Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/), which made backup easier but needed a larger server for the same performance then on premise.
+    I also replaced Celery and Redis with [Azure Container Jobs](https://learn.microsoft.com/en-us/azure/container-apps/jobs?tabs=azure-cli) and [Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/overview). I wrote a lot of Terraform code and used GitHub Actions for deployment. 
+
+- **Result:**  
+  - The cloud system offered managed backups, but it added many layers of extra code and steps.
+  - For developers, nothing much changed in the application itself. However, adding new tasks became harder because it required updating Terraform scripts.
+  - The cloud system turned out to be more complicated and far more expensive than a simple VM with automated backups on an [Azure Storage Account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview) using an Ansible script triggered by a scheduled GitHub Action.
+  - Users lost the ability to run the application locally in the same way it runs in production. Previously, with the help of a [devcontainer](https://code.visualstudio.com/docs/devcontainers/containers), developers could run the application locally with a single command by sharing the docker-compose configuration used in production.
+
+## The Value of Simplicity
+
+This experience reminds me that simple solutions often work best.
+A system running on a VM can be more reliable, easier to maintain, and cheaper than a cloud system full of extra tools.
+Technology should be chosen to fit the needs of the business and users, not just because it is new or trendy.
+
+> **Note:** Although the system is simpler, a VM generally offers a higher SLA than the combined SLAs of the PostgreSQL Flexible Server, Azure Container Jobs, and Azure Container Apps.
+
+## Conclusion
+
+In the tech race, using the latest technology is not always the right choice. Sometimes, simple is better. When planning your next project, ask yourself:
+- What real value does a new tool bring?
+- Is the new technology really needed?
+- Are the extra costs and complexity worth it?
+
+Keep technology as a tool to help you work better. Remember: keep it simple and keep it working.
+
+> **Note:** Cost is not only about money. It also includes time, effort, and the risk of failure.
