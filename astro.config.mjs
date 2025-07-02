@@ -107,6 +107,14 @@ export default defineConfig({
             label: 'DP-900',
             slug: 'microsoft-learn/dp-900'
         }]
+      }, {
+        label: 'Private Cloud',
+        items: [
+          {
+            label: 'Behind the Cloud - Real Hardware',
+            slug: 'private-cloud/behind-the-cloud-real-hardware'
+          }
+        ]
       }
     ]
   }), mdx()]
