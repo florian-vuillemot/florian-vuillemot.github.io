@@ -55,6 +55,18 @@ export default defineConfig({
             slug: 'azure-network/service-endpoints'
         }]
       }, {
+        label: 'Behind the Cloud real hardware',
+        items: [
+          {
+            label: 'Part 1 - Real Hardware',
+            slug: 'behind-the-cloud-real-hardware/part-1-introduction'
+          },
+          {
+            label: 'Part 2 - Hardware Details & Cluster Setup',
+            slug: 'behind-the-cloud-real-hardware/part-2-hardware-details'
+          }
+        ]
+      }, {
         label: 'Database',
         items: [{
             label: 'The SQL Over() function',
@@ -107,14 +119,6 @@ export default defineConfig({
             label: 'DP-900',
             slug: 'microsoft-learn/dp-900'
         }]
-      }, {
-        label: 'Private Cloud',
-        items: [
-          {
-            label: 'Behind the Cloud - Real Hardware',
-            slug: 'private-cloud/behind-the-cloud-real-hardware'
-          }
-        ]
       }
     ]
   }), mdx()]
