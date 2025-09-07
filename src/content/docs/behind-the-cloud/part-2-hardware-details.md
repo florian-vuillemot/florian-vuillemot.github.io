@@ -14,14 +14,14 @@ Here is the list of all the hardware and accessories:
 | Category   | Name | Quantity | Price |
 |------------|------|----------|-------|
 | Storage    | Kingston A400 SSD SSD Interne 2.5" SATA Rev 3.0, 240GB - SA400S37/240G | 2 | 29.99€ |
-| Connectic  | UGREEN Câble SATA USB 3.0 Adaptateur SATA USB pour SSD et Disques Durs 2,5 Pouces | 2 | 10.19€ |
+| Cable      | UGREEN Câble SATA USB 3.0 Adaptateur SATA USB pour SSD et Disques Durs 2,5 Pouces | 2 | 10.19€ |
 | Rack       | GeeekPi 6-Couches Raspberry Pi Cluster Boîtier | 1 | 17.99€ |
 | Storage    | SanDisk Ultra 32 GB microSDHC Memory Card + SD Adapter with A1 App Performance Up to 120 MB/s, Class 10, U1 | 3 | 8.15€ |
-| Connectic  | 1aTTack.de 10x 0,5m Câble Réseau Cat6 Cat 6 - RJ45 Ethernet LAN DSL Routeur Modem | 10 | 1.80€ |
-| Connectict | TP-LINK TPLINK Power-LAN PowerLAN PG2400P KIT (PG2400P KIT) | 1 | 90.53€ |
-| Connectict | LEGRAND Rallonge Multiprise Extra-Plate | 1 | 16.99€ | 
-| Connectic  | TP-Link Adaptateur USB Ethernet UE306, Adaptateur USB 3.0 vers Ethernet Gigabit | 1 | 16.99€ |
-| Switch     | TP-LINK TL-SG105 | 1 | 24.95€ |
+| Cable      | 1aTTack.de 10x 0,5m Câble Réseau Cat6 Cat 6 - RJ45 Ethernet LAN DSL Routeur Modem | 10 | 1.80€ |
+| Network    | TP-LINK TPLINK Power-LAN PowerLAN PG2400P KIT (PG2400P KIT) | 1 | 90.53€ |
+| Power      | LEGRAND Rallonge Multiprise Extra-Plate | 1 | 16.99€ | 
+| Cable      | TP-Link Adaptateur USB Ethernet UE306, Adaptateur USB 3.0 vers Ethernet Gigabit | 1 | 16.99€ |
+| Network    | TP-LINK TL-SG105 | 1 | 24.95€ |
 | Power      | Alimentation pour Raspberry Pi 4 USB-C blanc avec Adaptateurs secteur | 2 | 12€ |
 | Compute    | Raspberry Pi 4 modèle B - 8GB | 2 | 87€ |
 | Cooling    | Ventilateur dissipateur pour Raspberry Pi 5 | 1 | 6€ |

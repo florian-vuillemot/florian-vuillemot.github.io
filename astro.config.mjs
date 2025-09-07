@@ -55,15 +55,19 @@ export default defineConfig({
             slug: 'azure-network/service-endpoints'
         }]
       }, {
-        label: 'Behind the Cloud real hardware',
+        label: 'Behind the Cloud',
         items: [
           {
             label: 'Part 1 - Real Hardware',
-            slug: 'behind-the-cloud-real-hardware/part-1-introduction'
+            slug: 'behind-the-cloud/part-1-introduction'
           },
           {
             label: 'Part 2 - Hardware Details & Cluster Setup',
-            slug: 'behind-the-cloud-real-hardware/part-2-hardware-details'
+            slug: 'behind-the-cloud/part-2-hardware-details'
+          },
+          {
+            label: 'Part 3 - Network',
+            slug: 'behind-the-cloud/part-3-network'
           }
         ]
       }, {
