@@ -1,0 +1,86 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.8 Chrome/140.0.7339.240 Electron/38.4.0 Safari/537.36" version="28.2.8" pages="2">
+  <diagram name="1 - High-Level Topology" id="page1">
+    <mxGraphModel dx="3051" dy="837" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="15" value="Netgate 4200 (pfSense)" style="shape=mxgraph.cisco.security.firewall;fillColor=#f5f5f5;strokeColor=#666666;labelPosition=center;verticalLabelPosition=bottom;align=center;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="420" y="560" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="110" value="" style="endArrow=none;dashed=1;strokeWidth=2" parent="1" source="11" target="15" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="111" value="" style="endArrow=none;dashed=1;strokeWidth=2" parent="1" source="12" target="15" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="112" value="" style="endArrow=none;dashed=1;strokeWidth=2" parent="1" source="13" target="15" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="113" value="" style="endArrow=none;dashed=1;strokeWidth=2" parent="1" source="14" target="15" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="11" value="LAN&#xa;192.168.42.0/24 " style="rounded=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#4b89dc;" parent="1" vertex="1">
+          <mxGeometry x="-10" y="440" width="330" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="12" value="WireGuard VPN&#xa;192.168.43.0/24" style="rounded=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#2fab5a;" parent="1" vertex="1">
+          <mxGeometry x="660" y="440" width="330" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="13" value="Development - Port 3&#xa;192.168.44.0/24" style="rounded=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#ff9800;" parent="1" vertex="1">
+          <mxGeometry x="-10" y="640" width="330" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="14" value="Production - Port 4&#xa;192.168.45.0/24" style="rounded=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#d32f2f;" parent="1" vertex="1">
+          <mxGeometry x="660" y="640" width="330" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="0v8PBm3jVDedQg0ish4P-117" value="The Internet" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="220" width="270" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="0v8PBm3jVDedQg0ish4P-124" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;entryX=0.55;entryY=0.95;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="15" target="0v8PBm3jVDedQg0ish4P-117">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="430" y="590" as="sourcePoint" />
+            <mxPoint x="480" y="540" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0v8PBm3jVDedQg0ish4P-125" value="From the Internet -&amp;gt; To Wireguard&lt;div&gt;To the Internet -&amp;gt; Via NAT&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="0v8PBm3jVDedQg0ish4P-124">
+          <mxGeometry x="0.1492" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="2 - Subnet Differentiation &amp; Future Policy" id="page2">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1920" pageHeight="1080">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="200" value="Subnet Zones (Diff) &amp; Policy Roadmap Current: ALLOW ANY between zones • Future: Default‑deny + explicit allows" style="rounded=1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="60" y="40" width="1800" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="210" value="HQ‑Users (Corp LAN) CIDR: 192.168.42.0/24 GW: 192.168.42.1 Notes: User endpoints, printers" style="rounded=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor:#4b89dc;" vertex="1" parent="1">
+          <mxGeometry x="60" y="160" width="420" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="211" value="HQ‑VPN‑Clients (WG) CIDR: 192.168.43.0/24 GW: 192.168.43.1 Notes: Remote users via WireGuard" style="rounded=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor:#2fab5a;" vertex="1" parent="1">
+          <mxGeometry x="520" y="160" width="420" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="212" value="HQ‑Dev VLAN CIDR: 192.168.44.0/24 GW: 192.168.44.1 Notes: Dev/test workloads" style="rounded=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor:#ff9800;" vertex="1" parent="1">
+          <mxGeometry x="980" y="160" width="420" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="213" value="HQ‑Prod VLAN CIDR: 192.168.45.0/24 GW: 192.168.45.1 Notes: Production systems" style="rounded=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor:#d32f2f;" vertex="1" parent="1">
+          <mxGeometry x="60" y="360" width="420" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="214" value="STM‑Users (Site LAN) CIDR: 192.168.50.0/24 GW: 192.168.50.1 Notes: Branch endpoints" style="rounded=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor:#8e44ad;" vertex="1" parent="1">
+          <mxGeometry x="520" y="360" width="420" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="215" value="P2P Link (/31) CIDR: 192.168.80.0/31 GW: HQ .0 • STM .1 Notes: Intersite routed link" style="rounded=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor:#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="980" y="360" width="420" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="260" value="Policy Roadmap 1) Define firewall aliases per zone and FQDNs (e.g., *.standard-cloud.io) 2) Switch to default‑deny between all zones 3) Allow minimal flows:    • Users→Prod: RDP/HTTPS as needed    • Dev↔Prod: CI/CD ports only    • VPN‑Clients→*: least privilege 4) STM→HQ static + policy route: 192.168.0.0/16 &amp; *.standard-cloud.io via HQ 5) Enable logging; review &amp; tighten monthly" style="shape=note;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="60" y="540" width="860" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="261" value="Routing Summary • Static routes between HQ and STM • P2P /31 192.168.80.0/31 (HQ .0, STM .1) • NAT on both edges • DNS Resolver + DHCP on pfSense at each site • No IPv6 at this time" style="shape=note;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="980" y="540" width="880" height="240" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

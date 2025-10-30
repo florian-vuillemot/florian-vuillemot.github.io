@@ -1,5 +1,5 @@
 ---
-title: Behind the Cloud – Network
+title: Behind the Cloud — Network Foundations
 description: How I wired the cluster, assigned addresses with Kea DHCP, named hosts with BIND 9, routed traffic with NAT, and issued internal TLS certificates.
 ---
 
