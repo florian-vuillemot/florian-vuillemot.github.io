@@ -1,0 +1,92 @@
+# Taskfile: https://taskfile.dev
+# Wraps Astro/npm commands with Docker so you don't need Node.js installed locally.
+#
+# The CI workflow (.github/workflows/deploy.yml) does, on node:18:
+#   npm ci
+#   npx playwright install
+#   npm run build (-> astro check && astro build)
+#
+# We reproduce that here using the official Playwright image, which already
+# ships with Node.js and the browsers required by remark-mermaidjs/Playwright,
+# so there is no separate "playwright install" step needed.
+version: "3"
+
+vars:
+  IMAGE: mcr.microsoft.com/playwright:v1.48.2-jammy
+  PORT: 4321
+  # Named volume so node_modules (native deps like sharp) are built for Linux
+  # and never mixed with a Windows host filesystem via the bind mount below.
+  NODE_MODULES_VOLUME: florian-vuillemot-github-io_node_modules
+
+tasks:
+  install:
+    desc: Install dependencies (npm ci) inside Docker
+    cmds:
+      - docker run --rm
+        -v "{{.ROOT_DIR}}:/app"
+        -v "{{.NODE_MODULES_VOLUME}}:/app/node_modules"
+        -w /app
+        {{.IMAGE}}
+        npm ci
+
+  dev:
+    desc: Start the Astro dev server at localhost:4321
+    deps: [install]
+    cmds:
+      - docker run --rm -it
+        -v "{{.ROOT_DIR}}:/app"
+        -v "{{.NODE_MODULES_VOLUME}}:/app/node_modules"
+        -w /app
+        -p {{.PORT}}:4321
+        {{.IMAGE}}
+        npm run dev -- --host
+
+  check:
+    desc: Run astro check (type-checking)
+    deps: [install]
+    cmds:
+      - docker run --rm
+        -v "{{.ROOT_DIR}}:/app"
+        -v "{{.NODE_MODULES_VOLUME}}:/app/node_modules"
+        -w /app
+        {{.IMAGE}}
+        npm run astro -- check
+
+  build:
+    desc: Build the production site to ./dist (same as CI's npm run build)
+    deps: [install]
+    cmds:
+      - docker run --rm
+        -v "{{.ROOT_DIR}}:/app"
+        -v "{{.NODE_MODULES_VOLUME}}:/app/node_modules"
+        -w /app
+        {{.IMAGE}}
+        npm run build
+
+  preview:
+    desc: Preview the production build locally at localhost:4321
+    deps: [build]
+    cmds:
+      - docker run --rm -it
+        -v "{{.ROOT_DIR}}:/app"
+        -v "{{.NODE_MODULES_VOLUME}}:/app/node_modules"
+        -w /app
+        -p {{.PORT}}:4321
+        {{.IMAGE}}
+        npm run preview -- --host
+
+  shell:
+    desc: Open an interactive shell in the Docker container (debugging)
+    cmds:
+      - docker run --rm -it
+        -v "{{.ROOT_DIR}}:/app"
+        -v "{{.NODE_MODULES_VOLUME}}:/app/node_modules"
+        -w /app
+        -p {{.PORT}}:4321
+        {{.IMAGE}}
+        bash
+
+  clean:
+    desc: Remove the node_modules Docker volume (force a clean reinstall)
+    cmds:
+      - docker volume rm -f {{.NODE_MODULES_VOLUME}}
