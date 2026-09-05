@@ -72,6 +72,10 @@ export default defineConfig({
           {
             label: 'Part 3 - Network Appliance',
             slug: 'behind-the-cloud/part-3-appliance'
+          },
+          {
+            label: 'Part 4 - Storage',
+            slug: 'behind-the-cloud/part-4-storage'
           }
         ]
       }, {
