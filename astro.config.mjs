@@ -48,6 +48,9 @@ export default defineConfig({
             label: 'Bastion and KeyVault integration',
             slug: 'azure-network/bastion-keyvault-integration'
           }, {
+            label: 'Front Door fallback',
+            slug: 'azure-network/front-door-fallback'
+          }, {
             label: 'Hub and spoke based on Application Gateway',
             slug: 'azure-network/hub-and-spoke-based-on-app-gateway'
           }, {
